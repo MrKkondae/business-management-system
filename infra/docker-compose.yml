@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: bms-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: bms
+      POSTGRES_USER: bms_user
+      POSTGRES_PASSWORD: bms_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

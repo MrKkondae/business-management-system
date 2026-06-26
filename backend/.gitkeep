@@ -1,0 +1,16 @@
+type nul > src\main\java\com\bms\backend\common\.gitkeep
+type nul > src\main\java\com\bms\backend\config\.gitkeep
+
+type nul > src\main\java\com\bms\backend\customer\controller\.gitkeep
+type nul > src\main\java\com\bms\backend\customer\service\.gitkeep
+type nul > src\main\java\com\bms\backend\customer\repository\.gitkeep
+type nul > src\main\java\com\bms\backend\customer\entity\.gitkeep
+type nul > src\main\java\com\bms\backend\customer\dto\.gitkeep
+
+type nul > src\main\java\com\bms\backend\contact\.gitkeep
+type nul > src\main\java\com\bms\backend\opportunity\.gitkeep
+type nul > src\main\java\com\bms\backend\proposal\.gitkeep
+type nul > src\main\java\com\bms\backend\contract\.gitkeep
+type nul > src\main\java\com\bms\backend\project\.gitkeep
+type nul > src\main\java\com\bms\backend\billing\.gitkeep
+type nul > src\main\java\com\bms\backend\dashboard\.gitkeep
