@@ -86,6 +86,54 @@ FILE_SCHEMAS["02.logical-model/relationships/entity-relation-cross.csv"] = (
     "description",
 )
 
+OPTIONAL_FILE_SCHEMAS: dict[str, tuple[str, ...]] = {}
+for area in BUSINESS_AREAS:
+    OPTIONAL_FILE_SCHEMAS[f"03.physical-model/tables/table-{area}.csv"] = (
+        "entity_name",
+        "table_name",
+        "table_type",
+        "description",
+        "note",
+    )
+    OPTIONAL_FILE_SCHEMAS[f"03.physical-model/columns/column-{area}.csv"] = (
+        "table_name",
+        "column_sequence",
+        "korean_name",
+        "column_name",
+        "domain_name",
+        "data_type_override",
+        "nullable",
+        "default_value",
+        "pk_yn",
+        "description",
+        "note",
+    )
+    OPTIONAL_FILE_SCHEMAS[
+        f"03.physical-model/constraints/constraint-{area}.csv"
+    ] = (
+        "constraint_name",
+        "constraint_type",
+        "table_name",
+        "column_names",
+        "reference_table",
+        "reference_columns",
+        "check_expression",
+        "on_delete",
+        "on_update",
+        "enforcement_type",
+        "create_yn",
+        "description",
+    )
+    OPTIONAL_FILE_SCHEMAS[f"03.physical-model/indexes/index-{area}.csv"] = (
+        "index_name",
+        "table_name",
+        "column_names",
+        "unique_yn",
+        "index_method",
+        "where_condition",
+        "description",
+    )
+
 REQUIRED_FIELDS = {
     "standard-words": ("source_no", "korean_name", "english_name", "abbreviation"),
     "standard-terms": (
@@ -101,6 +149,30 @@ REQUIRED_FIELDS = {
     "entities": ("entity_name", "entity_type"),
     "attributes": ("entity_name", "attribute_sequence", "attribute_name"),
     "relationships": ("relation_expression",),
+    "physical-tables": ("entity_name", "table_name", "table_type"),
+    "physical-columns": (
+        "table_name",
+        "column_sequence",
+        "korean_name",
+        "column_name",
+        "domain_name",
+        "nullable",
+        "pk_yn",
+    ),
+    "physical-constraints": (
+        "constraint_name",
+        "constraint_type",
+        "table_name",
+        "column_names",
+        "enforcement_type",
+        "create_yn",
+    ),
+    "physical-indexes": (
+        "index_name",
+        "table_name",
+        "column_names",
+        "unique_yn",
+    ),
 }
 
 RELATION_RE = re.compile(
@@ -181,7 +253,15 @@ class Validator:
             if parsed_rows is not None:
                 self.rows[relative_path] = parsed_rows
 
-        expected = set(FILE_SCHEMAS)
+        for relative_path, expected_header in OPTIONAL_FILE_SCHEMAS.items():
+            path = self.catalog_dir / Path(relative_path)
+            if not path.is_file():
+                continue
+            parsed_rows = self._read_csv(path, relative_path, expected_header)
+            if parsed_rows is not None:
+                self.rows[relative_path] = parsed_rows
+
+        expected = set(FILE_SCHEMAS) | set(OPTIONAL_FILE_SCHEMAS)
         for path in sorted(self.catalog_dir.rglob("*.csv")):
             relative_path = path.relative_to(self.catalog_dir).as_posix()
             if relative_path not in expected:
@@ -323,6 +403,31 @@ class Validator:
                 ("dbms", "domain_name"),
             ),
             ("엔터티명", self._rows_of_kind("entities"), ("entity_name",)),
+            (
+                "물리 테이블명",
+                self._rows_of_kind("physical-tables"),
+                ("table_name",),
+            ),
+            (
+                "테이블별 물리 컬럼 순서",
+                self._rows_of_kind("physical-columns"),
+                ("table_name", "column_sequence"),
+            ),
+            (
+                "테이블별 물리 컬럼명",
+                self._rows_of_kind("physical-columns"),
+                ("table_name", "column_name"),
+            ),
+            (
+                "물리 제약조건명",
+                self._rows_of_kind("physical-constraints"),
+                ("constraint_name",),
+            ),
+            (
+                "물리 인덱스명",
+                self._rows_of_kind("physical-indexes"),
+                ("index_name",),
+            ),
             (
                 "엔터티별 속성 순서",
                 self._rows_of_kind("attributes"),
@@ -496,6 +601,14 @@ def file_kind(relative_path: str) -> str:
         return "attributes"
     if "/relationships/entity-relation-" in relative_path:
         return "relationships"
+    if relative_path.startswith("03.physical-model/tables/table-"):
+        return "physical-tables"
+    if relative_path.startswith("03.physical-model/columns/column-"):
+        return "physical-columns"
+    if relative_path.startswith("03.physical-model/constraints/constraint-"):
+        return "physical-constraints"
+    if relative_path.startswith("03.physical-model/indexes/index-"):
+        return "physical-indexes"
     raise ValueError(f"Unknown catalog file: {relative_path}")
 
 

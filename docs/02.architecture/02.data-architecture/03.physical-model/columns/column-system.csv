@@ -1,0 +1,116 @@
+﻿table_name,column_sequence,korean_name,column_name,domain_name,data_type_override,nullable,default_value,pk_yn,description,note
+TB_SYS_USER,1,사용자ID,USER_ID,ID,,N,,Y,사용자 식별자,논리 속성
+TB_SYS_USER,2,직원ID,EMP_ID,ID,,Y,,N,연계된 직원 식별자,논리 속성
+TB_SYS_USER,3,로그인ID,LOGIN_ID,ID,,N,,N,로그인에 사용하는 식별자,논리 속성
+TB_SYS_USER,4,사용자명,USER_NM,NAME,,N,,N,사용자 표시 명칭,논리 속성
+TB_SYS_USER,5,이메일주소,EMAIL_ADDR,EMAIL,,Y,,N,사용자 이메일 주소,논리 속성
+TB_SYS_USER,6,휴대전화번호,MOBILE_NO,MOBILE_NO,,Y,,N,사용자 휴대전화 번호,논리 속성
+TB_SYS_USER,7,계정상태코드,ACNT_STATUS_CD,CODE,,N,,N,계정 상태 코드,논리 속성
+TB_SYS_USER,8,조직ID,ORG_ID,ID,,Y,,N,소속 조직 식별자,논리 속성
+TB_SYS_USER,9,사용여부,USE_YN,USE_YN,,N,'Y',N,사용 가능 여부,논리 속성
+TB_SYS_USER,10,비밀번호해시값,PWD_HASH_VAL,HASH,,N,,N,비밀번호 해시값,논리 속성
+TB_SYS_USER,11,비밀번호변경일시,PWD_CHG_DTM,TIMESTAMP,,N,CURRENT_TIMESTAMP,N,최근 비밀번호 변경 일시,논리 속성
+TB_SYS_USER,12,로그인실패건수,LOGIN_FAIL_CNT,COUNT,,N,0,N,연속 로그인 실패 건수,논리 속성
+TB_SYS_USER,13,잠금일시,LOCK_DTM,TIMESTAMP,,Y,,N,계정 잠금 발생 일시,논리 속성
+TB_SYS_USER,14,마지막로그인일시,LAST_LOGIN_DTM,TIMESTAMP,,Y,,N,마지막 로그인 성공 일시,논리 속성
+TB_SYS_USER,15,비밀번호초기화필요여부,PWD_INIT_REQ_YN,YN,,N,'Y',N,최초 로그인 시 비밀번호 변경 필요 여부,논리 속성 및 업무 기본값
+TB_SYS_USER,16,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,공통 컬럼
+TB_SYS_USER,17,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,공통 컬럼
+TB_SYS_USER,18,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,공통 컬럼
+TB_SYS_USER,19,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,공통 컬럼
+TB_SYS_USER,20,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,공통 컬럼
+TB_SYS_ROLE,1,역할ID,ROLE_ID,ID,,N,,Y,역할 식별자,논리 속성
+TB_SYS_ROLE,2,역할명,ROLE_NM,NAME,,N,,N,역할 명칭,논리 속성
+TB_SYS_ROLE,3,역할설명,ROLE_DESC,SHORT_DESC,,Y,,N,역할에 대한 설명,논리 속성
+TB_SYS_ROLE,4,사용여부,USE_YN,USE_YN,,N,'Y',N,역할 사용 여부,논리 속성
+TB_SYS_ROLE,5,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,공통 컬럼
+TB_SYS_ROLE,6,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,공통 컬럼
+TB_SYS_ROLE,7,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,공통 컬럼
+TB_SYS_ROLE,8,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,공통 컬럼
+TB_SYS_ROLE,9,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,공통 컬럼
+TB_SYS_USER_ROLE_REL,1,사용자ID,USER_ID,ID,,N,,Y,사용자 식별자,논리 속성 및 복합 PK
+TB_SYS_USER_ROLE_REL,2,역할ID,ROLE_ID,ID,,N,,Y,역할 식별자,논리 속성 및 복합 PK
+TB_SYS_USER_ROLE_REL,3,등록자ID,REG_ID,REG_ID,,N,,N,관계 등록자 식별자,관계 테이블 공통 컬럼
+TB_SYS_USER_ROLE_REL,4,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,관계 등록 일시,관계 테이블 공통 컬럼
+TB_SYS_MENU,1,메뉴ID,MENU_ID,ID,,N,,Y,메뉴 식별자,논리 속성
+TB_SYS_MENU,2,상위메뉴ID,UP_MENU_ID,ID,,Y,,N,상위 메뉴 식별자,논리 속성 및 자기참조
+TB_SYS_MENU,3,메뉴명,MENU_NM,NAME,,N,,N,메뉴 명칭,논리 속성
+TB_SYS_MENU,4,메뉴URL,MENU_URL,URL,,Y,,N,메뉴 이동 URL,논리 속성
+TB_SYS_MENU,5,정렬순서,SORT_SEQ,SEQ,,N,0,N,동일 계층 내 표시 순서,논리 속성
+TB_SYS_MENU,6,사용여부,USE_YN,USE_YN,,N,'Y',N,메뉴 사용 여부,논리 속성
+TB_SYS_MENU,7,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,공통 컬럼
+TB_SYS_MENU,8,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,공통 컬럼
+TB_SYS_MENU,9,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,공통 컬럼
+TB_SYS_MENU,10,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,공통 컬럼
+TB_SYS_MENU,11,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,공통 컬럼
+TB_SYS_ROLE_MENU_PERM_REL,1,역할ID,ROLE_ID,ID,,N,,Y,역할 식별자,논리 속성 및 복합 PK
+TB_SYS_ROLE_MENU_PERM_REL,2,메뉴ID,MENU_ID,ID,,N,,Y,메뉴 식별자,논리 속성 및 복합 PK
+TB_SYS_ROLE_MENU_PERM_REL,3,조회권한여부,READ_PERM_YN,YN,,N,'N',N,메뉴 조회 권한 여부,논리 속성
+TB_SYS_ROLE_MENU_PERM_REL,4,등록권한여부,REG_PERM_YN,YN,,N,'N',N,메뉴 등록 권한 여부,논리 속성
+TB_SYS_ROLE_MENU_PERM_REL,5,수정권한여부,MOD_PERM_YN,YN,,N,'N',N,메뉴 수정 권한 여부,논리 속성
+TB_SYS_ROLE_MENU_PERM_REL,6,삭제권한여부,DEL_PERM_YN,YN,,N,'N',N,메뉴 삭제 권한 여부,논리 속성
+TB_SYS_ROLE_MENU_PERM_REL,7,등록자ID,REG_ID,REG_ID,,N,,N,권한 등록자 식별자,관계 테이블 공통 컬럼
+TB_SYS_ROLE_MENU_PERM_REL,8,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,권한 등록 일시,관계 테이블 공통 컬럼
+TB_SYS_ORG,1,조직ID,ORG_ID,ID,,N,,Y,조직 식별자,논리 속성
+TB_SYS_ORG,2,상위조직ID,UP_ORG_ID,ID,,Y,,N,상위 조직 식별자,논리 속성 및 자기참조
+TB_SYS_ORG,3,조직명,ORG_NM,NAME,,N,,N,조직 명칭,논리 속성
+TB_SYS_ORG,4,조직유형코드,ORG_TYPE_CD,CODE,,N,,N,조직 유형 코드,논리 속성
+TB_SYS_ORG,5,사용여부,USE_YN,USE_YN,,N,'Y',N,조직 사용 여부,논리 속성
+TB_SYS_ORG,6,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,공통 컬럼
+TB_SYS_ORG,7,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,공통 컬럼
+TB_SYS_ORG,8,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,공통 컬럼
+TB_SYS_ORG,9,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,공통 컬럼
+TB_SYS_ORG,10,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,공통 컬럼
+TB_COM_CODE_GRP,1,코드그룹ID,CD_GRP_ID,ID,,N,,Y,코드 그룹 식별자,논리 속성
+TB_COM_CODE_GRP,2,코드그룹명,CD_GRP_NM,NAME,,N,,N,코드 그룹 명칭,논리 속성
+TB_COM_CODE_GRP,3,코드그룹설명내용,CD_GRP_DESC_CONT,CONTENT,,Y,,N,코드 그룹 설명,논리 속성
+TB_COM_CODE_GRP,4,사용여부,USE_YN,USE_YN,,N,'Y',N,코드 그룹 사용 여부,논리 속성
+TB_COM_CODE_GRP,5,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,공통 컬럼
+TB_COM_CODE_GRP,6,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,공통 컬럼
+TB_COM_CODE_GRP,7,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,공통 컬럼
+TB_COM_CODE_GRP,8,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,공통 컬럼
+TB_COM_CODE_GRP,9,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,공통 컬럼
+TB_COM_CODE,1,코드그룹ID,CD_GRP_ID,ID,,N,,Y,소속 코드 그룹 식별자,논리 속성 및 복합 PK
+TB_COM_CODE,2,코드,CD,CODE,,N,,Y,코드 값,논리 속성 및 복합 PK
+TB_COM_CODE,3,코드명,CD_NM,NAME,,N,,N,코드 명칭,논리 속성
+TB_COM_CODE,4,정렬순서,SORT_SEQ,SEQ,,N,0,N,코드 표시 순서,논리 속성
+TB_COM_CODE,5,사용여부,USE_YN,USE_YN,,N,'Y',N,코드 사용 여부,논리 속성
+TB_COM_CODE,6,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,공통 컬럼
+TB_COM_CODE,7,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,공통 컬럼
+TB_COM_CODE,8,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,공통 컬럼
+TB_COM_CODE,9,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,공통 컬럼
+TB_COM_CODE,10,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,공통 컬럼
+TB_SYS_CONFIG,1,시스템설정ID,SYS_CONFIG_ID,ID,,N,,Y,시스템 설정 식별자,논리 속성
+TB_SYS_CONFIG,2,시스템설정키,SYS_CONFIG_KEY,CONFIG_KEY,,N,,N,시스템 설정 조회 키,논리 속성
+TB_SYS_CONFIG,3,시스템설정값,SYS_CONFIG_VAL,CONTENT,,Y,,N,시스템 설정 값,논리 속성
+TB_SYS_CONFIG,4,시스템설정설명내용,SYS_CONFIG_DESC_CONT,CONTENT,,Y,,N,시스템 설정 설명,논리 속성
+TB_SYS_CONFIG,5,사용여부,USE_YN,USE_YN,,N,'Y',N,시스템 설정 사용 여부,논리 속성
+TB_SYS_CONFIG,6,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,공통 컬럼
+TB_SYS_CONFIG,7,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,공통 컬럼
+TB_SYS_CONFIG,8,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,공통 컬럼
+TB_SYS_CONFIG,9,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,공통 컬럼
+TB_SYS_CONFIG,10,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,공통 컬럼
+TB_SYS_ACCESS_LOG,1,접속로그ID,ACCESS_LOG_ID,ID,,N,,Y,접속 로그 식별자,논리 속성
+TB_SYS_ACCESS_LOG,2,사용자ID,USER_ID,ID,,Y,,N,접속 사용자 식별자,미인증 접속을 고려해 NULL 허용
+TB_SYS_ACCESS_LOG,3,접속일시,ACCESS_DTM,TIMESTAMP,,N,CURRENT_TIMESTAMP,N,접속 발생 일시,논리 속성
+TB_SYS_ACCESS_LOG,4,접속IP주소,ACCESS_IP_ADDR,IP_ADDRESS,,Y,,N,접속 원본 IP 주소,논리 속성
+TB_SYS_ACCESS_LOG,5,성공여부,SUCC_YN,YN,,N,'N',N,접속 성공 여부,논리 속성
+TB_SYS_ACCESS_LOG,6,등록자ID,REG_ID,REG_ID,,N,'SYSTEM',N,로그 생성 주체,불변 로그 공통 컬럼
+TB_SYS_ACCESS_LOG,7,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,로그 저장 일시,불변 로그 공통 컬럼
+TB_SYS_LOG,1,로그ID,LOG_ID,ID,,N,,Y,시스템 로그 식별자,논리 속성
+TB_SYS_LOG,2,로그유형코드,LOG_TYPE_CD,CODE,,N,,N,로그 유형 코드,논리 속성
+TB_SYS_LOG,3,사용자ID,USER_ID,ID,,Y,,N,관련 사용자 식별자,시스템 처리 로그를 고려해 NULL 허용
+TB_SYS_LOG,4,발생일시,OCCUR_DTM,TIMESTAMP,,N,CURRENT_TIMESTAMP,N,로그 사건 발생 일시,논리 속성
+TB_SYS_LOG,5,로그내용,LOG_CONT,CONTENT,,Y,,N,로그 상세 내용,논리 속성
+TB_SYS_LOG,6,등록자ID,REG_ID,REG_ID,,N,'SYSTEM',N,로그 생성 주체,불변 로그 공통 컬럼
+TB_SYS_LOG,7,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,로그 저장 일시,불변 로그 공통 컬럼
+TB_SYS_NOTICE,1,공지ID,NOTICE_ID,ID,,N,,Y,공지사항 식별자,논리 속성
+TB_SYS_NOTICE,2,제목,TITLE,TITLE,,N,,N,공지사항 제목,논리 속성
+TB_SYS_NOTICE,3,내용,CONT,CONTENT,,Y,,N,공지사항 본문 내용,논리 속성
+TB_SYS_NOTICE,4,게시시작일자,POST_START_DT,DATE,,N,,N,게시 시작 일자,논리 속성
+TB_SYS_NOTICE,5,게시종료일자,POST_END_DT,DATE,,Y,,N,게시 종료 일자,상시 게시를 고려해 NULL 허용
+TB_SYS_NOTICE,6,등록자ID,REG_ID,REG_ID,,N,,N,공지사항 등록자 식별자,논리 속성 및 공통 컬럼
+TB_SYS_NOTICE,7,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,공통 컬럼
+TB_SYS_NOTICE,8,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,공통 컬럼
+TB_SYS_NOTICE,9,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,공통 컬럼
+TB_SYS_NOTICE,10,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,공통 컬럼

@@ -1,0 +1,13 @@
+﻿entity_name,table_name,table_type,description,note
+사용자,TB_SYS_USER,MASTER,BMS 사용자 계정 기본정보와 인증 및 계정 잠금정보,
+역할,TB_SYS_ROLE,MASTER,시스템 접근권한 부여 단위,
+사용자역할,TB_SYS_USER_ROLE_REL,RELATION,사용자와 역할의 매핑 정보,USER_ID와 ROLE_ID 복합 PK
+메뉴,TB_SYS_MENU,MASTER,시스템 메뉴 정보,
+역할메뉴권한,TB_SYS_ROLE_MENU_PERM_REL,RELATION,역할별 메뉴 접근권한,ROLE_ID와 MENU_ID 복합 PK
+조직,TB_SYS_ORG,MASTER,회사 조직 및 부서 정보,UP_ORG_ID 자기참조
+코드그룹,TB_COM_CODE_GRP,MASTER,공통코드 그룹 정보,
+공통코드,TB_COM_CODE,MASTER,업무 공통코드 정보,
+시스템설정,TB_SYS_CONFIG,MASTER,시스템 운영환경 설정,
+접속로그,TB_SYS_ACCESS_LOG,LOG,로그인 및 접속 이력,불변 이력
+시스템로그,TB_SYS_LOG,LOG,시스템 사용 및 오류 로그,불변 이력
+공지사항,TB_SYS_NOTICE,BUSINESS,시스템 공지사항,

@@ -1,0 +1,1 @@
+﻿constraint_name,constraint_type,table_name,column_names,reference_table,reference_columns,check_expression,on_delete,on_update,enforcement_type,create_yn,description
