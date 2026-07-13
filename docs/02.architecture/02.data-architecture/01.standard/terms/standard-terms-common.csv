@@ -1,0 +1,7 @@
+source_no,korean_name,english_name,column_name,domain_name,description,note
+9001,등록자ID,REGISTER IDENTIFIER,REG_ID,REG_ID,,
+9002,등록일시,REGISTER DATETIME,REG_DTM,REG_DTM,,
+9003,수정자ID,MODIFY IDENTIFIER,MOD_ID,MOD_ID,,
+9004,수정일시,MODIFY DATETIME,MOD_DTM,MOD_DTM,,
+9005,삭제여부,DELETE YES NO,DEL_YN,DEL_YN,,
+9006,사용여부,USE YES NO,USE_YN,USE_YN,,

@@ -1,0 +1,2 @@
+relation_expression,description
+고객사 1 : N 고객담당자,하나의 고객사는 여러 담당자를 가질 수 있다.

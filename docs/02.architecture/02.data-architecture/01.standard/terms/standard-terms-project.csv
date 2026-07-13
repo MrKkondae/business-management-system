@@ -1,0 +1,9 @@
+source_no,korean_name,english_name,column_name,domain_name,description,note
+1,프로젝트ID,PROJECT IDENTIFIER,PRJ_ID,ID,프로젝트 식별자,PK
+2,프로젝트명,PROJECT NAME,PRJ_NM,LONG_NAME,프로젝트 명칭,
+3,프로젝트유형코드,PROJECT TYPE CODE,PRJ_TYPE_CD,CODE,프로젝트 유형,
+4,프로젝트상태코드,PROJECT STATUS CODE,PRJ_STATUS_CD,CODE,프로젝트 상태,
+5,프로젝트시작일,PROJECT START DATE,START_DT,DATE,프로젝트 시작일,
+6,프로젝트종료일,PROJECT END DATE,END_DT,DATE,프로젝트 종료일,
+7,고객ID,CUSTOMER IDENTIFIER,CUST_ID,ID,고객 식별자,FK
+8,계약ID,CONTRACT IDENTIFIER,CNTR_ID,ID,계약 식별자,FK
