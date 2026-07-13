@@ -1,4 +1,4 @@
-entity_name,attribute_sequence,attribute_name
+﻿entity_name,attribute_sequence,attribute_name
 매출계획,1,매출계획ID
 매출계획,2,프로젝트ID
 매출계획,3,기준월

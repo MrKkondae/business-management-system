@@ -7,6 +7,8 @@ DOMAIN,문자형,TITLE,,N,,"공지사항 제목, 게시글 제목",
 DOMAIN,문자형,SHORT_DESC,,Y,,짧은 설명,REMARK
 DOMAIN,문자형,CONTENT,,Y,,긴 내용,CONTENT
 DOMAIN,문자형,NUMBER,,Y,,"업무번호(계약번호, 프로젝트번호, 문서번호 등)",
+DOMAIN,문자형,HASH,,N,,해시값,PWD_HASH_VAL
+DOMAIN,문자형,CONFIG_KEY,,N,,시스템 설정 키,SYS_CONFIG_KEY
 DOMAIN,날짜 및 시간,DATE,,N,,날짜,
 DOMAIN,날짜 및 시간,TIMESTAMP,,N,CURRENT_TIMESTAMP,일시,
 DOMAIN,날짜 및 시간,YEAR,,N,,년도,
@@ -26,6 +28,7 @@ DOMAIN,연락처,TEL_NO,,Y,,전화번호,
 DOMAIN,연락처,MOBILE_NO,,Y,,휴대전화,
 DOMAIN,연락처,EMAIL,,Y,,이메일,
 DOMAIN,연락처,URL,,Y,,URL,
+DOMAIN,연락처,IP_ADDRESS,,Y,,IPv4/IPv6 주소,ACCESS_IP_ADDR
 DOMAIN,사업자 정보,BIZ_REG_NO,,Y,,사업자등록번호,
 DOMAIN,사업자 정보,CORP_REG_NO,,Y,,법인등록번호,
 DOMAIN,공통,REG_ID,,N,,등록자,REG_ID

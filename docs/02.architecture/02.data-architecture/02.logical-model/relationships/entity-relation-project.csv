@@ -1,4 +1,4 @@
-relation_expression,description
+﻿relation_expression,description
 프로젝트 1 : N 산출물,SI 프로젝트는 여러 산출물을 가진다.
 산출물 1 : N 산출물버전,하나의 산출물은 여러 버전을 가질 수 있다.
 프로젝트 1 : N 하자보수,SI 종료 후 여러 하자보수 건이 발생할 수 있다.

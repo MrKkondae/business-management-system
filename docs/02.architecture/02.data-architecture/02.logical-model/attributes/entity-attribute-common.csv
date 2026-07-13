@@ -1,4 +1,4 @@
-entity_name,attribute_sequence,attribute_name
+﻿entity_name,attribute_sequence,attribute_name
 알림,1,알림ID
 알림,2,수신자ID
 알림,3,알림유형

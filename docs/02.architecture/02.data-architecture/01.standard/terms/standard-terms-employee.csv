@@ -1,6 +1,0 @@
-source_no,korean_name,english_name,column_name,domain_name,description,note
-301,직원ID,EMPLOYEE IDENTIFIER,EMP_ID,ID,,
-302,직원명,EMPLOYEE NAME,EMP_NM,NAME,,
-303,부서코드,DEPARTMENT CODE,DEPT_CD,CODE,,
-304,직급코드,POSITION CODE,POSITION_CD,CODE,,
-305,기술등급코드,SKILL GRADE CODE,SKILL_GRADE_CD,CODE,,

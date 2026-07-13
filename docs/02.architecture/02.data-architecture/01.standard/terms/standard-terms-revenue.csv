@@ -1,5 +1,0 @@
-source_no,korean_name,english_name,column_name,domain_name,description,note
-501,매출금액,REVENUE AMOUNT,REV_AMT,AMOUNT,,
-502,청구금액,BILL AMOUNT,BILL_AMT,AMOUNT,,
-503,수금금액,RECEIPT AMOUNT,RCPT_AMT,AMOUNT,,
-504,미수금액,OUTSTANDING AMOUNT,OUTSTANDING_AMT,AMOUNT,,

@@ -1,4 +1,4 @@
-entity_name,attribute_sequence,attribute_name
+﻿entity_name,attribute_sequence,attribute_name
 계약,1,계약ID
 계약,2,고객사ID
 계약,3,수주ID

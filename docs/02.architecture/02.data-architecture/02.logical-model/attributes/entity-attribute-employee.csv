@@ -1,4 +1,4 @@
-entity_name,attribute_sequence,attribute_name
+﻿entity_name,attribute_sequence,attribute_name
 직원,1,직원ID
 직원,2,사용자ID
 직원,3,직원명

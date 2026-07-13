@@ -1,3 +1,3 @@
-relation_expression,description
+﻿relation_expression,description
 청구 1 : N 수금,하나의 청구에 대해 여러 번 수금될 수 있다.
 청구 1 : 0..1 세금계산서,청구 건에 대해 세금계산서가 발행될 수 있다.

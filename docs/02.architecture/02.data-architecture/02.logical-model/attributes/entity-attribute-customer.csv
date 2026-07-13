@@ -1,4 +1,4 @@
-entity_name,attribute_sequence,attribute_name
+﻿entity_name,attribute_sequence,attribute_name
 고객사,1,고객사ID
 고객사,2,고객사명
 고객사,3,사업자등록번호
