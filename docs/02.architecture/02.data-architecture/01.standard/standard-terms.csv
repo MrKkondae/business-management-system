@@ -71,6 +71,7 @@
 4,project,프로젝트상태코드,PROJECT STATUS CODE,PRJ_STATUS_CD,CODE,프로젝트 상태,
 5,project,프로젝트시작일자,PROJECT START DATE,START_DT,DATE,프로젝트 시작일자,
 6,project,프로젝트종료일자,PROJECT END DATE,END_DT,DATE,프로젝트 종료일자,
+7,project,PM사용자ID,PROJECT MANAGER USER IDENTIFIER,PM_USER_ID,ID,프로젝트 담당 PM 사용자 식별자,
 301,employee,직원ID,EMPLOYEE IDENTIFIER,EMP_ID,ID,,
 302,employee,직원명,EMPLOYEE NAME,EMP_NM,NAME,,
 303,employee,부서코드,DEPARTMENT CODE,DEPT_CD,CODE,,
