@@ -108,3 +108,6 @@
 345,실적,ACTUAL,ACTL,업무,실제로 수행한 결과,
 346,확정,CONFIRMATION,CNFM,상태,검토를 마쳐 최종 상태로 정함,
 347,비고,REMARK,REMARK,공통,추가로 기록하는 참고 사항,
+348,담당자,CONTACT PERSON,CONTACT,업무,업무를 담당하는 사람,
+349,활동,ACTIVITY,ACT,업무,고객 또는 업무 대상 활동,
+350,담당,CHARGE,CHRG,업무,업무를 맡아 처리함,

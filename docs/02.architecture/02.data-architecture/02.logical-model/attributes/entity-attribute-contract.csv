@@ -1,6 +1,6 @@
 ﻿entity_name,attribute_sequence,attribute_name
 계약,1,계약ID
-계약,2,고객사ID
+계약,2,고객ID
 계약,3,수주ID
 계약,4,계약명
 계약,5,계약유형
