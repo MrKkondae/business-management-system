@@ -1,6 +1,6 @@
 ﻿index_name,table_name,column_names,unique_yn,index_method,where_condition,description
 UX_TB_SYS_USER_01,TB_SYS_USER,LOGIN_ID,Y,,DEL_YN = 'N',활성 사용자 로그인ID 고유성 보장
-UX_TB_SYS_USER_02,TB_SYS_USER,EMP_ID,Y,,EMP_ID IS NOT NULL AND DEL_YN = 'N',직원과 활성 사용자 계정의 선택적 1대1 관계 보장
+UX_TB_SYS_USER_02,TB_SYS_USER,EMP_ID,Y,,EMP_ID IS NOT NULL AND DEL_YN = 'N',내부 직원과 활성 사용자 계정의 선택적 1대1 관계 보장
 IX_TB_SYS_USER_01,TB_SYS_USER,ORG_ID,N,,DEL_YN = 'N',조직별 활성 사용자 조회
 UX_TB_SYS_ROLE_01,TB_SYS_ROLE,ROLE_NM,Y,,DEL_YN = 'N',활성 역할명 고유성 보장
 IX_TB_SYS_USER_ROLE_REL_01,TB_SYS_USER_ROLE_REL,ROLE_ID,N,,,역할별 사용자 역방향 조회

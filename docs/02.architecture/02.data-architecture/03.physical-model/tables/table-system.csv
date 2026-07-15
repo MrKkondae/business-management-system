@@ -1,5 +1,5 @@
 ﻿entity_name,table_name,table_type,description,note
-사용자,TB_SYS_USER,MASTER,BMS 사용자 계정 기본정보와 인증 및 계정 잠금정보,
+사용자,TB_SYS_USER,MASTER,BMS 사용자 계정 기본정보와 인증 및 계정 잠금정보,사람 계정의 EMP_ID는 내부 직원만 참조하며 외주인력 계정 생성 불가
 역할,TB_SYS_ROLE,MASTER,시스템 접근권한 부여 단위,
 사용자역할,TB_SYS_USER_ROLE_REL,RELATION,사용자와 역할의 매핑 정보,USER_ID와 ROLE_ID 복합 PK
 메뉴,TB_SYS_MENU,MASTER,시스템 메뉴 정보,
