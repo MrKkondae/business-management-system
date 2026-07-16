@@ -93,10 +93,11 @@ TB_SYS_CONFIG,10,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,공통
 TB_SYS_ACCESS_LOG,1,접속로그ID,ACCESS_LOG_ID,ID,,N,,Y,접속 로그 식별자,논리 속성
 TB_SYS_ACCESS_LOG,2,사용자ID,USER_ID,ID,,Y,,N,접속 사용자 식별자,미인증 접속을 고려해 NULL 허용
 TB_SYS_ACCESS_LOG,3,접속일시,ACCESS_DTM,TIMESTAMP,,N,CURRENT_TIMESTAMP,N,접속 발생 일시,논리 속성
-TB_SYS_ACCESS_LOG,4,접속IP주소,ACCESS_IP_ADDR,IP_ADDRESS,,Y,,N,접속 원본 IP 주소,논리 속성
-TB_SYS_ACCESS_LOG,5,성공여부,SUCC_YN,YN,,N,'N',N,접속 성공 여부,논리 속성
-TB_SYS_ACCESS_LOG,6,등록자ID,REG_ID,REG_ID,,N,'SYSTEM',N,로그 생성 주체,불변 로그 공통 컬럼
-TB_SYS_ACCESS_LOG,7,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,로그 저장 일시,불변 로그 공통 컬럼
+TB_SYS_ACCESS_LOG,4,로그아웃일시,LOGOUT_DTM,TIMESTAMP,,Y,,N,정상 로그아웃 또는 세션 종료 일시,로그인 실패 및 접속 중인 세션을 고려해 NULL 허용
+TB_SYS_ACCESS_LOG,5,접속IP주소,ACCESS_IP_ADDR,IP_ADDRESS,,Y,,N,접속 원본 IP 주소,논리 속성
+TB_SYS_ACCESS_LOG,6,성공여부,SUCC_YN,YN,,N,'N',N,접속 성공 여부,논리 속성
+TB_SYS_ACCESS_LOG,7,등록자ID,REG_ID,REG_ID,,N,'SYSTEM',N,로그 생성 주체,불변 로그 공통 컬럼
+TB_SYS_ACCESS_LOG,8,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,로그 저장 일시,불변 로그 공통 컬럼
 TB_SYS_LOG,1,로그ID,LOG_ID,ID,,N,,Y,시스템 로그 식별자,논리 속성
 TB_SYS_LOG,2,로그유형코드,LOG_TYPE_CD,CODE,,N,,N,로그 유형 코드,논리 속성
 TB_SYS_LOG,3,사용자ID,USER_ID,ID,,Y,,N,관련 사용자 식별자,시스템 처리 로그를 고려해 NULL 허용
