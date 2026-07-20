@@ -1,7 +1,7 @@
 ﻿entity_name,attribute_sequence,attribute_name,pk_yn,fk_target,required_yn,unique_yn,code_group_or_domain,derived_yn,personal_info_yn,default_value
 매출계획,1,매출계획ID,Y,,Y,Y,도메인:ID,N,N,
 매출계획,2,프로젝트ID,N,프로젝트.프로젝트ID,Y,N,도메인:ID,N,N,
-매출계획,3,기준월,N,,N,N,도메인:YEAR_MONTH,N,N,
+매출계획,3,기준연월,N,,N,N,도메인:YEARMONTH,N,N,
 매출계획,4,예정금액,N,,N,N,도메인:AMOUNT,N,N,
 매출계획,5,매출구분,N,,N,N,코드그룹:매출구분,N,N,
 매출계획,6,계획상태,N,,N,N,코드그룹:계획상태,N,N,
