@@ -75,6 +75,14 @@ for area in BUSINESS_AREAS:
         "entity_name",
         "attribute_sequence",
         "attribute_name",
+        "pk_yn",
+        "fk_target",
+        "required_yn",
+        "unique_yn",
+        "code_group_or_domain",
+        "derived_yn",
+        "personal_info_yn",
+        "default_value",
     )
     FILE_SCHEMAS[f"02.logical-model/relationships/entity-relation-{area}.csv"] = (
         "relation_expression",
@@ -88,6 +96,17 @@ FILE_SCHEMAS["02.logical-model/relationships/entity-relation-cross.csv"] = (
 
 OPTIONAL_FILE_SCHEMAS: dict[str, tuple[str, ...]] = {}
 for area in BUSINESS_AREAS:
+    OPTIONAL_FILE_SCHEMAS[
+        f"02.logical-model/attributes/interface-attribute-{area}.csv"
+    ] = (
+        "entity_name",
+        "attribute_sequence",
+        "attribute_name",
+        "source_attribute_name",
+        "standard_term_exception_yn",
+        "description",
+        "note",
+    )
     OPTIONAL_FILE_SCHEMAS[f"03.physical-model/tables/table-{area}.csv"] = (
         "entity_name",
         "table_name",
@@ -148,6 +167,12 @@ REQUIRED_FIELDS = {
     "db-type-mapping": ("dbms", "domain_name", "data_type"),
     "entities": ("entity_name", "entity_type"),
     "attributes": ("entity_name", "attribute_sequence", "attribute_name"),
+    "interface-attributes": (
+        "entity_name",
+        "attribute_sequence",
+        "attribute_name",
+        "standard_term_exception_yn",
+    ),
     "relationships": ("relation_expression",),
     "physical-tables": ("entity_name", "table_name", "table_type"),
     "physical-columns": (
@@ -235,6 +260,7 @@ class Validator:
         self._validate_files_and_structure()
         self._validate_unique_keys()
         self._validate_references()
+        self._validate_interface_attributes()
         self._validate_terms()
         return self.findings
 
@@ -288,12 +314,19 @@ class Validator:
             return None
 
         if b"\r" in raw:
-            self.add(
-                "ERROR",
-                "INVALID_LINE_ENDING",
-                "LF가 아닌 줄바꿈(CR 또는 CRLF)이 포함되어 있습니다.",
-                relative_path=relative_path,
-            )
+            normalized_raw = raw.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+            try:
+                path.write_bytes(normalized_raw)
+            except OSError as exc:
+                self.add(
+                    "ERROR",
+                    "LINE_ENDING_NORMALIZATION_FAILED",
+                    f"줄바꿈을 LF로 변경할 수 없습니다: {exc}",
+                    relative_path=relative_path,
+                )
+                return None
+            raw = normalized_raw
+            text = raw.decode("utf-8-sig")
 
         reader = csv.reader(io.StringIO(text, newline=""), strict=True)
         try:
@@ -439,6 +472,20 @@ class Validator:
                 ("entity_name", "attribute_name"),
             ),
             (
+                "외부 연계 엔터티별 속성 순서",
+                self._rows_of_kind("interface-attributes"),
+                ("entity_name", "attribute_sequence"),
+            ),
+            (
+                "외부 연계 원본 속성명",
+                (
+                    row
+                    for row in self._rows_of_kind("interface-attributes")
+                    if row.values["standard_term_exception_yn"].strip() == "Y"
+                ),
+                ("entity_name", "source_attribute_name"),
+            ),
+            (
                 "관계식",
                 self._rows_of_kind("relationships"),
                 ("relation_expression",),
@@ -509,6 +556,8 @@ class Validator:
         }
         for row in self._rows_of_kind("attributes"):
             self._require_reference(row, "entity_name", entities, "엔터티")
+        for row in self._rows_of_kind("interface-attributes"):
+            self._require_reference(row, "entity_name", entities, "엔터티")
 
         for row in self._rows_of_kind("relationships"):
             expression = row.values["relation_expression"].strip()
@@ -523,6 +572,34 @@ class Validator:
                         subject=expression,
                     )
                 continue
+
+    def _validate_interface_attributes(self) -> None:
+        for row in self._rows_of_kind("interface-attributes"):
+            exception_yn = row.values["standard_term_exception_yn"].strip()
+            source_name = row.values["source_attribute_name"].strip()
+            if exception_yn not in {"Y", "N"}:
+                self.add(
+                    "ERROR",
+                    "INVALID_STANDARD_TERM_EXCEPTION_YN",
+                    "standard_term_exception_yn은 'Y' 또는 'N'이어야 합니다.",
+                    row=row,
+                    subject=exception_yn,
+                )
+            elif exception_yn == "Y" and not source_name:
+                self.add(
+                    "ERROR",
+                    "MISSING_SOURCE_ATTRIBUTE_NAME",
+                    "표준용어 예외 속성은 source_attribute_name이 필요합니다.",
+                    row=row,
+                )
+            elif exception_yn == "N" and source_name:
+                self.add(
+                    "ERROR",
+                    "UNEXPECTED_SOURCE_ATTRIBUTE_NAME",
+                    "BMS 내부 속성은 source_attribute_name을 비워야 합니다.",
+                    row=row,
+                    subject=source_name,
+                )
 
     def _require_reference(
         self, row: CatalogRow, field: str, registered: set[str], target_label: str
@@ -579,6 +656,18 @@ class Validator:
                     row=row,
                     subject=attribute_name,
                 )
+        for row in self._rows_of_kind("interface-attributes"):
+            if row.values["standard_term_exception_yn"].strip() == "Y":
+                continue
+            attribute_name = row.values["attribute_name"].strip()
+            if attribute_name and attribute_name not in registered_terms:
+                self.add(
+                    "WARNING",
+                    "UNREGISTERED_TERM",
+                    f"속성명 {attribute_name!r}이 표준용어에 등록되어 있지 않습니다.",
+                    row=row,
+                    subject=attribute_name,
+                )
 
     def _rows_of_kind(self, kind: str) -> Iterable[CatalogRow]:
         for relative_path, rows in self.rows.items():
@@ -599,6 +688,8 @@ def file_kind(relative_path: str) -> str:
         return "entities"
     if "/attributes/entity-attribute-" in relative_path:
         return "attributes"
+    if "/attributes/interface-attribute-" in relative_path:
+        return "interface-attributes"
     if "/relationships/entity-relation-" in relative_path:
         return "relationships"
     if relative_path.startswith("03.physical-model/tables/table-"):
