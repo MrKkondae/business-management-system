@@ -1,0 +1,268 @@
+﻿table_name,column_sequence,korean_name,column_name,domain_name,data_type_override,nullable,default_value,pk_yn,description,note
+TB_SALES_ANNC,1,공고ID,ANNC_ID,ID,,N,,Y,사업공고의 공고ID,논리 속성
+TB_SALES_ANNC,2,공고명,ANNC_NM,LONG_NAME,,N,,N,사업공고의 공고명,논리 속성
+TB_SALES_ANNC,3,수요기관코드,DEMAND_INST_CD,CODE,,Y,,N,사업공고의 수요기관코드,논리 속성
+TB_SALES_ANNC,4,입찰개시일시,BID_START_DTM,TIMESTAMP,,Y,,N,사업공고의 입찰개시일시,논리 속성
+TB_SALES_ANNC,5,입찰마감일시,BID_END_DTM,TIMESTAMP,,Y,,N,사업공고의 입찰마감일시,논리 속성
+TB_SALES_ANNC,6,개찰일시,BID_OPEN_DTM,TIMESTAMP,,Y,,N,사업공고의 개찰일시,논리 속성
+TB_SALES_ANNC,7,마감일,CLOSE_DT,DATE,,Y,,N,사업공고의 마감일,논리 속성
+TB_SALES_ANNC,8,예산금액,BUDGET_AMT,AMOUNT,,Y,,N,사업공고의 예산금액,논리 속성
+TB_SALES_ANNC,9,공고상태,ANNC_STATUS_CD,CODE,,Y,,N,사업공고의 공고상태,논리 속성
+TB_SALES_ANNC,10,공고종류코드,ANNC_TYPE_CD,CODE,,Y,,N,사업공고의 공고종류코드,논리 속성
+TB_SALES_ANNC,11,입찰공고번호,BID_ANNC_NO,NUMBER,,Y,,N,사업공고의 입찰공고번호,논리 속성
+TB_SALES_ANNC,12,수요기관명,DEMAND_INST_NM,LONG_NAME,,N,,N,사업공고의 수요기관명,논리 속성
+TB_SALES_ANNC,13,입찰방식,BID_MTHD_NM,NAME,,Y,,N,사업공고의 입찰방식,논리 속성
+TB_SALES_ANNC,14,계약방법,CNTR_MTHD_NM,NAME,,Y,,N,사업공고의 계약방법,논리 속성
+TB_SALES_ANNC,15,계약구분,CNTR_SE_NM,NAME,,Y,,N,사업공고의 계약구분,논리 속성
+TB_SALES_ANNC,16,재입찰여부,REBID_YN,YN,,N,'N',N,사업공고의 재입찰여부,논리 속성
+TB_SALES_ANNC,17,긴급공고여부,EMRG_ANNC_YN,YN,,N,'N',N,사업공고의 긴급공고여부,논리 속성
+TB_SALES_ANNC,18,발주기관담당자직급,ORDER_INST_CONTACT_POSITION,NAME,,Y,,N,사업공고의 발주기관담당자직급,논리 속성
+TB_SALES_ANNC,19,발주기관담당자명,ORDER_INST_CONTACT_NM,NAME,,Y,,N,사업공고의 발주기관담당자명,논리 속성
+TB_SALES_ANNC,20,발주기관담당자연락처,ORDER_INST_CONTACT_TEL_NO,TEL_NO,,Y,,N,사업공고의 발주기관담당자연락처,논리 속성
+TB_SALES_ANNC,21,입찰공고차수,BID_ANNC_ORD,SEQ,,Y,,N,사업공고의 입찰공고차수,논리 속성
+TB_SALES_ANNC,22,공고출처구분코드,ANNC_SRC_SE_CD,CODE,,N,,N,사업공고가 유입된 출처의 구분 코드,논리 속성
+TB_SALES_ANNC,23,공고검토상태코드,ANNC_REVIEW_STATUS_CD,CODE,,N,'UNREVIEWED',N,사업공고의 공고검토상태코드,논리 속성
+TB_SALES_ANNC,24,검토담당자ID,REVIEW_CONTACT_ID,ID,,Y,,N,사업공고 검토 담당 사용자 식별자,논리 속성
+TB_SALES_ANNC,25,검토일시,REVIEW_DTM,TIMESTAMP,,Y,,N,사업공고를 검토한 일시,논리 속성
+TB_SALES_ANNC,26,담당자의견내용,CONTACT_OPINION_CONT,CONTENT,,Y,,N,사업공고 검토 담당자의 의견 내용,논리 속성
+TB_SALES_ANNC,27,사용자보완정보내용,USER_SUPPL_INFO_CONT,CONTENT,,Y,,N,사용자가 사업공고에 추가하거나 보정한 정보 내용,논리 속성
+TB_SALES_ANNC,28,등록자ID,REG_ID,REG_ID,,N,,N,사업공고의 등록자ID,공통 컬럼
+TB_SALES_ANNC,29,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,사업공고의 등록일시,공통 컬럼
+TB_SALES_ANNC,30,수정자ID,MOD_ID,MOD_ID,,Y,,N,사업공고의 수정자ID,공통 컬럼
+TB_SALES_ANNC,31,수정일시,MOD_DTM,MOD_DTM,,Y,,N,사업공고의 수정일시,공통 컬럼
+TB_SALES_ANNC,32,삭제여부,DEL_YN,DEL_YN,,N,'N',N,사업공고의 삭제여부,공통 컬럼
+TB_SALES_ANNC,33,원공고ID,ORGNL_ANNC_ID,ID,,Y,,N,재공고가 참조하는 최초 사업공고 식별자,논리 속성
+TB_SALES_ANNC,34,입찰진행상태코드,BID_PRGRS_STATUS_CD,CODE,,N,,N,공고부터 최종 결과까지의 입찰 진행단계 코드,논리 속성
+TB_SALES_ANNC,35,입찰결과코드,BID_RESULT_CD,CODE,,Y,,N,단독입찰 유찰 낙찰 등 입찰 결과 코드,논리 속성
+TB_SALES_ANNC,36,결과확인일시,RESULT_CNFM_DTM,TIMESTAMP,,Y,,N,입찰 결과를 확인한 일시,논리 속성
+TB_SALES_ANNC,37,결과확인방법코드,RESULT_CNFM_MTHD_CD,CODE,,Y,,N,API 또는 수동확인 등 결과 확인방법 코드,논리 속성
+TB_SALES_ANNC_COLLECT_COND,1,수집조건ID,COLLECT_COND_ID,ID,,N,,Y,사업공고수집조건의 수집조건ID,논리 속성
+TB_SALES_ANNC_COLLECT_COND,2,수집조건명,COLLECT_COND_NM,LONG_NAME,,N,,N,사업공고수집조건의 수집조건명,논리 속성
+TB_SALES_ANNC_COLLECT_COND,3,공고업무구분코드,ANNC_BIZ_SE_CD,CODE,,N,,N,사업공고수집조건의 공고업무구분코드,논리 속성
+TB_SALES_ANNC_COLLECT_COND,4,수집대상시작일자,COLLECT_TGT_START_DT,DATE,,Y,,N,사업공고수집조건의 수집대상시작일자,논리 속성
+TB_SALES_ANNC_COLLECT_COND,5,수집대상종료일자,COLLECT_TGT_END_DT,DATE,,Y,,N,사업공고수집조건의 수집대상종료일자,논리 속성
+TB_SALES_ANNC_COLLECT_COND,6,마지막성공수집일시,LAST_SUCC_COLLECT_DTM,TIMESTAMP,,Y,,N,사업공고수집조건의 마지막성공수집일시,논리 속성
+TB_SALES_ANNC_COLLECT_COND,8,등록자ID,REG_ID,REG_ID,,N,,N,사업공고수집조건의 등록자ID,공통 컬럼
+TB_SALES_ANNC_COLLECT_COND,9,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,사업공고수집조건의 등록일시,공통 컬럼
+TB_SALES_ANNC_COLLECT_COND,10,수정자ID,MOD_ID,MOD_ID,,Y,,N,사업공고수집조건의 수정자ID,공통 컬럼
+TB_SALES_ANNC_COLLECT_COND,11,수정일시,MOD_DTM,MOD_DTM,,Y,,N,사업공고수집조건의 수정일시,공통 컬럼
+TB_SALES_ANNC_COLLECT_COND,12,삭제여부,DEL_YN,DEL_YN,,N,'N',N,사업공고수집조건의 삭제여부,공통 컬럼
+TB_SALES_ANNC_COLLECT_TGT_INST,1,수집대상기관ID,COLLECT_TGT_INST_ID,ID,,N,,Y,사업공고수집대상기관의 수집대상기관ID,논리 속성
+TB_SALES_ANNC_COLLECT_TGT_INST,2,수집조건ID,COLLECT_COND_ID,ID,,N,,N,사업공고수집대상기관의 수집조건ID,논리 속성
+TB_SALES_ANNC_COLLECT_TGT_INST,3,발주기관코드,ORDER_INST_CD,CODE,,N,,N,사업공고수집대상기관의 발주기관코드,논리 속성
+TB_SALES_ANNC_COLLECT_TGT_INST,4,발주기관명,ORDER_INST_NM,LONG_NAME,,Y,,N,사업공고수집대상기관의 발주기관명,논리 속성
+TB_SALES_ANNC_COLLECT_TGT_INST,6,등록자ID,REG_ID,REG_ID,,N,,N,사업공고수집대상기관의 등록자ID,공통 컬럼
+TB_SALES_ANNC_COLLECT_TGT_INST,7,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,사업공고수집대상기관의 등록일시,공통 컬럼
+TB_SALES_ANNC_COLLECT_TGT_INST,8,수정자ID,MOD_ID,MOD_ID,,Y,,N,사업공고수집대상기관의 수정자ID,공통 컬럼
+TB_SALES_ANNC_COLLECT_TGT_INST,9,수정일시,MOD_DTM,MOD_DTM,,Y,,N,사업공고수집대상기관의 수정일시,공통 컬럼
+TB_SALES_ANNC_COLLECT_TGT_INST,10,삭제여부,DEL_YN,DEL_YN,,N,'N',N,사업공고수집대상기관의 삭제여부,공통 컬럼
+TB_SALES_ANNC_COLLECT_KWD,1,수집키워드ID,COLLECT_KWD_ID,ID,,N,,Y,사업공고수집키워드의 수집키워드ID,논리 속성
+TB_SALES_ANNC_COLLECT_KWD,2,수집조건ID,COLLECT_COND_ID,ID,,N,,N,사업공고수집키워드의 수집조건ID,논리 속성
+TB_SALES_ANNC_COLLECT_KWD,3,키워드구분코드,KWD_SE_CD,CODE,,N,,N,사업공고수집키워드의 키워드구분코드,논리 속성
+TB_SALES_ANNC_COLLECT_KWD,4,키워드내용,KWD_CONT,CONTENT,VARCHAR(200),N,,N,사업공고수집키워드의 키워드내용,고유 인덱스 키 길이를 고려한 물리 타입 예외
+TB_SALES_ANNC_COLLECT_KWD,6,등록자ID,REG_ID,REG_ID,,N,,N,사업공고수집키워드의 등록자ID,공통 컬럼
+TB_SALES_ANNC_COLLECT_KWD,7,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,사업공고수집키워드의 등록일시,공통 컬럼
+TB_SALES_ANNC_COLLECT_KWD,8,수정자ID,MOD_ID,MOD_ID,,Y,,N,사업공고수집키워드의 수정자ID,공통 컬럼
+TB_SALES_ANNC_COLLECT_KWD,9,수정일시,MOD_DTM,MOD_DTM,,Y,,N,사업공고수집키워드의 수정일시,공통 컬럼
+TB_SALES_ANNC_COLLECT_KWD,10,삭제여부,DEL_YN,DEL_YN,,N,'N',N,사업공고수집키워드의 삭제여부,공통 컬럼
+TB_SALES_ANNC_COLLECT_HIST,1,수집이력ID,COLLECT_HIST_ID,ID,,N,,Y,사업공고수집이력의 수집이력ID,논리 속성
+TB_SALES_ANNC_COLLECT_HIST,2,수집조건ID,COLLECT_COND_ID,ID,,N,,N,사업공고수집이력의 수집조건ID,논리 속성
+TB_SALES_ANNC_COLLECT_HIST,3,수집실행유형코드,COLLECT_EXEC_TYPE_CD,CODE,,N,,N,사업공고수집이력의 수집실행유형코드,논리 속성
+TB_SALES_ANNC_COLLECT_HIST,4,수집시작일시,COLLECT_START_DTM,TIMESTAMP,,N,,N,사업공고수집이력의 수집시작일시,논리 속성
+TB_SALES_ANNC_COLLECT_HIST,5,수집종료일시,COLLECT_END_DTM,TIMESTAMP,,Y,,N,사업공고수집이력의 수집종료일시,논리 속성
+TB_SALES_ANNC_COLLECT_HIST,6,조회시작일시,INQ_START_DTM,TIMESTAMP,,Y,,N,사업공고수집이력의 조회시작일시,논리 속성
+TB_SALES_ANNC_COLLECT_HIST,7,조회종료일시,INQ_END_DTM,TIMESTAMP,,Y,,N,사업공고수집이력의 조회종료일시,논리 속성
+TB_SALES_ANNC_COLLECT_HIST,8,응답건수,RSP_CNT,COUNT,,N,0,N,사업공고수집이력의 응답건수,논리 속성
+TB_SALES_ANNC_COLLECT_HIST,9,신규건수,NEW_CNT,COUNT,,N,0,N,사업공고수집이력의 신규건수,논리 속성
+TB_SALES_ANNC_COLLECT_HIST,10,변경건수,CHG_CNT,COUNT,,N,0,N,사업공고수집이력의 변경건수,논리 속성
+TB_SALES_ANNC_COLLECT_HIST,11,중복건수,DUP_CNT,COUNT,,N,0,N,사업공고수집이력의 중복건수,논리 속성
+TB_SALES_ANNC_COLLECT_HIST,12,오류건수,ERR_CNT,COUNT,,N,0,N,사업공고수집이력의 오류건수,논리 속성
+TB_SALES_ANNC_COLLECT_HIST,13,수집처리상태코드,COLLECT_PROC_STATUS_CD,CODE,,N,,N,사업공고수집이력의 수집처리상태코드,논리 속성
+TB_SALES_ANNC_COLLECT_HIST,14,오류내용,ERR_CONT,CONTENT,,Y,,N,사업공고수집이력의 오류내용,논리 속성
+TB_SALES_ANNC_COLLECT_HIST,15,재처리상태코드,REPROC_STATUS_CD,CODE,,Y,,N,사업공고수집이력의 재처리상태코드,논리 속성
+TB_SALES_ANNC_COLLECT_HIST,16,등록자ID,REG_ID,REG_ID,,N,,N,사업공고수집이력의 등록자ID,공통 컬럼
+TB_SALES_ANNC_COLLECT_HIST,17,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,사업공고수집이력의 등록일시,공통 컬럼
+TB_SALES_ANNC_COLLECT_ORGNL,1,수집원문ID,COLLECT_ORGNL_ID,ID,,N,,Y,사업공고수집원문의 수집원문ID,논리 속성
+TB_SALES_ANNC_COLLECT_ORGNL,2,수집이력ID,COLLECT_HIST_ID,ID,,N,,N,사업공고수집원문의 수집이력ID,논리 속성
+TB_SALES_ANNC_COLLECT_ORGNL,3,입찰공고번호,BID_ANNC_NO,NUMBER,,N,,N,사업공고수집원문의 입찰공고번호,논리 속성
+TB_SALES_ANNC_COLLECT_ORGNL,4,입찰공고차수,BID_ANNC_ORD,SEQ,,N,,N,사업공고수집원문의 입찰공고차수,논리 속성
+TB_SALES_ANNC_COLLECT_ORGNL,5,원문응답내용,ORGNL_RSP_CONT,CONTENT,,N,,N,사업공고수집원문의 원문응답내용,논리 속성
+TB_SALES_ANNC_COLLECT_ORGNL,6,원문해시값,ORGNL_HASH_VAL,HASH,,N,,N,사업공고수집원문의 원문해시값,논리 속성
+TB_SALES_ANNC_COLLECT_ORGNL,7,수집일시,COLLECT_DTM,TIMESTAMP,,N,CURRENT_TIMESTAMP,N,사업공고수집원문의 수집일시,논리 속성
+TB_SALES_ANNC_COLLECT_ORGNL,8,등록자ID,REG_ID,REG_ID,,N,,N,사업공고수집원문의 등록자ID,공통 컬럼
+TB_SALES_ANNC_COLLECT_ORGNL,9,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,사업공고수집원문의 등록일시,공통 컬럼
+TB_SALES_ANNC_OPPTY_REL,1,공고영업기회연계ID,ANNC_OPPTY_REL_ID,ID,,N,,Y,사업공고영업기회연계의 공고영업기회연계ID,논리 속성
+TB_SALES_ANNC_OPPTY_REL,2,공고ID,ANNC_ID,ID,,N,,N,사업공고영업기회연계의 공고ID,논리 속성
+TB_SALES_ANNC_OPPTY_REL,3,영업기회ID,SALES_OPPTY_ID,ID,,N,,N,사업공고영업기회연계의 영업기회ID,논리 속성
+TB_SALES_ANNC_OPPTY_REL,4,전환자ID,CONVERT_USER_ID,ID,,N,,N,사업공고영업기회연계의 전환자ID,논리 속성
+TB_SALES_ANNC_OPPTY_REL,5,전환일시,CONVERT_DTM,TIMESTAMP,,Y,CURRENT_TIMESTAMP,N,사업공고영업기회연계의 전환일시,논리 속성
+TB_SALES_ANNC_OPPTY_REL,6,등록자ID,REG_ID,REG_ID,,N,,N,사업공고영업기회연계의 등록자ID,공통 컬럼
+TB_SALES_ANNC_OPPTY_REL,7,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,사업공고영업기회연계의 등록일시,공통 컬럼
+TB_SALES_OPPTY,1,영업기회ID,SALES_OPPTY_ID,ID,,N,,Y,영업기회의 영업기회ID,논리 속성
+TB_SALES_OPPTY,2,고객ID,CUST_ID,ID,,N,,N,영업기회의 고객ID,논리 속성
+TB_SALES_OPPTY,3,기회명,OPPTY_NM,LONG_NAME,,N,,N,영업기회의 명칭,논리 속성
+TB_SALES_OPPTY,4,영업단계,SALES_STAGE_CD,CODE,,N,,N,영업기회의 현재 진행 단계 코드,논리 속성
+TB_SALES_OPPTY,5,예상금액,EST_AMT,AMOUNT,,Y,,N,영업기회의 예상 계약 금액,논리 속성
+TB_SALES_OPPTY,6,담당자ID,CONTACT_ID,ID,,N,,N,영업기회를 담당하는 사용자 식별자,논리 속성
+TB_SALES_OPPTY,7,등록자ID,REG_ID,REG_ID,,N,,N,영업기회의 등록자ID,공통 컬럼
+TB_SALES_OPPTY,8,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,영업기회의 등록일시,공통 컬럼
+TB_SALES_OPPTY,9,수정자ID,MOD_ID,MOD_ID,,Y,,N,영업기회의 수정자ID,공통 컬럼
+TB_SALES_OPPTY,10,수정일시,MOD_DTM,MOD_DTM,,Y,,N,영업기회의 수정일시,공통 컬럼
+TB_SALES_OPPTY,11,삭제여부,DEL_YN,DEL_YN,,N,'N',N,영업기회의 삭제여부,공통 컬럼
+TB_SALES_FEAS_ANALYSIS,1,분석ID,ANALYSIS_ID,ID,,N,,Y,사업성분석 식별자,논리 속성
+TB_SALES_FEAS_ANALYSIS,2,영업기회ID,SALES_OPPTY_ID,ID,,N,,N,사업성분석의 영업기회ID,논리 속성
+TB_SALES_FEAS_ANALYSIS,3,예상매출금액,EST_REV_AMT,AMOUNT,,Y,,N,사업성분석에서 추정한 매출 금액,논리 속성
+TB_SALES_FEAS_ANALYSIS,4,예상원가금액,EST_COST_AMT,AMOUNT,,Y,,N,사업성분석에서 추정한 원가 금액,논리 속성
+TB_SALES_FEAS_ANALYSIS,5,예상손익금액,EST_PROFIT_AMT,AMOUNT,,Y,,N,예상매출금액에서 예상원가금액을 차감한 예상 손익 금액,논리 속성
+TB_SALES_FEAS_ANALYSIS,6,예상투입MM,EST_ASSIGN_MM,MM,,Y,,N,사업 수행에 필요할 것으로 예상한 인력 투입량,논리 속성
+TB_SALES_FEAS_ANALYSIS,7,등록자ID,REG_ID,REG_ID,,N,,N,사업성분석의 등록자ID,공통 컬럼
+TB_SALES_FEAS_ANALYSIS,8,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,사업성분석의 등록일시,공통 컬럼
+TB_SALES_FEAS_ANALYSIS,9,수정자ID,MOD_ID,MOD_ID,,Y,,N,사업성분석의 수정자ID,공통 컬럼
+TB_SALES_FEAS_ANALYSIS,10,수정일시,MOD_DTM,MOD_DTM,,Y,,N,사업성분석의 수정일시,공통 컬럼
+TB_SALES_FEAS_ANALYSIS,11,삭제여부,DEL_YN,DEL_YN,,N,'N',N,사업성분석의 삭제여부,공통 컬럼
+TB_SALES_PRPSL,1,제안ID,PRPSL_ID,ID,,N,,Y,제안 식별자,논리 속성
+TB_SALES_PRPSL,2,공고ID,ANNC_ID,ID,,N,,N,제안의 공고ID,논리 속성
+TB_SALES_PRPSL,3,제안명,PRPSL_NM,LONG_NAME,,N,,N,제안의 명칭,논리 속성
+TB_SALES_PRPSL,4,제출일,SUBMIT_DT,DATE,,Y,,N,제안서를 제출한 날짜,논리 속성
+TB_SALES_PRPSL,5,발표일,PRSNT_DT,DATE,,Y,,N,제안 발표를 수행한 날짜,논리 속성
+TB_SALES_PRPSL,6,제안상태,PRPSL_STATUS_CD,CODE,,N,,N,제안 업무의 현재 진행 상태 코드,논리 속성
+TB_SALES_PRPSL,7,제안결과,PRPSL_RESULT_CD,CODE,,Y,,N,제안 평가 또는 심사의 결과 코드,논리 속성
+TB_SALES_PRPSL,8,등록자ID,REG_ID,REG_ID,,N,,N,제안의 등록자ID,공통 컬럼
+TB_SALES_PRPSL,9,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,제안의 등록일시,공통 컬럼
+TB_SALES_PRPSL,10,수정자ID,MOD_ID,MOD_ID,,Y,,N,제안의 수정자ID,공통 컬럼
+TB_SALES_PRPSL,11,수정일시,MOD_DTM,MOD_DTM,,Y,,N,제안의 수정일시,공통 컬럼
+TB_SALES_PRPSL,12,삭제여부,DEL_YN,DEL_YN,,N,'N',N,제안의 삭제여부,공통 컬럼
+TB_SALES_ORDER_RCV,1,수주ID,ORD_RCV_ID,ID,,N,,Y,수주의 수주ID,논리 속성
+TB_SALES_ORDER_RCV,3,제안ID,PRPSL_ID,ID,,N,,N,제안 식별자,논리 속성
+TB_SALES_ORDER_RCV,4,수주여부,ORD_RCV_YN,YN,,N,,N,제안 결과에 따라 사업을 수주했는지 여부,논리 속성
+TB_SALES_ORDER_RCV,5,수주금액,ORD_RCV_AMT,AMOUNT,,Y,,N,수주가 확정된 금액,논리 속성
+TB_SALES_ORDER_RCV,6,수주일자,ORD_RCV_DT,DATE,,Y,,N,사업 수주가 확정된 날짜,논리 속성
+TB_SALES_ORDER_RCV,7,등록자ID,REG_ID,REG_ID,,N,,N,수주의 등록자ID,공통 컬럼
+TB_SALES_ORDER_RCV,8,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,수주의 등록일시,공통 컬럼
+TB_SALES_ORDER_RCV,9,수정자ID,MOD_ID,MOD_ID,,Y,,N,수주의 수정자ID,공통 컬럼
+TB_SALES_ORDER_RCV,10,수정일시,MOD_DTM,MOD_DTM,,Y,,N,수주의 수정일시,공통 컬럼
+TB_SALES_ORDER_RCV,11,삭제여부,DEL_YN,DEL_YN,,N,'N',N,수주의 삭제여부,공통 컬럼
+TB_SALES_ANNC_REL_RCV,1,연계수신ID,REL_RCV_ID,ID,,N,,Y,연계 수신 건 식별자,BMS 내부 처리 컬럼
+TB_SALES_ANNC_REL_RCV,2,수집원문ID,COLLECT_ORGNL_ID,ID,,N,,N,수집 원문 참조 식별자,BMS 내부 처리 컬럼
+TB_SALES_ANNC_REL_RCV,3,공고ID,ANNC_ID,ID,,Y,,N,사업공고 반영 후 설정되는 참조 식별자,BMS 내부 처리 컬럼
+TB_SALES_ANNC_REL_RCV,4,연계처리구분코드,REL_PROC_SE_CD,CODE,,N,,N,신규 변경 취소 중복 처리 구분,BMS 내부 처리 컬럼
+TB_SALES_ANNC_REL_RCV,5,연계처리상태코드,REL_PROC_STATUS_CD,CODE,,N,,N,수신 검증 반영 오류 재처리 상태,BMS 내부 처리 컬럼
+TB_SALES_ANNC_REL_RCV,6,사업공고반영일시,BIZ_ANNC_REFLECT_DTM,TIMESTAMP,,Y,,N,사업공고 반영 완료 일시,BMS 내부 처리 컬럼
+TB_SALES_ANNC_REL_RCV,7,재처리횟수,REPROC_CNT,COUNT,,N,0,N,사업공고 반영 재처리 횟수,BMS 내부 처리 컬럼
+TB_SALES_ANNC_REL_RCV,8,오류내용,ERR_CONT,CONTENT,,Y,,N,검증 또는 반영 오류 내용,BMS 내부 처리 컬럼
+TB_SALES_ANNC_REL_RCV,9,등록자ID,REG_ID,REG_ID,,N,,N,등록자 식별자,BMS 내부 처리 컬럼
+TB_SALES_ANNC_REL_RCV,10,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,등록 일시,BMS 내부 처리 컬럼
+TB_SALES_ANNC_REL_RCV,11,수정자ID,MOD_ID,MOD_ID,,Y,,N,수정자 식별자,BMS 내부 처리 컬럼
+TB_SALES_ANNC_REL_RCV,12,수정일시,MOD_DTM,MOD_DTM,,Y,,N,수정 일시,BMS 내부 처리 컬럼
+TB_SALES_ANNC_REL_RCV,13,결과코드,resultCode,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,14,결과메세지,resultMsg,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,15,한 페이지 결과 수,numOfRows,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,16,페이지 번호,pageNo,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,17,전체 결과 수,totalCount,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,18,입찰공고번호,bidNtceNo,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,19,입찰공고차수,bidNtceOrd,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,20,재공고여부,reNtceYn,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,21,등록유형명,rgstTyNm,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,22,공고종류명,ntceKindNm,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,23,국제입찰여부,intrbidYn,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,24,입찰공고일시,bidNtceDt,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,25,참조번호,refNo,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,26,입찰공고명,bidNtceNm,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,27,공고기관코드,ntceInsttCd,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,28,공고기관명,ntceInsttNm,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,29,수요기관코드,dminsttCd,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,30,수요기관명,dminsttNm,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,31,입찰방식명,bidMethdNm,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,32,계약체결방법명,cntrctCnclsMthdNm,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,33,공고기관담당자명,ntceInsttOfclNm,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,34,공고기관담당자전화번호,ntceInsttOfclTelNo,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,35,공고기관담당자이메일주소,ntceInsttOfclEmailAdrs,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,36,집행관명,exctvNm,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,37,입찰참가자격등록마감일시,bidQlfctRgstDt,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,38,공동수급협정서접수방식,cmmnSpldmdAgrmntRcptdocMethd,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,39,공동수급협정마감일시,cmmnSpldmdAgrmntClseDt,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,40,공동수급업체지역제한여부,cmmnSpldmdCorpRgnLmtYn,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,41,입찰개시일시,bidBeginDt,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,42,입찰마감일시,bidClseDt,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,43,개찰일시,opengDt,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,44,공고규격서URL1,ntceSpecDocUrl1,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,45,공고규격서URL2,ntceSpecDocUrl2,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,46,공고규격서URL3,ntceSpecDocUrl3,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,47,공고규격서URL4,ntceSpecDocUrl4,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,48,공고규격서URL5,ntceSpecDocUrl5,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,49,공고규격서URL6,ntceSpecDocUrl6,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,50,공고규격서URL7,ntceSpecDocUrl7,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,51,공고규격서URL8,ntceSpecDocUrl8,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,52,공고규격서URL9,ntceSpecDocUrl9,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,53,공고규격서URL10,ntceSpecDocUrl10,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,54,공고규격파일명1,ntceSpecFileNm1,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,55,공고규격파일명2,ntceSpecFileNm2,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,56,공고규격파일명3,ntceSpecFileNm3,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,57,공고규격파일명4,ntceSpecFileNm4,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,58,공고규격파일명5,ntceSpecFileNm5,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,59,공고규격파일명6,ntceSpecFileNm6,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,60,공고규격파일명7,ntceSpecFileNm7,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,61,공고규격파일명8,ntceSpecFileNm8,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,62,공고규격파일명9,ntceSpecFileNm9,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,63,공고규격파일명10,ntceSpecFileNm10,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,64,재입찰허용여부,rbidPermsnYn,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,65,PQ신청서접수방법명,pqApplDocRcptMthdNm,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,66,PQ신청서접수일시,pqApplDocRcptDt,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,67,TP심사신청방법명,tpEvalApplMthdNm,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,68,TP심사신청마감일시,tpEvalApplClseDt,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,69,공동도급의무지역명1,jntcontrctDutyRgnNm1,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,70,공동도급의무지역명2,jntcontrctDutyRgnNm2,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,71,공동도급의무지역명3,jntcontrctDutyRgnNm3,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,72,지역의무공동도급비율,rgnDutyJntcontrctRt,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,73,내역입찰여부,dtlsBidYn,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,74,입찰참가제한여부,bidPrtcptLmtYn,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,75,예정가격결정방법명,prearngPrceDcsnMthdNm,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,76,총예가건수,totPrdprcNum,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,77,추첨예가건수,drwtPrdprcNum,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,78,배정예산금액,asignBdgtAmt,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,79,추정가격,presmptPrce,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,80,개찰장소,opengPlce,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,81,설명회실시일시,dcmtgOprtnDt,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,82,설명회실시장소,dcmtgOprtnPlce,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,83,입찰공고상세URL,bidNtceDtlUrl,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,84,입찰공고URL,bidNtceUrl,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,85,입찰참가수수료납부여부,bidPrtcptFeePaymntYn,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,86,입찰참가수수료,bidPrtcptFee,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,87,입찰보증금납부여부,bidGrntymnyPaymntYn,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,88,채권자명,crdtrNm,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,89,조달청일반용역여부,ppswGnrlSrvceYn,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,90,용역구분명,srvceDivNm,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,91,물품분류제한여부,prdctClsfcLmtYn,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,92,제조여부,mnfctYn,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,93,구매대상물품목록,purchsObjPrdctList,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,94,통합공고번호,untyNtceNo,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,95,공동수급방식코드,cmmnSpldmdMethdCd,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,96,공동수급구성방식명,cmmnSpldmdMethdNm,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,97,표준공고서URL,stdNtceDocUrl,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,98,지사투찰허용여부,brffcBidprcPermsnYn,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,99,지명경쟁여부,dsgntCmptYn,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,100,실적경쟁여부,arsltCmptYn,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,101,PQ심사여부,pqEvalYn,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,102,TP심사여부,tpEvalYn,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,103,공고설명여부,ntceDscrptYn,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,104,예비가격재작성방법명,rsrvtnPrceReMkngMthdNm,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,105,실적신청서접수방법명,arsltApplDocRcptMthdNm,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,106,실적신청서접수일시,arsltReqstdocRcptDt,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,107,발주계획통합번호,orderPlanUntyNo,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,108,낙찰하한율,sucsfbidLwltRate,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,109,공고등록일시,rgstDt,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,110,사전규격등록번호,bfSpecRgstNo,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,111,정보화사업여부,infoBizYn,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,112,낙찰방법코드,sucsfbidMthdCd,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,113,낙찰방법명,sucsfbidMthdNm,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,114,변경일시,chgDt,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,115,수요기관담당자이메일주소,dminsttOfclEmailAdrs,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,116,업종제한여부,indstrytyLmtYn,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,117,변경공고사유,chgNtceRsn,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,118,재입찰개찰일시,rbidOpengDt,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,119,부가가치세,VAT,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,120,주공종부가가치세,indutyVAT,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,121,공공조달대분류명,pubPrcrmntLrgclsfcNm,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,122,공공조달중분류명,pubPrcrmntMidclsfcNm,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,123,공공조달분류번호,pubPrcrmntClsfcNo,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
+TB_SALES_ANNC_REL_RCV,124,공공조달분류명,pubPrcrmntClsfcNm,CONTENT,,Y,,N,,외부 연계 원본 필드명 보존; PostgreSQL 인용 식별자 사용
