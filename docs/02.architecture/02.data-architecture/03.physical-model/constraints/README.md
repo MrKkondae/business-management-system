@@ -1,6 +1,9 @@
 # 물리 제약조건과 참조
 
-업무영역별 PK, UK, FK, CK와 애플리케이션 참조 메타데이터 CSV를 관리한다. 시스템관리 원본은 `constraint-system.csv`이다.
+업무영역별 PK, UK, FK, CK와 애플리케이션 참조 메타데이터 CSV를 관리한다.
+
+- 시스템관리 원본: `constraint-system.csv`
+- 공통 원본: `constraint-common.csv`
 
 DB FK를 생성하지 않는 참조도 `enforcement_type=APPLICATION`, `create_yn=N`으로 기록하여 관계와 무결성 점검 대상을 보존한다.
 

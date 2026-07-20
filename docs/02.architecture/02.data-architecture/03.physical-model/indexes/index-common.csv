@@ -1,0 +1,7 @@
+index_name,table_name,column_names,unique_yn,index_method,where_condition,description
+IX_TB_COM_NOTI_01,TB_COM_NOTI,RCVR_ID|READ_YN|OCCUR_DTM,N,,DEL_YN = 'N',수신자별 읽음 상태와 발생일시 기준 알림 조회
+IX_TB_COM_NOTI_02,TB_COM_NOTI,OCCUR_DTM,N,,,발생일시 기준 알림 보관정책 처리
+IX_TB_COM_FILE_01,TB_COM_FILE,TASK_SE_CD|TASK_ID|REG_DTM,N,,DEL_YN = 'N',업무대상별 첨부파일 등록순 조회
+UX_TB_COM_FILE_01,TB_COM_FILE,FILE_PATH|SAVE_FILE_NM,Y,,,파일 저장 위치 전체 고유성 보장
+IX_TB_COM_MEMO_01,TB_COM_MEMO,TASK_SE_CD|TASK_ID|WRT_DTM,N,,DEL_YN = 'N',업무대상별 메모 작성순 조회
+IX_TB_COM_MEMO_02,TB_COM_MEMO,WRTR_ID|WRT_DTM,N,,DEL_YN = 'N',작성자별 메모 조회 및 관리

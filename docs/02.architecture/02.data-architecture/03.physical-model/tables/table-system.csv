@@ -8,6 +8,8 @@
 코드그룹,TB_COM_CODE_GRP,MASTER,공통코드 그룹 정보,
 공통코드,TB_COM_CODE,MASTER,업무 공통코드 정보,
 시스템설정,TB_SYS_CONFIG,MASTER,시스템 운영환경 설정,
+외부시스템연계설정,TB_SYS_EXT_REL_CONFIG,MASTER,외부시스템 API 접속 및 호출정책 설정,인증정보 자체가 아닌 환경변수 또는 보안 저장소 참조명 관리
+API호출로그,TB_SYS_API_CALL_LOG,LOG,외부 API 호출 요청과 응답 및 오류 결과,인증정보와 민감값을 마스킹하여 보관하는 불변 로그
 접속로그,TB_SYS_ACCESS_LOG,LOG,로그인 및 접속 이력,로그아웃일시 기록 외 불변 이력
 시스템로그,TB_SYS_LOG,LOG,시스템 사용 및 오류 로그,불변 이력
 공지사항,TB_SYS_NOTICE,BUSINESS,시스템 공지사항,

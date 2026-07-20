@@ -1,0 +1,36 @@
+table_name,column_sequence,korean_name,column_name,domain_name,data_type_override,nullable,default_value,pk_yn,description,note
+TB_COM_NOTI,1,알림ID,NOTI_ID,ID,,N,,Y,알림 식별자,논리 속성
+TB_COM_NOTI,2,수신자ID,RCVR_ID,ID,,N,,N,알림 수신 사용자 식별자,시스템관리 사용자 참조
+TB_COM_NOTI,3,알림유형,NOTI_TYPE_CD,CODE,,N,,N,알림 유형 코드,논리 속성
+TB_COM_NOTI,4,제목,TITLE,TITLE,,N,,N,알림 제목,논리 속성
+TB_COM_NOTI,5,내용,CONT,CONTENT,,Y,,N,알림 상세 내용,논리 속성
+TB_COM_NOTI,6,읽음여부,READ_YN,YN,,N,'N',N,수신자의 알림 읽음 여부,논리 속성 및 업무 기본값
+TB_COM_NOTI,7,발생일시,OCCUR_DTM,TIMESTAMP,,N,CURRENT_TIMESTAMP,N,알림 발생 일시,논리 속성
+TB_COM_NOTI,8,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,공통 컬럼
+TB_COM_NOTI,9,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,공통 컬럼
+TB_COM_NOTI,10,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,공통 컬럼
+TB_COM_NOTI,11,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,공통 컬럼
+TB_COM_NOTI,12,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,공통 컬럼
+TB_COM_FILE,1,파일ID,FILE_ID,ID,,N,,Y,첨부파일 식별자,논리 속성
+TB_COM_FILE,2,업무구분,TASK_SE_CD,CODE,,N,,N,첨부파일이 연결되는 업무 구분 코드,다형 참조 구분자
+TB_COM_FILE,3,업무ID,TASK_ID,ID,,N,,N,첨부파일이 연결되는 업무 대상 식별자,다형 참조 식별자
+TB_COM_FILE,4,원본파일명,ORGNL_FILE_NM,LONG_NAME,,N,,N,사용자가 업로드한 원본 파일명,경로 구성에 사용 금지
+TB_COM_FILE,5,저장파일명,SAVE_FILE_NM,LONG_NAME,,N,,N,파일 저장소에서 사용하는 시스템 생성 파일명,사용자 지정 금지
+TB_COM_FILE,6,파일경로,FILE_PATH,FILE_PATH,,N,,N,파일 저장소 내 정규화된 경로 또는 객체 키,허용 저장영역 밖 경로 사용 금지
+TB_COM_FILE,7,파일크기,FILE_SIZE,FILE_SIZE,,N,,N,파일의 바이트 단위 크기,시스템 설정 최대값 이하
+TB_COM_FILE,8,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,공통 컬럼
+TB_COM_FILE,9,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,공통 컬럼
+TB_COM_FILE,10,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,공통 컬럼
+TB_COM_FILE,11,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,공통 컬럼
+TB_COM_FILE,12,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,공통 컬럼
+TB_COM_MEMO,1,메모ID,MEMO_ID,ID,,N,,Y,메모 식별자,논리 속성
+TB_COM_MEMO,2,업무구분,TASK_SE_CD,CODE,,N,,N,메모가 연결되는 업무 구분 코드,다형 참조 구분자
+TB_COM_MEMO,3,업무ID,TASK_ID,ID,,N,,N,메모가 연결되는 업무 대상 식별자,다형 참조 식별자
+TB_COM_MEMO,4,내용,CONT,CONTENT,,N,,N,메모 내용,논리 속성
+TB_COM_MEMO,5,작성자ID,WRTR_ID,ID,,N,,N,메모 작성 사용자 식별자,수정 및 삭제 권한 판정 기준
+TB_COM_MEMO,6,작성일시,WRT_DTM,TIMESTAMP,,N,CURRENT_TIMESTAMP,N,메모 작성 일시,논리 속성
+TB_COM_MEMO,7,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,공통 컬럼
+TB_COM_MEMO,8,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,공통 컬럼
+TB_COM_MEMO,9,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,공통 컬럼
+TB_COM_MEMO,10,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,공통 컬럼
+TB_COM_MEMO,11,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,공통 컬럼
