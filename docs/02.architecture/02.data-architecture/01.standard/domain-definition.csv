@@ -9,11 +9,15 @@ DOMAIN,문자형,CONTENT,,Y,,긴 내용,CONTENT
 DOMAIN,문자형,NUMBER,,Y,,"업무번호(계약번호, 프로젝트번호, 문서번호 등)",
 DOMAIN,문자형,HASH,,N,,해시값,PWD_HASH_VAL
 DOMAIN,문자형,CONFIG_KEY,,N,,시스템 설정 키,SYS_CONFIG_KEY
+DOMAIN,문자형,TRACE_ID,,N,,시스템 간 요청 추적 식별자,REQ_TRACE_ID
+DOMAIN,문자형,EVENT_CODE,,N,,시스템 업무 사건 코드,EVENT_TYPE_CD
+DOMAIN,문자형,FILE_PATH,,N,,파일 저장소 내 경로 또는 객체 키,FILE_PATH
 DOMAIN,날짜 및 시간,DATE,,N,,날짜,
 DOMAIN,날짜 및 시간,TIMESTAMP,,N,CURRENT_TIMESTAMP,일시,
 DOMAIN,날짜 및 시간,YEAR,,N,,년도,
 DOMAIN,날짜 및 시간,YEARMONTH,,N,,년월,
 DOMAIN,숫자형,COUNT,,N,0,건수,
+DOMAIN,숫자형,FILE_SIZE,,N,,바이트 단위 파일 크기,FILE_SIZE
 DOMAIN,숫자형,SEQ,,N,0,순번,
 DOMAIN,숫자형,QTY,,N,0,수량,
 DOMAIN,숫자형,RATE,,N,0,비율,
