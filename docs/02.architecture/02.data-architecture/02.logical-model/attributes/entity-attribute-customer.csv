@@ -8,7 +8,6 @@
 고객사,7,이메일주소,N,,N,N,도메인:EMAIL,N,Y,
 고객사,8,주소,N,,N,N,도메인:ADDRESS,N,Y,
 고객사,9,고객상태코드,N,,N,N,코드그룹:고객상태코드,N,N,
-고객사,10,사용여부,N,,Y,N,도메인:USE_YN,N,N,Y
 고객사,11,등록자ID,N,,Y,N,도메인:REG_ID,N,Y,
 고객사,12,등록일시,N,,Y,N,도메인:REG_DTM,N,N,CURRENT_TIMESTAMP
 고객사,13,수정자ID,N,,N,N,도메인:MOD_ID,N,Y,
@@ -22,7 +21,6 @@
 고객담당자,6,이메일주소,N,,N,N,도메인:EMAIL,N,Y,
 고객담당자,7,전화번호,N,,N,N,도메인:TEL_NO,N,Y,
 고객담당자,8,휴대전화번호,N,,N,N,도메인:MOBILE_NO,N,Y,
-고객담당자,9,사용여부,N,,Y,N,도메인:USE_YN,N,N,Y
 고객담당자,10,등록자ID,N,,Y,N,도메인:REG_ID,N,Y,
 고객담당자,11,등록일시,N,,Y,N,도메인:REG_DTM,N,N,CURRENT_TIMESTAMP
 고객담당자,12,수정자ID,N,,N,N,도메인:MOD_ID,N,Y,

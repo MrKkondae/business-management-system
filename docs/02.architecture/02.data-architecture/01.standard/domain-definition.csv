@@ -1,5 +1,5 @@
 record_type,category,domain_name,allowed_value,nullable,default_value,description,example_column
-DOMAIN,문자형,ID,,N,,식별자,PRJ_ID
+DOMAIN,문자형,ID,,N,,내부 엔터티는 26자리 ULID를 사용하는 식별자,PRJ_ID
 DOMAIN,문자형,CODE,,N,,공통코드,STATUS_CD
 DOMAIN,문자형,NAME,,N,,"일반 명칭(직원명, 대표자명, 코드명)",EMP_NM
 DOMAIN,문자형,LONG_NAME,,N,,"일반 명칭(프로젝트명, 계약명, 고객사명)",PRJ_NM
@@ -13,7 +13,7 @@ DOMAIN,문자형,TRACE_ID,,N,,시스템 간 요청 추적 식별자,REQ_TRACE_ID
 DOMAIN,문자형,EVENT_CODE,,N,,시스템 업무 사건 코드,EVENT_TYPE_CD
 DOMAIN,문자형,FILE_PATH,,N,,파일 저장소 내 경로 또는 객체 키,FILE_PATH
 DOMAIN,날짜 및 시간,DATE,,N,,날짜,
-DOMAIN,날짜 및 시간,TIMESTAMP,,N,CURRENT_TIMESTAMP,일시,
+DOMAIN,날짜 및 시간,TIMESTAMP,,N,CURRENT_TIMESTAMP,UTC 기준 저장 일시,
 DOMAIN,날짜 및 시간,YEAR,,N,,년도,
 DOMAIN,날짜 및 시간,YEARMONTH,,N,,년월,
 DOMAIN,숫자형,COUNT,,N,0,건수,
@@ -36,9 +36,9 @@ DOMAIN,연락처,IP_ADDRESS,,Y,,IPv4/IPv6 주소,ACCESS_IP_ADDR
 DOMAIN,문자형,ADDRESS,,Y,,주소,CUST_ADDR
 DOMAIN,사업자 정보,BIZ_REG_NO,,Y,,사업자등록번호,
 DOMAIN,사업자 정보,CORP_REG_NO,,Y,,법인등록번호,
-DOMAIN,공통,REG_ID,,N,,등록자,REG_ID
+DOMAIN,공통,REG_ID,,N,,등록 사용자 ULID 또는 예약 처리주체,REG_ID
 DOMAIN,공통,REG_DTM,,N,CURRENT_TIMESTAMP,등록일시,REG_DTM
-DOMAIN,공통,MOD_ID,,Y,,수정자,MOD_ID
+DOMAIN,공통,MOD_ID,,Y,,수정 사용자 ULID 또는 예약 처리주체,MOD_ID
 DOMAIN,공통,MOD_DTM,,Y,CURRENT_TIMESTAMP,수정일시,MOD_DTM
 DOMAIN,공통,DEL_YN,,N,'N',삭제여부,DEL_YN
 DOMAIN,공통,USE_YN,,N,'Y',사용여부,USE_YN

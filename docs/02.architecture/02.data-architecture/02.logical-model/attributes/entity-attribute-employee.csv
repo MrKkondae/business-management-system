@@ -6,7 +6,6 @@
 인력,5,생년월일,N,,N,N,도메인:DATE,N,Y,
 인력,6,휴대전화번호,N,,N,N,도메인:MOBILE_NO,N,Y,
 인력,7,이메일주소,N,,N,N,도메인:EMAIL,N,Y,
-인력,8,사용여부,N,,Y,N,도메인:USE_YN,N,N,Y
 인력,10,등록자ID,N,,Y,N,도메인:REG_ID,N,Y,
 인력,11,등록일시,N,,Y,N,도메인:REG_DTM,N,N,CURRENT_TIMESTAMP
 인력,12,수정자ID,N,,N,N,도메인:MOD_ID,N,Y,
@@ -25,7 +24,6 @@
 직원,11,삭제여부,N,,Y,N,도메인:DEL_YN,N,N,N
 외주인력,1,인력ID,Y,인력.인력ID,Y,Y,도메인:ID,N,Y,
 외주인력,2,협력업체ID,N,협력업체.협력업체ID,Y,N,도메인:ID,N,N,
-외주인력,3,사용여부,N,,Y,N,도메인:USE_YN,N,N,Y
 외주인력,4,등록자ID,N,,Y,N,도메인:REG_ID,N,Y,
 외주인력,5,등록일시,N,,Y,N,도메인:REG_DTM,N,N,CURRENT_TIMESTAMP
 외주인력,6,수정자ID,N,,N,N,도메인:MOD_ID,N,Y,

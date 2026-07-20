@@ -1,12 +1,12 @@
 ﻿index_name,table_name,column_names,unique_yn,index_method,where_condition,description
-UX_TB_SYS_USER_01,TB_SYS_USER,LOGIN_ID,Y,,DEL_YN = 'N',활성 사용자 로그인ID 고유성 보장
+UX_TB_SYS_USER_01,TB_SYS_USER,LOGIN_ID,Y,,,삭제 여부와 관계없는 로그인ID 전체 고유성 보장
 UX_TB_SYS_USER_02,TB_SYS_USER,EMP_ID,Y,,EMP_ID IS NOT NULL AND DEL_YN = 'N',내부 직원과 활성 사용자 계정의 선택적 1대1 관계 보장
 UX_TB_SYS_ROLE_01,TB_SYS_ROLE,ROLE_NM,Y,,DEL_YN = 'N',활성 역할명 고유성 보장
 IX_TB_SYS_USER_ROLE_REL_01,TB_SYS_USER_ROLE_REL,ROLE_ID,N,,,역할별 사용자 역방향 조회
 IX_TB_SYS_MENU_01,TB_SYS_MENU,UP_MENU_ID|SORT_SEQ,N,,DEL_YN = 'N',상위메뉴별 하위메뉴 정렬 조회
 IX_TB_SYS_ROLE_MENU_PERM_REL_1,TB_SYS_ROLE_MENU_PERM_REL,MENU_ID,N,,,메뉴별 역할권한 역방향 조회
 IX_TB_SYS_ORG_01,TB_SYS_ORG,UP_ORG_ID,N,,DEL_YN = 'N',상위조직별 하위조직 조회
-IX_TB_COM_CODE_01,TB_COM_CODE,CD_GRP_ID|SORT_SEQ,N,,DEL_YN = 'N' AND USE_YN = 'Y',코드그룹별 사용 코드 정렬 조회
+IX_TB_COM_CODE_01,TB_COM_CODE,CD_GRP_ID|SORT_SEQ,N,,DEL_YN = 'N',코드그룹별 삭제되지 않은 코드 정렬 조회
 UX_TB_SYS_CONFIG_01,TB_SYS_CONFIG,SYS_CONFIG_KEY,Y,,DEL_YN = 'N',활성 시스템설정키 고유성 보장
 IX_TB_SYS_ACCESS_LOG_01,TB_SYS_ACCESS_LOG,USER_ID|ACCESS_DTM,N,,,사용자별 접속이력 조회
 IX_TB_SYS_ACCESS_LOG_02,TB_SYS_ACCESS_LOG,ACCESS_DTM,N,,,접속일시 기준 기간 조회 및 보관정책 처리
