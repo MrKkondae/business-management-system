@@ -1,0 +1,4 @@
+entity_name,table_name,table_type,description,note
+고객사,TB_CUST_MST,MASTER,고객사 기본정보 및 업무 상태,사업자등록번호는 삭제 여부와 관계없이 재사용 금지
+고객담당자,TB_CUST_CONTACT,MASTER,고객사 소속 담당자 기본정보 및 상태,
+영업활동,TB_CUST_ACTIVITY,BUSINESS,고객 대상 방문 전화 메일 미팅 등 영업활동 이력,

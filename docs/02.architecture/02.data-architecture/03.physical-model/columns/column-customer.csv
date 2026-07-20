@@ -1,0 +1,41 @@
+table_name,column_sequence,korean_name,column_name,domain_name,data_type_override,nullable,default_value,pk_yn,description,note
+TB_CUST_MST,1,고객ID,CUST_ID,ID,,N,,Y,고객사 식별자,논리 속성
+TB_CUST_MST,2,고객명,CUST_NM,LONG_NAME,,N,,N,고객사 명칭,논리 속성
+TB_CUST_MST,3,고객유형코드,CUST_TYPE_CD,CODE,,N,,N,고객 유형 코드,논리 속성
+TB_CUST_MST,4,사업자등록번호,BIZ_REG_NO,BIZ_REG_NO,,Y,,N,고객사의 사업자등록번호,삭제 여부와 관계없는 고유 업무 식별자
+TB_CUST_MST,5,대표자명,CEO_NM,NAME,,Y,,N,고객사 대표자 명칭,개인정보
+TB_CUST_MST,6,전화번호,TEL_NO,TEL_NO,,Y,,N,고객사 대표 전화번호,개인정보
+TB_CUST_MST,7,이메일주소,EMAIL_ADDR,EMAIL,,Y,,N,고객사 대표 이메일 주소,개인정보
+TB_CUST_MST,8,주소,ADDR,ADDRESS,,Y,,N,고객사 주소,개인정보
+TB_CUST_MST,9,고객상태코드,CUST_STATUS_CD,CODE,,N,'ACTIVE',N,고객사의 업무 상태 코드,활성 및 비활성 상태 관리
+TB_CUST_MST,11,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,공통 컬럼
+TB_CUST_MST,12,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,공통 컬럼
+TB_CUST_MST,13,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,공통 컬럼
+TB_CUST_MST,14,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,공통 컬럼
+TB_CUST_MST,15,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,공통 컬럼
+TB_CUST_CONTACT,1,고객담당자ID,CUST_CONTACT_ID,ID,,N,,Y,고객담당자 식별자,논리 속성
+TB_CUST_CONTACT,2,고객ID,CUST_ID,ID,,N,,N,소속 고객사 식별자,고객사 참조
+TB_CUST_CONTACT,3,고객담당자명,CUST_CONTACT_NM,NAME,,N,,N,고객담당자 명칭,논리 속성
+TB_CUST_CONTACT,4,부서명,DEPT_NM,NAME,,Y,,N,고객담당자 소속 부서 명칭,논리 속성
+TB_CUST_CONTACT,5,직위명,JOB_POS_NM,NAME,,Y,,N,고객담당자 직위 명칭,논리 속성
+TB_CUST_CONTACT,6,이메일주소,EMAIL_ADDR,EMAIL,,Y,,N,고객담당자 이메일 주소,개인정보
+TB_CUST_CONTACT,7,전화번호,TEL_NO,TEL_NO,,Y,,N,고객담당자 유선 전화번호,개인정보
+TB_CUST_CONTACT,8,휴대전화번호,MOBILE_NO,MOBILE_NO,,Y,,N,고객담당자 휴대전화 번호,개인정보
+TB_CUST_CONTACT,9,고객담당자상태코드,CUST_CONTACT_STATUS_CD,CODE,,N,'ACTIVE',N,고객담당자의 활성 또는 비활성 상태 코드,업무기능 보완 속성
+TB_CUST_CONTACT,10,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,공통 컬럼
+TB_CUST_CONTACT,11,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,공통 컬럼
+TB_CUST_CONTACT,12,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,공통 컬럼
+TB_CUST_CONTACT,13,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,공통 컬럼
+TB_CUST_CONTACT,14,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,공통 컬럼
+TB_CUST_ACTIVITY,1,활동ID,ACT_ID,ID,,N,,Y,영업활동 식별자,논리 속성
+TB_CUST_ACTIVITY,2,고객ID,CUST_ID,ID,,N,,N,영업활동 대상 고객사 식별자,고객사 참조
+TB_CUST_ACTIVITY,3,고객담당자ID,CUST_CONTACT_ID,ID,,Y,,N,영업활동 대상 고객담당자 식별자,고객담당자 참조
+TB_CUST_ACTIVITY,4,활동유형코드,ACT_TYPE_CD,CODE,,N,,N,방문 전화 메일 미팅 등 활동 유형 코드,논리 속성
+TB_CUST_ACTIVITY,5,활동일시,ACT_DTM,TIMESTAMP,,N,,N,영업활동 수행 일시,UTC 기준 저장
+TB_CUST_ACTIVITY,6,활동내용,ACT_CONT,CONTENT,,Y,,N,영업활동 상세 내용,논리 속성
+TB_CUST_ACTIVITY,7,활동담당사용자ID,ACT_CHRG_USER_ID,ID,,N,,N,영업활동 담당 BMS 사용자 식별자,시스템관리 사용자 참조
+TB_CUST_ACTIVITY,8,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,공통 컬럼
+TB_CUST_ACTIVITY,9,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,공통 컬럼
+TB_CUST_ACTIVITY,10,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,공통 컬럼
+TB_CUST_ACTIVITY,11,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,공통 컬럼
+TB_CUST_ACTIVITY,12,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,공통 컬럼

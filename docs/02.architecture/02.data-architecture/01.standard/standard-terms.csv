@@ -397,3 +397,4 @@
 9195,revenue,공급가액,SUPPLY AMOUNT,SUPPLY_AMT,AMOUNT,부가세를 제외한 재화 또는 용역의 공급 금액,
 9196,revenue,부가세,VALUE ADDED TAX,VAT_AMT,AMOUNT,공급가액에 부과된 부가가치세 금액,
 9197,revenue,발행상태,ISSUE STATUS,ISSUE_STATUS_CD,CODE,세금계산서의 발행 상태 코드,
+9198,customer,고객담당자상태코드,CUSTOMER CONTACT STATUS CODE,CUST_CONTACT_STATUS_CD,CODE,고객담당자의 활성 또는 비활성 상태 코드,
