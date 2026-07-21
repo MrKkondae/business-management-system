@@ -1,0 +1,9 @@
+constraint_name,constraint_type,table_name,column_names,reference_table,reference_columns,check_expression,on_delete,on_update,enforcement_type,create_yn,description
+PK_TB_PRJ_MST,PK,TB_PRJ_MST,PRJ_ID,,,,,,DATABASE,Y,프로젝트 기본키
+FK_TB_PRJ_MST_01,FK,TB_PRJ_MST,CNTR_ID,계약(논리),계약ID,,RESTRICT,RESTRICT,APPLICATION,N,v1.1 계약 물리 모델 확정 전 선택 계약 참조
+FK_TB_PRJ_MST_02,FK,TB_PRJ_MST,CUST_ID,TB_CUST_MST,CUST_ID,,RESTRICT,RESTRICT,APPLICATION,N,프로젝트 고객사의 애플리케이션 참조
+FK_TB_PRJ_MST_03,FK,TB_PRJ_MST,PM_USER_ID,TB_SYS_USER,USER_ID,,RESTRICT,RESTRICT,APPLICATION,N,프로젝트 PM 사용자의 애플리케이션 참조
+FK_TB_PRJ_MST_04,FK,TB_PRJ_MST,TASK_TGT_ID,TB_COM_TASK_TGT,TASK_TGT_ID,,RESTRICT,RESTRICT,DATABASE,Y,프로젝트 업무대상 참조 무결성
+CK_TB_PRJ_MST_01,CK,TB_PRJ_MST,START_DT|ORGNL_END_DT|END_DT,,,START_DT <= ORGNL_END_DT AND ORGNL_END_DT <= END_DT,,,DATABASE,Y,시작일 최초종료일 현재종료일 순서 검사
+CK_TB_PRJ_MST_02,CK,TB_PRJ_MST,DEL_YN,,,"DEL_YN IN ('Y','N')",,,DATABASE,Y,삭제여부 허용값 검사
+CK_TB_PRJ_MST_03,CK,TB_PRJ_MST,PRJ_STATUS_CD|ORGNL_END_DT|END_DT,,,"PRJ_STATUS_CD <> 'EXTENDED' OR END_DT > ORGNL_END_DT",,,DATABASE,Y,연장 상태이면 현재 종료일이 최초 종료일보다 이후인지 검사

@@ -1,0 +1,6 @@
+index_name,table_name,column_names,unique_yn,index_method,where_condition,description
+UX_TB_PRJ_MST_01,TB_PRJ_MST,PRJ_NO,Y,,,삭제 여부와 관계없는 프로젝트번호 고유성 및 재사용 금지
+UX_TB_PRJ_MST_02,TB_PRJ_MST,TASK_TGT_ID,Y,,,하나의 업무대상에 프로젝트 한 건만 연결
+IX_TB_PRJ_MST_01,TB_PRJ_MST,CUST_ID|PRJ_STATUS_CD|PRJ_NM,N,,DEL_YN = 'N',고객사와 상태별 프로젝트 조회
+IX_TB_PRJ_MST_02,TB_PRJ_MST,PRJ_STATUS_CD|END_DT,N,,DEL_YN = 'N',상태별 종료예정 프로젝트 조회
+IX_TB_PRJ_MST_03,TB_PRJ_MST,PM_USER_ID|PRJ_STATUS_CD,N,,DEL_YN = 'N' AND PM_USER_ID IS NOT NULL,PM별 프로젝트 조회

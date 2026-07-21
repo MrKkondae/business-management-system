@@ -14,12 +14,12 @@ TYPE_FILE = DATA_ROOT / "01.standard/db-type-mapping.csv"
 
 LOGICAL_TABLE_ALIASES = {
     "감사대상(논리)": "AUDIT_TARGET_LOGICAL",
-    "프로젝트(논리)": "PROJECT_LOGICAL",
+    "계약(논리)": "CONTRACT_LOGICAL",
 }
 
 LOGICAL_COLUMN_ALIASES = {
     "대상ID": "TARGET_ID",
-    "프로젝트ID": "PROJECT_ID",
+    "계약ID": "CONTRACT_ID",
 }
 
 AREA_CONFIGS = {
@@ -89,7 +89,7 @@ AREA_CONFIGS = {
             '    TB_COM_TASK_TGT ||--o{ TB_COM_MEMO : "DB FK: TASK_TGT_ID"',
             '    TB_SYS_USER ||--o{ TB_COM_MEMO : "APP REF: WRTR_ID"',
             '    TB_COM_TASK_TGT ||--o| CONTRACT_LOGICAL : "LOGICAL REF: TASK_TGT_ID"',
-            '    TB_COM_TASK_TGT ||--o| PROJECT_LOGICAL : "LOGICAL REF: TASK_TGT_ID"',
+            '    TB_COM_TASK_TGT ||--o| TB_PRJ_MST : "DB FK: TASK_TGT_ID"',
             '    TB_COM_TASK_TGT ||--o| TB_SALES_OPPTY : "DB FK: TASK_TGT_ID"',
             '    TB_COM_TASK_TGT ||--o| CONTRACT_DOCUMENT_LOGICAL : "LOGICAL REF: TASK_TGT_ID"',
             '    TB_COM_TASK_TGT ||--o| TB_SALES_ANNC : "DB FK: TASK_TGT_ID"',
@@ -97,7 +97,7 @@ AREA_CONFIGS = {
             '    TB_COM_TASK_TGT ||--o| TB_RES_MST : "DB FK: TASK_TGT_ID"',
             '    TB_COM_FILE ||--o| CONTRACT_DOCUMENT_LOGICAL : "LOGICAL REF: PDF_FILE_ID"',
         ),
-        "overview_note": "계약·프로젝트·계약문서는 아직 물리 모델이 확정되지 않아 `*_LOGICAL`로 표시했다. 영업기회·사업공고·제안·인력의 물리 테이블은 `TASK_TGT_ID`를 필수·고유 참조한다. 업무대상 유형과 실제 연결 엔터티의 일치는 애플리케이션 트랜잭션에서 검증한다.",
+        "overview_note": "계약·계약문서는 아직 물리 모델이 확정되지 않아 `*_LOGICAL`로 표시했다. 프로젝트·영업기회·사업공고·제안·인력의 물리 테이블은 `TASK_TGT_ID`를 필수·고유 참조한다. 업무대상 유형과 실제 연결 엔터티의 일치는 애플리케이션 트랜잭션에서 검증한다.",
         "notes": (
             "업무대상은 허용된 구체 엔터티 하나와만 연결하고 유형코드와 실제 엔터티의 일치를 애플리케이션에서 검증한다.",
             "논리삭제된 업무대상에는 새 첨부파일과 메모를 등록하지 않으며 기존 데이터는 보존 정책에 따라 조회한다.",
@@ -127,8 +127,9 @@ AREA_CONFIGS = {
             '    TB_SYS_USER ||--o{ TB_CUST_ACTIVITY : "APP REF: ACT_CHRG_USER_ID"',
             '    TB_CUST_MST ||--o{ TB_SALES_OPPTY : "APP REF: CUST_ID"',
             '    TB_CUST_MST ||--o{ CONTRACT_LOGICAL : "LOGICAL REF: CUST_ID"',
+            '    TB_CUST_MST ||--o{ TB_PRJ_MST : "APP REF: CUST_ID"',
         ),
-        "overview_note": "`TB_SYS_USER`는 시스템관리, `TB_SALES_OPPTY`는 영업관리 영역의 물리 테이블이다. 계약은 아직 물리 모델이 확정되지 않아 `CONTRACT_LOGICAL`로 표시했다.",
+        "overview_note": "`TB_SYS_USER`는 시스템관리, `TB_SALES_OPPTY`는 영업관리, `TB_PRJ_MST`는 프로젝트관리 영역의 물리 테이블이다. 계약은 아직 물리 모델이 확정되지 않아 `CONTRACT_LOGICAL`로 표시했다.",
         "notes": (
             "고객사와 고객담당자는 `ACTIVE`를 기본 상태로 등록하며 비활성 상태와 논리삭제를 구분한다.",
             "사업자등록번호는 값이 있을 때 삭제 여부와 관계없이 재사용할 수 없다.",
@@ -189,6 +190,33 @@ AREA_CONFIGS = {
             "서비스키·인증 헤더·민감한 쿼리 값은 원문과 로그에 저장하기 전에 제거하거나 마스킹한다.",
         ),
     },
+    "project": {
+        "title": "프로젝트관리",
+        "output": "06.project-management-erd.md",
+        "intro": "인력투입에서 참조하는 v1.0 최소 프로젝트 기준정보의 PostgreSQL 물리 모델을 표현한다.",
+        "sections": (
+            ("프로젝트 기준정보", "수동 등록 프로젝트의 업무번호, 고객사, 기본정보, 최초·현재 종료일과 상태를 관리하는 구조이다.", ("TB_PRJ_MST",)),
+        ),
+        "traceability": (
+            ("PB-005", "인력투입용 최소 프로젝트 기준정보", "TB_PRJ_MST"),
+        ),
+        "overview": (
+            '    TB_COM_TASK_TGT ||--o| TB_PRJ_MST : "DB FK: TASK_TGT_ID"',
+            '    TB_CUST_MST ||--o{ TB_PRJ_MST : "APP REF: CUST_ID"',
+            '    TB_SYS_USER o|--o{ TB_PRJ_MST : "APP REF: PM_USER_ID"',
+            '    CONTRACT_LOGICAL o|--o{ TB_PRJ_MST : "APP REF: CNTR_ID"',
+            '    TB_PRJ_MST ||--o{ TB_RES_ASSIGN : "DB FK: PRJ_ID"',
+        ),
+        "overview_note": "`TB_COM_TASK_TGT`는 공통, `TB_CUST_MST`는 고객관리, `TB_SYS_USER`는 시스템관리, `TB_RES_ASSIGN`은 인력관리 영역의 물리 테이블이다. 계약은 v1.1 대상이므로 `CONTRACT_LOGICAL`로 표시했다.",
+        "notes": (
+            "프로젝트 등록 시 업무대상과 프로젝트를 같은 트랜잭션에서 생성하고 `TASK_TGT_ID`를 필수·고유 참조한다.",
+            "프로젝트번호는 논리삭제 후에도 재사용하지 않으며 프로젝트명 중복은 허용한다.",
+            "등록 시 `ORGNL_END_DT`와 `END_DT`를 같게 저장하고 연장 시 최초종료일자는 유지한 채 현재 종료일자만 증가시킨다.",
+            "상태는 `PLANNED`, `IN_PROGRESS`, `EXTENDED`, `COMPLETED`, `CANCELED`를 사용한다.",
+            "완료·취소 프로젝트는 신규 인력투입에서 선택할 수 없고 인력투입이 참조 중인 프로젝트는 물리삭제하지 않는다.",
+            "다회 연장 이력은 v1.0에서 저장하지 않으며 필요 시 프로젝트 연장이력 하위 테이블을 추가한다.",
+        ),
+    },
     "employee": {
         "title": "인력관리",
         "output": "07.resource-management-erd.md",
@@ -221,12 +249,12 @@ AREA_CONFIGS = {
             '    TB_RES_MST ||--o{ TB_RES_SKILL_QUAL : "DB FK: RES_ID"',
             '    TB_RES_MST ||--o{ TB_RES_SKILL_CAREER : "DB FK: RES_ID"',
             '    TB_RES_MST ||--o{ TB_RES_UNIT_AMT : "DB FK: RES_ID"',
-            '    PROJECT_LOGICAL ||--o{ TB_RES_ASSIGN : "LOGICAL REF: PRJ_ID"',
+            '    TB_PRJ_MST ||--o{ TB_RES_ASSIGN : "DB FK: PRJ_ID"',
             '    TB_RES_MST ||--o{ TB_RES_ASSIGN : "DB FK: RES_ID"',
             '    TB_RES_ASSIGN ||--o{ TB_RES_MTHLY_ASSIGN_ACTL : "DB FK: RES_ASSIGN_ID"',
             '    TB_SYS_USER o|--o{ TB_RES_MTHLY_ASSIGN_ACTL : "APP REF: ACTL_CNFM_ID"',
         ),
-        "overview_note": "`TB_COM_TASK_TGT`는 공통, `TB_SYS_ORG`와 `TB_SYS_USER`는 시스템관리 영역의 물리 테이블이다. 프로젝트는 아직 물리 모델이 확정되지 않아 `PROJECT_LOGICAL`로 표시했다.",
+        "overview_note": "`TB_COM_TASK_TGT`는 공통, `TB_SYS_ORG`와 `TB_SYS_USER`는 시스템관리, `TB_PRJ_MST`는 프로젝트관리 영역의 물리 테이블이다.",
         "notes": (
             "인력 등록 시 인력 업무대상과 인력 마스터를 동일 트랜잭션에서 생성하고 `TASK_TGT_ID`를 필수·고유 참조한다.",
             "인력구분에 맞는 직원 또는 외주인력 상세 중 하나만 공유 PK로 생성하며 두 하위유형의 동시 존재를 차단한다.",
@@ -700,22 +728,21 @@ def generate_overall_erd() -> Path:
             "",
             "## 5. 미물리화 업무영역의 논리 확장 경계",
             "",
-            "계약·프로젝트·예산원가·매출수금 영역은 논리 엔터티가 정의되어 있으나 물리 테이블·컬럼·제약조건은 아직 확정되지 않았다. 다음 관계는 현재 논리 모델의 연결 방향이며 물리화 시 실제 테이블명과 FK 집행 방식을 확정한다.",
+            "계약·예산원가·매출수금 영역은 논리 엔터티가 정의되어 있으나 물리 테이블·컬럼·제약조건은 아직 확정되지 않았다. 다음 관계는 현재 논리 모델의 연결 방향이며 물리화 시 실제 테이블명과 FK 집행 방식을 확정한다.",
             "",
             "```mermaid",
             "erDiagram",
             '    TB_CUST_MST ||--o{ CONTRACT_LOGICAL : "LOGICAL REF: CUST_ID"',
             '    TB_SALES_ORDER_RCV ||--o| CONTRACT_LOGICAL : "LOGICAL REF: ORD_RCV_ID"',
-            '    CONTRACT_LOGICAL ||--o{ PROJECT_LOGICAL : "LOGICAL REF"',
+            '    CONTRACT_LOGICAL o|--o{ TB_PRJ_MST : "APP REF: CNTR_ID"',
             '    TB_COM_TASK_TGT ||--o| CONTRACT_LOGICAL : "LOGICAL REF: TASK_TGT_ID"',
-            '    TB_COM_TASK_TGT ||--o| PROJECT_LOGICAL : "LOGICAL REF: TASK_TGT_ID"',
             '    TB_COM_TASK_TGT ||--o| CONTRACT_DOCUMENT_LOGICAL : "LOGICAL REF: TASK_TGT_ID"',
             '    TB_COM_FILE ||--o| CONTRACT_DOCUMENT_LOGICAL : "LOGICAL REF: PDF_FILE_ID"',
-            '    PROJECT_LOGICAL ||--o{ BUDGET_LOGICAL : "LOGICAL REF"',
-            '    PROJECT_LOGICAL ||--o{ COST_LOGICAL : "LOGICAL REF"',
-            '    PROJECT_LOGICAL ||--o{ PROFIT_LOSS_LOGICAL : "LOGICAL REF"',
-            '    PROJECT_LOGICAL ||--o{ SALES_PLAN_LOGICAL : "LOGICAL REF"',
-            '    PROJECT_LOGICAL ||--o{ BILLING_LOGICAL : "LOGICAL REF"',
+            '    TB_PRJ_MST ||--o{ BUDGET_LOGICAL : "LOGICAL REF"',
+            '    TB_PRJ_MST ||--o{ COST_LOGICAL : "LOGICAL REF"',
+            '    TB_PRJ_MST ||--o{ PROFIT_LOSS_LOGICAL : "LOGICAL REF"',
+            '    TB_PRJ_MST ||--o{ SALES_PLAN_LOGICAL : "LOGICAL REF"',
+            '    TB_PRJ_MST ||--o{ BILLING_LOGICAL : "LOGICAL REF"',
             "```",
             "",
             "### 5.1 논리 엔터티 목록",

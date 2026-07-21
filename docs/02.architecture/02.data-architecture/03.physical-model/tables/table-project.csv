@@ -1,0 +1,2 @@
+entity_name,table_name,table_type,description,note
+프로젝트,TB_PRJ_MST,MASTER,인력투입에서 참조하는 최소 프로젝트 기준정보,v1.0 수동 등록; 계약 연결은 선택이며 v1.1에서 확장

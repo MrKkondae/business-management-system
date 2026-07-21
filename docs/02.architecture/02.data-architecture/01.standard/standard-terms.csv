@@ -400,3 +400,5 @@
 9198,customer,고객담당자상태코드,CUSTOMER CONTACT STATUS CODE,CUST_CONTACT_STATUS_CD,CODE,고객담당자의 활성 또는 비활성 상태 코드,
 9199,common,업무대상ID,TASK TARGET IDENTIFIER,TASK_TGT_ID,ID,첨부파일과 메모 등 공통 기능이 연결되는 업무대상 식별자,
 9200,common,업무대상유형코드,TASK TARGET TYPE CODE,TASK_TGT_TYPE_CD,CODE,업무대상이 나타내는 구체적인 업무 엔터티 유형 코드,
+9201,project,프로젝트번호,PROJECT NUMBER,PRJ_NO,NUMBER,사용자가 식별하는 프로젝트 업무번호,
+9202,project,최초종료일자,ORIGINAL END DATE,ORGNL_END_DT,DATE,프로젝트 등록 시 확정한 최초 종료일자,

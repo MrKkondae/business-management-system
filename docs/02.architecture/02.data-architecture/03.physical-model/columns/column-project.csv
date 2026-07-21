@@ -1,0 +1,18 @@
+table_name,column_sequence,korean_name,column_name,domain_name,data_type_override,nullable,default_value,pk_yn,description,note
+TB_PRJ_MST,1,프로젝트ID,PRJ_ID,ID,,N,,Y,프로젝트 식별자,논리 속성; 기본키
+TB_PRJ_MST,2,프로젝트번호,PRJ_NO,NUMBER,,N,,N,사용자가 식별하는 프로젝트 업무번호,논리 속성; 전체 이력에서 재사용 금지
+TB_PRJ_MST,3,계약ID,CNTR_ID,ID,,Y,,N,향후 연결되는 계약 식별자,v1.0 선택 속성; 계약 물리 모델 확정 전 애플리케이션 참조
+TB_PRJ_MST,4,고객ID,CUST_ID,ID,,N,,N,프로젝트 고객사 식별자,고객사 애플리케이션 참조
+TB_PRJ_MST,5,프로젝트명,PRJ_NM,LONG_NAME,,N,,N,프로젝트 명칭,논리 속성
+TB_PRJ_MST,6,프로젝트유형코드,PRJ_TYPE_CD,CODE,,Y,,N,프로젝트 유형 코드,논리 속성
+TB_PRJ_MST,7,프로젝트시작일자,START_DT,DATE,,N,,N,프로젝트 시작일자,논리 속성
+TB_PRJ_MST,8,최초종료일자,ORGNL_END_DT,DATE,,N,,N,등록 시 확정한 최초 종료일자,연장 후에도 변경하지 않음
+TB_PRJ_MST,9,프로젝트종료일자,END_DT,DATE,,N,,N,연장을 반영한 현재 종료예정일자,등록 시 최초종료일자와 동일
+TB_PRJ_MST,10,프로젝트상태코드,PRJ_STATUS_CD,CODE,,N,'PLANNED',N,계획 진행 연장 완료 취소 상태 코드,논리 속성
+TB_PRJ_MST,11,PM사용자ID,PM_USER_ID,ID,,Y,,N,프로젝트 담당 PM 사용자 식별자,시스템관리 사용자 애플리케이션 참조; 개인정보
+TB_PRJ_MST,12,업무대상ID,TASK_TGT_ID,ID,,N,,N,프로젝트 공통 업무대상 식별자,논리 속성; 전체 UNIQUE
+TB_PRJ_MST,13,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,공통 컬럼
+TB_PRJ_MST,14,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,공통 컬럼; UTC 기준 저장
+TB_PRJ_MST,15,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,공통 컬럼
+TB_PRJ_MST,16,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,공통 컬럼; UTC 기준 저장
+TB_PRJ_MST,17,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,공통 컬럼
