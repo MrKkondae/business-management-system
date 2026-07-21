@@ -1,4 +1,5 @@
 entity_name,table_name,table_type,description,note
 알림,TB_COM_NOTI,BUSINESS,사용자별 업무 진행상태 및 주요 이벤트 알림,
-첨부파일,TB_COM_FILE,BUSINESS,업무대상별 첨부파일 메타정보,업무구분과 업무ID로 대상을 식별하는 범용 첨부 구조
-메모,TB_COM_MEMO,BUSINESS,업무대상별 메모 및 의견,업무구분과 업무ID로 대상을 식별하는 범용 메모 구조
+업무대상,TB_COM_TASK_TGT,BUSINESS,첨부파일과 메모 등 공통 기능이 연결되는 업무 엔터티의 공통 식별정보,구체적인 업무 엔터티와 1:1 연결
+첨부파일,TB_COM_FILE,BUSINESS,업무대상별 첨부파일 메타정보,업무대상ID로 대상을 참조하는 범용 첨부 구조
+메모,TB_COM_MEMO,BUSINESS,업무대상별 메모 및 의견,업무대상ID로 대상을 참조하는 범용 메모 구조

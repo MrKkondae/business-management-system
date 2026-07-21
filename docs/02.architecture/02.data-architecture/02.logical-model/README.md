@@ -2,4 +2,4 @@
 
 DBMS와 무관한 엔터티, 속성, 관계 및 모델링 설명을 관리한다.
 
-엔터티, 속성, 관계는 각각의 하위 디렉토리에 있는 업무영역별 CSV가 원본이다. `01.entity-definition.md`와 `notes`의 Markdown은 모델링 원칙, 업무영역 설명, 판단 근거와 CSV 위치만 관리한다.
+엔터티, 속성, 관계는 각각의 하위 디렉토리에 있는 업무영역별 CSV가 원본이다. 업무대상 유형코드와 대상 엔터티의 매핑은 `mappings/task-target-type-mapping.csv`가 원본이다. `01.entity-definition.md`와 `notes`의 Markdown은 모델링 원칙, 업무영역 설명, 판단 근거와 CSV 위치만 관리한다.

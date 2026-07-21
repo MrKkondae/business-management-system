@@ -1,4 +1,4 @@
-table_name,column_sequence,korean_name,column_name,domain_name,data_type_override,nullable,default_value,pk_yn,description,note
+﻿table_name,column_sequence,korean_name,column_name,domain_name,data_type_override,nullable,default_value,pk_yn,description,note
 TB_RES_MST,1,인력ID,RES_ID,ID,,N,,Y,직원과 외주인력을 통합한 인력 식별자,논리 속성; 기본키; 개인정보
 TB_RES_MST,2,인력구분코드,RES_SE_CD,CODE,,N,,N,직원과 외주인력을 구분하는 코드,논리 속성
 TB_RES_MST,3,성명,FULL_NM,NAME,,N,,N,인력의 전체 이름,논리 속성; 개인정보
@@ -11,6 +11,7 @@ TB_RES_MST,11,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 
 TB_RES_MST,12,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,논리 속성; 개인정보
 TB_RES_MST,13,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,논리 속성; UTC 기준 저장
 TB_RES_MST,14,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,논리 속성
+TB_RES_MST,15,업무대상ID,TASK_TGT_ID,ID,,N,,N,인력의 공통 기능 연결 업무대상 식별자,필수·고유 업무대상 참조
 TB_RES_EMPLOYEE,1,인력ID,RES_ID,ID,,N,,Y,직원과 외주인력을 통합한 인력 식별자,논리 속성; 공유 또는 복합 기본키; 인력.인력ID 참조; 개인정보
 TB_RES_EMPLOYEE,2,사원번호,EMP_NO,NUMBER,,N,,N,회사에서 직원에게 부여한 번호,논리 속성; 개인정보
 TB_RES_EMPLOYEE,3,입사일자,HIRE_DT,DATE,,Y,,N,직원이 회사에 입사한 일자,논리 속성

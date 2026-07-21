@@ -1,4 +1,5 @@
 index_name,table_name,column_names,unique_yn,index_method,where_condition,description
+UX_TB_RES_MST_01,TB_RES_MST,TASK_TGT_ID,Y,,,하나의 업무대상에 최대 하나의 인력 연결 보장
 IX_TB_RES_MST_01,TB_RES_MST,RES_SE_CD|FULL_NM,N,,DEL_YN = 'N',인력구분 및 성명 기준 활성 인력 조회
 IX_TB_RES_MST_02,TB_RES_MST,MOBILE_NO,N,,DEL_YN = 'N' AND MOBILE_NO IS NOT NULL,휴대전화번호 기준 활성 인력 조회
 UX_TB_RES_EMPLOYEE_01,TB_RES_EMPLOYEE,EMP_NO,Y,,,삭제 여부와 관계없는 사원번호 고유성 보장

@@ -398,3 +398,5 @@
 9196,revenue,부가세,VALUE ADDED TAX,VAT_AMT,AMOUNT,공급가액에 부과된 부가가치세 금액,
 9197,revenue,발행상태,ISSUE STATUS,ISSUE_STATUS_CD,CODE,세금계산서의 발행 상태 코드,
 9198,customer,고객담당자상태코드,CUSTOMER CONTACT STATUS CODE,CUST_CONTACT_STATUS_CD,CODE,고객담당자의 활성 또는 비활성 상태 코드,
+9199,common,업무대상ID,TASK TARGET IDENTIFIER,TASK_TGT_ID,ID,첨부파일과 메모 등 공통 기능이 연결되는 업무대상 식별자,
+9200,common,업무대상유형코드,TASK TARGET TYPE CODE,TASK_TGT_TYPE_CD,CODE,업무대상이 나타내는 구체적인 업무 엔터티 유형 코드,

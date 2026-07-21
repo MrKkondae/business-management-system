@@ -1,4 +1,4 @@
-table_name,column_sequence,korean_name,column_name,domain_name,data_type_override,nullable,default_value,pk_yn,description,note
+﻿table_name,column_sequence,korean_name,column_name,domain_name,data_type_override,nullable,default_value,pk_yn,description,note
 TB_CUST_MST,1,고객ID,CUST_ID,ID,,N,,Y,고객사 식별자,논리 속성
 TB_CUST_MST,2,고객명,CUST_NM,LONG_NAME,,N,,N,고객사 명칭,논리 속성
 TB_CUST_MST,3,고객유형코드,CUST_TYPE_CD,CODE,,N,,N,고객 유형 코드,논리 속성

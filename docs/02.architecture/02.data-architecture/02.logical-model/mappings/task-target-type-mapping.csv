@@ -1,0 +1,8 @@
+task_target_type_code,entity_name,description
+CONTRACT,계약,계약 업무대상
+PROJECT,프로젝트,프로젝트 업무대상
+SALES_OPPORTUNITY,영업기회,영업기회 업무대상
+CONTRACT_DOCUMENT,계약문서,계약문서 업무대상
+SALES_ANNOUNCEMENT,사업공고,사업공고 업무대상
+PROPOSAL,제안,제안 업무대상
+RESOURCE,인력,인력 업무대상

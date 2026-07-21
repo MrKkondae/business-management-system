@@ -62,6 +62,11 @@ FILE_SCHEMAS = {
         "example_column",
     ),
     "01.standard/db-type-mapping.csv": ("dbms", "domain_name", "data_type"),
+    "02.logical-model/mappings/task-target-type-mapping.csv": (
+        "task_target_type_code",
+        "entity_name",
+        "description",
+    ),
 }
 
 for area in BUSINESS_AREAS:
@@ -198,6 +203,7 @@ REQUIRED_FIELDS = {
         "column_names",
         "unique_yn",
     ),
+    "task-target-type-mappings": ("task_target_type_code", "entity_name"),
 }
 
 RELATION_RE = re.compile(
@@ -262,6 +268,7 @@ class Validator:
         self._validate_references()
         self._validate_interface_attributes()
         self._validate_terms()
+        self._validate_task_targets()
         return self.findings
 
     def _validate_files_and_structure(self) -> None:
@@ -490,6 +497,16 @@ class Validator:
                 self._rows_of_kind("relationships"),
                 ("relation_expression",),
             ),
+            (
+                "업무대상 유형코드",
+                self._rows_of_kind("task-target-type-mappings"),
+                ("task_target_type_code",),
+            ),
+            (
+                "업무대상 유형 엔터티",
+                self._rows_of_kind("task-target-type-mappings"),
+                ("entity_name",),
+            ),
         ]
         for label, rows, fields in rules:
             self._report_duplicate_keys(label, rows, fields)
@@ -559,6 +576,30 @@ class Validator:
         for row in self._rows_of_kind("interface-attributes"):
             self._require_reference(row, "entity_name", entities, "엔터티")
 
+        attributes = {
+            (
+                row.values["entity_name"].strip(),
+                row.values["attribute_name"].strip(),
+            )
+            for row in self._rows_of_kind("attributes")
+        }
+        for row in self._rows_of_kind("attributes"):
+            target = row.values["fk_target"].strip()
+            if not target:
+                continue
+            match = re.fullmatch(r"(.+)\.([^.]+)", target)
+            if not match or (match.group(1), match.group(2)) not in attributes:
+                self.add(
+                    "ERROR",
+                    "UNKNOWN_LOGICAL_FK_TARGET",
+                    f"fk_target {target!r}에 해당하는 엔터티·속성이 등록되어 있지 않습니다.",
+                    row=row,
+                    subject=target,
+                )
+
+        for row in self._rows_of_kind("task-target-type-mappings"):
+            self._require_reference(row, "entity_name", entities, "엔터티")
+
         for row in self._rows_of_kind("relationships"):
             expression = row.values["relation_expression"].strip()
             match = RELATION_RE.fullmatch(expression)
@@ -572,6 +613,67 @@ class Validator:
                         subject=expression,
                     )
                 continue
+            for endpoint in (match.group(1).strip(), match.group(2).strip()):
+                if endpoint not in entities:
+                    self.add(
+                        "ERROR",
+                        "UNKNOWN_RELATION_ENTITY",
+                        f"관계식 엔터티 {endpoint!r}이 등록되어 있지 않습니다.",
+                        row=row,
+                        subject=endpoint,
+                    )
+
+        tables = {
+            row.values["table_name"].strip()
+            for row in self._rows_of_kind("physical-tables")
+        }
+        columns = {
+            (row.values["table_name"].strip(), row.values["column_name"].strip())
+            for row in self._rows_of_kind("physical-columns")
+        }
+        for row in self._rows_of_kind("physical-tables"):
+            self._require_reference(row, "entity_name", entities, "엔터티")
+        for row in self._rows_of_kind("physical-columns"):
+            self._require_reference(row, "table_name", tables, "물리 테이블")
+            self._require_reference(row, "domain_name", domains, "논리 도메인")
+        for row in self._rows_of_kind("physical-constraints"):
+            self._require_reference(row, "table_name", tables, "물리 테이블")
+            table_name = row.values["table_name"].strip()
+            local_columns = self._split_column_names(row.values["column_names"])
+            self._validate_columns_exist(row, table_name, local_columns, columns)
+            if row.values["constraint_type"].strip() != "FK":
+                continue
+            reference_table = row.values["reference_table"].strip()
+            reference_columns = self._split_column_names(
+                row.values["reference_columns"]
+            )
+            if len(local_columns) != len(reference_columns):
+                self.add(
+                    "ERROR",
+                    "FK_COLUMN_COUNT_MISMATCH",
+                    "FK의 로컬 컬럼 수와 대상 컬럼 수가 다릅니다.",
+                    row=row,
+                    subject=row.values["constraint_name"].strip(),
+                )
+            if (
+                row.values["enforcement_type"].strip() == "APPLICATION"
+                and row.values["create_yn"].strip() == "N"
+            ):
+                continue
+            self._require_reference(
+                row, "reference_table", tables, "물리 FK 대상 테이블"
+            )
+            self._validate_columns_exist(
+                row, reference_table, reference_columns, columns, reference=True
+            )
+        for row in self._rows_of_kind("physical-indexes"):
+            self._require_reference(row, "table_name", tables, "물리 테이블")
+            self._validate_columns_exist(
+                row,
+                row.values["table_name"].strip(),
+                self._split_column_names(row.values["column_names"]),
+                columns,
+            )
 
     def _validate_interface_attributes(self) -> None:
         for row in self._rows_of_kind("interface-attributes"):
@@ -614,6 +716,30 @@ class Validator:
                 subject=value,
             )
 
+    @staticmethod
+    def _split_column_names(value: str) -> list[str]:
+        return [name.strip() for name in value.split("|") if name.strip()]
+
+    def _validate_columns_exist(
+        self,
+        row: CatalogRow,
+        table_name: str,
+        column_names: list[str],
+        registered: set[tuple[str, str]],
+        reference: bool = False,
+    ) -> None:
+        for column_name in column_names:
+            if (table_name, column_name) in registered:
+                continue
+            label = "대상 컬럼" if reference else "컬럼"
+            self.add(
+                "ERROR",
+                "UNKNOWN_PHYSICAL_COLUMN",
+                f"{table_name}.{column_name} {label}이 물리 컬럼에 등록되어 있지 않습니다.",
+                row=row,
+                subject=f"{table_name}.{column_name}",
+            )
+
     def _validate_terms(self) -> None:
         term_rows = list(self._rows_of_kind("standard-terms"))
         groups: dict[str, list[CatalogRow]] = defaultdict(list)
@@ -646,6 +772,10 @@ class Validator:
             )
 
         registered_terms = {row.values["korean_name"].strip() for row in term_rows}
+        registered_physical_terms = {
+            (row.values["korean_name"].strip(), row.values["column_name"].strip())
+            for row in term_rows
+        }
         for row in self._rows_of_kind("attributes"):
             attribute_name = row.values["attribute_name"].strip()
             if attribute_name and attribute_name not in registered_terms:
@@ -669,6 +799,194 @@ class Validator:
                     subject=attribute_name,
                 )
 
+        interface_exceptions = {
+            value
+            for row in self._rows_of_kind("interface-attributes")
+            if row.values["standard_term_exception_yn"].strip() == "Y"
+            for value in (
+                row.values["attribute_name"].strip(),
+                row.values["source_attribute_name"].strip(),
+            )
+            if value
+        }
+        for row in self._rows_of_kind("physical-columns"):
+            pair = (
+                row.values["korean_name"].strip(),
+                row.values["column_name"].strip(),
+            )
+            if (
+                pair not in registered_physical_terms
+                and pair[1] not in interface_exceptions
+            ):
+                self.add(
+                    "ERROR",
+                    "UNREGISTERED_PHYSICAL_TERM",
+                    f"물리 컬럼 {pair[0]!r}/{pair[1]!r} 조합이 표준용어에 등록되어 있지 않습니다.",
+                    row=row,
+                    subject=f"{pair[0]}/{pair[1]}",
+                )
+
+    def _validate_task_targets(self) -> None:
+        mapping_rows = list(self._rows_of_kind("task-target-type-mappings"))
+        mapped_entities = {
+            row.values["entity_name"].strip() for row in mapping_rows
+        }
+        for row in mapping_rows:
+            code = row.values["task_target_type_code"].strip()
+            if len(code) > 20 or not re.fullmatch(r"[A-Z][A-Z0-9_]*", code):
+                self.add(
+                    "ERROR",
+                    "INVALID_TASK_TARGET_TYPE_CODE",
+                    "업무대상 유형코드는 영문 대문자 스네이크 형식의 20자 이하여야 합니다.",
+                    row=row,
+                    subject=code,
+                )
+
+        attributes = list(self._rows_of_kind("attributes"))
+        relationships = list(self._rows_of_kind("relationships"))
+        target_relations: set[frozenset[str]] = set()
+        for row in relationships:
+            match = RELATION_RE.fullmatch(row.values["relation_expression"].strip())
+            if match:
+                target_relations.add(
+                    frozenset((match.group(1).strip(), match.group(2).strip()))
+                )
+
+        for entity_name in mapped_entities:
+            target_attributes = [
+                row
+                for row in attributes
+                if row.values["entity_name"].strip() == entity_name
+                and row.values["attribute_name"].strip() == "업무대상ID"
+            ]
+            if len(target_attributes) != 1 or target_attributes[0].values[
+                "fk_target"
+            ].strip() != "업무대상.업무대상ID":
+                self.add(
+                    "ERROR",
+                    "INVALID_TASK_TARGET_ATTRIBUTE",
+                    f"{entity_name!r}은 업무대상.업무대상ID를 참조하는 업무대상ID 속성을 정확히 하나 가져야 합니다.",
+                    row=target_attributes[0] if target_attributes else None,
+                    subject=entity_name,
+                )
+            if frozenset(("업무대상", entity_name)) not in target_relations:
+                self.add(
+                    "ERROR",
+                    "MISSING_TASK_TARGET_RELATION",
+                    f"업무대상과 {entity_name!r}의 관계가 등록되어 있지 않습니다.",
+                    subject=entity_name,
+                )
+
+        entity_tables: dict[str, list[str]] = defaultdict(list)
+        for row in self._rows_of_kind("physical-tables"):
+            entity_tables[row.values["entity_name"].strip()].append(
+                row.values["table_name"].strip()
+            )
+        physical_columns = {
+            (row.values["table_name"].strip(), row.values["column_name"].strip())
+            for row in self._rows_of_kind("physical-columns")
+        }
+        constraints = list(self._rows_of_kind("physical-constraints"))
+        indexes = list(self._rows_of_kind("physical-indexes"))
+        for entity_name in mapped_entities:
+            for table_name in entity_tables.get(entity_name, []):
+                if (table_name, "TASK_TGT_ID") not in physical_columns:
+                    self.add(
+                        "ERROR",
+                        "MISSING_PHYSICAL_TASK_TARGET_COLUMN",
+                        f"{entity_name!r} 물리 테이블 {table_name!r}에 TASK_TGT_ID가 없습니다.",
+                        subject=table_name,
+                    )
+                has_fk = any(
+                    row.values["constraint_type"].strip() == "FK"
+                    and row.values["table_name"].strip() == table_name
+                    and self._split_column_names(row.values["column_names"])
+                    == ["TASK_TGT_ID"]
+                    and row.values["reference_table"].strip() == "TB_COM_TASK_TGT"
+                    and self._split_column_names(row.values["reference_columns"])
+                    == ["TASK_TGT_ID"]
+                    and row.values["enforcement_type"].strip() == "DATABASE"
+                    and row.values["create_yn"].strip() == "Y"
+                    for row in constraints
+                )
+                if not has_fk:
+                    self.add(
+                        "ERROR",
+                        "MISSING_PHYSICAL_TASK_TARGET_FK",
+                        f"{entity_name!r} 물리 테이블 {table_name!r}의 업무대상 DB FK가 없습니다.",
+                        subject=table_name,
+                    )
+                has_unique = any(
+                    row.values["constraint_type"].strip() == "UNIQUE"
+                    and row.values["table_name"].strip() == table_name
+                    and self._split_column_names(row.values["column_names"])
+                    == ["TASK_TGT_ID"]
+                    for row in constraints
+                ) or any(
+                    row.values["table_name"].strip() == table_name
+                    and row.values["unique_yn"].strip() == "Y"
+                    and self._split_column_names(row.values["column_names"])
+                    == ["TASK_TGT_ID"]
+                    for row in indexes
+                )
+                if not has_unique:
+                    self.add(
+                        "ERROR",
+                        "MISSING_PHYSICAL_TASK_TARGET_UNIQUE",
+                        f"{entity_name!r} 물리 테이블 {table_name!r}의 TASK_TGT_ID 전체 UNIQUE가 없습니다.",
+                        subject=table_name,
+                    )
+
+        excluded = {"첨부파일", "메모"}
+        related_entities = {
+            endpoint
+            for pair in target_relations
+            if "업무대상" in pair
+            for endpoint in pair
+            if endpoint not in {"업무대상"} | excluded
+        }
+        for entity_name in sorted(related_entities - mapped_entities):
+            self.add(
+                "ERROR",
+                "MISSING_TASK_TARGET_TYPE_MAPPING",
+                f"업무대상 관계 엔터티 {entity_name!r}의 유형코드 매핑이 없습니다.",
+                subject=entity_name,
+            )
+
+        for path in sorted(self.catalog_dir.rglob("*")):
+            if path.suffix.lower() not in {".csv", ".md"}:
+                continue
+            if "업무대상(논리)" in path.read_text(encoding="utf-8-sig"):
+                self.add(
+                    "ERROR",
+                    "LEGACY_LOGICAL_TASK_TARGET",
+                    "'업무대상(논리)' 문자열이 남아 있습니다.",
+                    relative_path=path.relative_to(self.catalog_dir).as_posix(),
+                )
+
+        for row in attributes:
+            if (
+                row.values["entity_name"].strip() in {"첨부파일", "메모"}
+                and row.values["attribute_name"].strip() in {"업무구분", "업무ID"}
+            ):
+                self.add(
+                    "ERROR",
+                    "LEGACY_TASK_REFERENCE",
+                    "첨부파일·메모에 구형 업무 참조 속성이 남아 있습니다.",
+                    row=row,
+                )
+        for row in self._rows_of_kind("physical-columns"):
+            if (
+                row.values["table_name"].strip() in {"TB_COM_FILE", "TB_COM_MEMO"}
+                and row.values["column_name"].strip() in {"TASK_SE_CD", "TASK_ID"}
+            ):
+                self.add(
+                    "ERROR",
+                    "LEGACY_TASK_REFERENCE",
+                    "첨부파일·메모에 구형 업무 참조 컬럼이 남아 있습니다.",
+                    row=row,
+                )
+
     def _rows_of_kind(self, kind: str) -> Iterable[CatalogRow]:
         for relative_path, rows in self.rows.items():
             if file_kind(relative_path) == kind:
@@ -684,6 +1002,8 @@ def file_kind(relative_path: str) -> str:
         return "domain-definition"
     if relative_path.endswith("db-type-mapping.csv"):
         return "db-type-mapping"
+    if relative_path.endswith("task-target-type-mapping.csv"):
+        return "task-target-type-mappings"
     if "/entities/entity-" in relative_path:
         return "entities"
     if "/attributes/entity-attribute-" in relative_path:
