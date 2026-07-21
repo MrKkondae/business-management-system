@@ -1,0 +1,69 @@
+openapi: 3.1.0
+info:
+  title: BMS API
+  version: 1.0.0
+  description: Business Management System API contract
+servers:
+  - url: /api/v1
+security:
+  - sessionCookie: []
+tags: []
+paths: {}
+components:
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: JSESSIONID
+    csrfToken:
+      type: apiKey
+      in: header
+      name: X-CSRF-TOKEN
+  schemas:
+    FieldError:
+      type: object
+      required: [field, reason, message]
+      properties:
+        field:
+          type: string
+        reason:
+          type: string
+        message:
+          type: string
+    Problem:
+      type: object
+      required: [code, message, traceId]
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        traceId:
+          type: string
+        fieldErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldError'
+    PageMetadata:
+      type: object
+      required: [page, size, totalElements, totalPages, sort]
+      properties:
+        page:
+          type: integer
+          minimum: 0
+        size:
+          type: integer
+          minimum: 1
+          maximum: 100
+        totalElements:
+          type: integer
+          format: int64
+          minimum: 0
+        totalPages:
+          type: integer
+          minimum: 0
+        sort:
+          type: array
+          items:
+            type: string
+
