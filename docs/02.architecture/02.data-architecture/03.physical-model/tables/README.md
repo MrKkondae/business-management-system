@@ -6,3 +6,4 @@
 - 공통 원본: `table-common.csv`
 - 고객관리 원본: `table-customer.csv`
 - 영업관리 원본: `table-sales.csv`
+- 인력관리 원본: `table-employee.csv`

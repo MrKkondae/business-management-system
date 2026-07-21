@@ -1,0 +1,14 @@
+entity_name,table_name,table_type,description,note
+인력,TB_RES_MST,MASTER,직원과 외주인력에 공통으로 적용되는 식별자와 기본정보,직원·외주인력 공통 상위 테이블; 인력구분별 하위유형 배타성은 애플리케이션 집행
+직원,TB_RES_EMPLOYEE,MASTER,인력 중 내부 직원에게만 적용되는 현재 재직정보,인력 공유 PK 하위유형; 사원번호는 삭제 여부와 관계없이 재사용 금지
+외주인력,TB_RES_OUTSRC,MASTER,인력 중 외부 인력에게만 적용되는 업체 소속 및 계약정보,인력 공유 PK 하위유형; 사용자 계정 연결 금지
+협력업체,TB_RES_PARTNER_VENDOR,MASTER,외주인력이 소속되는 법인 또는 개인사업자 정보,사업자등록번호는 값이 있는 경우 삭제 여부와 관계없이 재사용 금지
+인력근무경력,TB_RES_WORK_CAREER,HISTORY,인력의 과거 회사 근무 및 담당업무 이력,인력별 순번 복합 PK
+인력학력,TB_RES_ACAD,HISTORY,인력의 학교·학과·수학기간·학위 정보,인력별 순번 복합 PK
+인력교육,TB_RES_EDU,HISTORY,인력이 이수한 교육과정·교육기관·교육기간 및 수료 정보,인력별 순번 복합 PK
+인력상훈,TB_RES_AWARD,HISTORY,인력이 수여받은 상훈의 종류·상훈기관·수여일 및 근거 정보,인력별 순번 복합 PK
+인력기술자격,TB_RES_SKILL_QUAL,HISTORY,인력이 취득한 기술자격의 종목·등록번호·취득일·발급기관 정보,인력별 순번 복합 PK
+인력기술경력,TB_RES_SKILL_CAREER,HISTORY,인력이 사업에 참여한 기간·발주사·소속사·직위 및 담당업무 경력정보,외부 사업 경력 직접 관리; BMS 프로젝트 투입경력과 중복 저장 금지
+인력단가,TB_RES_UNIT_AMT,HISTORY,인력별 기준연월 및 월·일 단가 정보,인력·기준연월 활성 행 고유
+인력투입,TB_RES_ASSIGN,BUSINESS,프로젝트별 인력 투입기간과 역할 정보,동일 프로젝트·인력의 활성 투입기간 중복은 애플리케이션에서 트랜잭션 검증
+인력월별투입실적,TB_RES_MTHLY_ASSIGN_ACTL,BUSINESS,인력투입 건의 월별 계획·실적 투입률과 투입MM 정보,투입·기준연월 활성 행 고유; 인력별 월간 총투입률 상한 및 확정 후 변경금지는 애플리케이션 집행

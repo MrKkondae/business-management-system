@@ -6,5 +6,6 @@
 - 공통 원본: `index-common.csv`
 - 고객관리 원본: `index-customer.csv`
 - 영업관리 원본: `index-sales.csv`
+- 인력관리 원본: `index-employee.csv`
 
 논리삭제 데이터의 전체 UNIQUE와 `DEL_YN = 'N'` 부분 UNIQUE 선택 기준은 `../../00.governance/03.physical-model-common-policy.md`를 따른다.

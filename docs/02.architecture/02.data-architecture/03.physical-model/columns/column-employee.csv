@@ -1,0 +1,156 @@
+table_name,column_sequence,korean_name,column_name,domain_name,data_type_override,nullable,default_value,pk_yn,description,note
+TB_RES_MST,1,인력ID,RES_ID,ID,,N,,Y,직원과 외주인력을 통합한 인력 식별자,논리 속성; 기본키; 개인정보
+TB_RES_MST,2,인력구분코드,RES_SE_CD,CODE,,N,,N,직원과 외주인력을 구분하는 코드,논리 속성
+TB_RES_MST,3,성명,FULL_NM,NAME,,N,,N,인력의 전체 이름,논리 속성; 개인정보
+TB_RES_MST,4,성별코드,GENDER_CD,CODE,,Y,,N,인력의 성별을 나타내는 코드,논리 속성; 개인정보
+TB_RES_MST,5,생년월일,BIRTH_DT,DATE,,Y,,N,인력의 출생 일자,논리 속성; 개인정보
+TB_RES_MST,6,휴대전화번호,MOBILE_NO,MOBILE_NO,,Y,,N,인력 휴대전화번호,논리 속성; 개인정보
+TB_RES_MST,7,이메일주소,EMAIL_ADDR,EMAIL,,Y,,N,인력 이메일 주소,논리 속성; 개인정보
+TB_RES_MST,10,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,논리 속성; 개인정보
+TB_RES_MST,11,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,논리 속성; UTC 기준 저장
+TB_RES_MST,12,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,논리 속성; 개인정보
+TB_RES_MST,13,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,논리 속성; UTC 기준 저장
+TB_RES_MST,14,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,논리 속성
+TB_RES_EMPLOYEE,1,인력ID,RES_ID,ID,,N,,Y,직원과 외주인력을 통합한 인력 식별자,논리 속성; 공유 또는 복합 기본키; 인력.인력ID 참조; 개인정보
+TB_RES_EMPLOYEE,2,사원번호,EMP_NO,NUMBER,,N,,N,회사에서 직원에게 부여한 번호,논리 속성; 개인정보
+TB_RES_EMPLOYEE,3,입사일자,HIRE_DT,DATE,,Y,,N,직원이 회사에 입사한 일자,논리 속성
+TB_RES_EMPLOYEE,4,조직ID,ORG_ID,ID,,N,,N,직원 소속 조직 식별자,논리 속성; 조직.조직ID 참조
+TB_RES_EMPLOYEE,5,직위코드,JOB_POS_CD,CODE,,Y,,N,직원의 직위 코드,논리 속성
+TB_RES_EMPLOYEE,6,재직상태코드,EMPLOY_STATUS_CD,CODE,,Y,,N,직원의 재직 상태를 나타내는 코드,논리 속성
+TB_RES_EMPLOYEE,7,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,논리 속성; 개인정보
+TB_RES_EMPLOYEE,8,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,논리 속성; UTC 기준 저장
+TB_RES_EMPLOYEE,9,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,논리 속성; 개인정보
+TB_RES_EMPLOYEE,10,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,논리 속성; UTC 기준 저장
+TB_RES_EMPLOYEE,11,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,논리 속성
+TB_RES_OUTSRC,1,인력ID,RES_ID,ID,,N,,Y,직원과 외주인력을 통합한 인력 식별자,논리 속성; 공유 또는 복합 기본키; 인력.인력ID 참조; 개인정보
+TB_RES_OUTSRC,2,협력업체ID,PARTNER_VENDOR_ID,ID,,N,,N,외주인력이 소속된 협력업체 식별자,논리 속성; 협력업체.협력업체ID 참조
+TB_RES_OUTSRC,4,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,논리 속성; 개인정보
+TB_RES_OUTSRC,5,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,논리 속성; UTC 기준 저장
+TB_RES_OUTSRC,6,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,논리 속성; 개인정보
+TB_RES_OUTSRC,7,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,논리 속성; UTC 기준 저장
+TB_RES_OUTSRC,8,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,논리 속성
+TB_RES_PARTNER_VENDOR,1,협력업체ID,PARTNER_VENDOR_ID,ID,,N,,Y,외주인력이 소속된 협력업체 식별자,논리 속성; 기본키
+TB_RES_PARTNER_VENDOR,2,업체명,VENDOR_NM,LONG_NAME,,N,,N,협력업체의 명칭,논리 속성
+TB_RES_PARTNER_VENDOR,3,사업자등록번호,BIZ_REG_NO,BIZ_REG_NO,,N,,N,사업자등록번호 값,논리 속성
+TB_RES_PARTNER_VENDOR,4,대표자명,CEO_NM,NAME,,Y,,N,협력업체 대표자 명칭,논리 속성; 개인정보
+TB_RES_PARTNER_VENDOR,5,전화번호,TEL_NO,TEL_NO,,Y,,N,협력업체 대표 전화번호,논리 속성; 개인정보
+TB_RES_PARTNER_VENDOR,6,영업대표명,SALES_REP_NM,NAME,,Y,,N,협력업체 영업대표의 이름,논리 속성; 개인정보
+TB_RES_PARTNER_VENDOR,7,영업대표부서명,SALES_REP_DEPT_NM,NAME,,Y,,N,협력업체 영업대표의 부서 명칭,논리 속성
+TB_RES_PARTNER_VENDOR,8,영업대표직급,SALES_REP_POSITION,NAME,,Y,,N,협력업체 영업대표의 직급,논리 속성
+TB_RES_PARTNER_VENDOR,9,영업대표연락처,SALES_REP_CONTACT,TEL_NO,,Y,,N,협력업체 영업대표의 연락처,논리 속성; 개인정보
+TB_RES_PARTNER_VENDOR,10,회사소개내용,CO_INTRO_CONT,CONTENT,,Y,,N,협력업체 회사 소개 내용,논리 속성
+TB_RES_PARTNER_VENDOR,11,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,논리 속성; 개인정보
+TB_RES_PARTNER_VENDOR,12,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,논리 속성; UTC 기준 저장
+TB_RES_PARTNER_VENDOR,13,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,논리 속성; 개인정보
+TB_RES_PARTNER_VENDOR,14,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,논리 속성; UTC 기준 저장
+TB_RES_PARTNER_VENDOR,15,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,논리 속성
+TB_RES_WORK_CAREER,1,인력ID,RES_ID,ID,,N,,Y,직원과 외주인력을 통합한 인력 식별자,논리 속성; 공유 또는 복합 기본키; 인력.인력ID 참조; 개인정보
+TB_RES_WORK_CAREER,2,인력근무경력순번,RES_WORK_CAREER_SEQ,SEQ,,N,,Y,인력별 근무경력 순번,논리 속성; 기본키
+TB_RES_WORK_CAREER,3,근무시작일자,WORK_START_DT,DATE,,Y,,N,과거 회사 근무를 시작한 일자,논리 속성
+TB_RES_WORK_CAREER,4,근무종료일자,WORK_END_DT,DATE,,Y,,N,과거 회사 근무를 종료한 일자,논리 속성
+TB_RES_WORK_CAREER,5,회사명,CO_NM,LONG_NAME,,Y,,N,인력이 근무한 회사 명칭,논리 속성
+TB_RES_WORK_CAREER,6,담당업무,CHRG_TASK_DESC,SHORT_DESC,,Y,,N,사업에서 인력이 담당한 업무,논리 속성
+TB_RES_WORK_CAREER,7,부서,DEPT_NM,NAME,,Y,,N,과거 근무 당시 소속 부서 명칭,논리 속성
+TB_RES_WORK_CAREER,8,직위,JOB_POS_NM,NAME,,Y,,N,사업 참여 당시 인력의 직위,논리 속성
+TB_RES_WORK_CAREER,9,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,논리 속성; 개인정보
+TB_RES_WORK_CAREER,10,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,논리 속성; UTC 기준 저장
+TB_RES_WORK_CAREER,11,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,논리 속성; 개인정보
+TB_RES_WORK_CAREER,12,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,논리 속성; UTC 기준 저장
+TB_RES_WORK_CAREER,13,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,논리 속성
+TB_RES_ACAD,1,인력ID,RES_ID,ID,,N,,Y,직원과 외주인력을 통합한 인력 식별자,논리 속성; 공유 또는 복합 기본키; 인력.인력ID 참조; 개인정보
+TB_RES_ACAD,2,인력학력순번,RES_ACAD_SEQ,SEQ,,N,,Y,인력별 학력 순번,논리 속성; 기본키
+TB_RES_ACAD,3,학교명,SCHOOL_NM,LONG_NAME,,N,,N,인력이 수학한 학교 명칭,논리 속성
+TB_RES_ACAD,4,학과,MAJOR_NM,NAME,,Y,,N,인력이 수학한 학과 명칭,논리 속성
+TB_RES_ACAD,5,수학시작일자,STUDY_START_DT,DATE,,Y,,N,학교에서 수학을 시작한 일자,논리 속성
+TB_RES_ACAD,6,수학종료일자,STUDY_END_DT,DATE,,Y,,N,학교에서 수학을 종료한 일자,논리 속성
+TB_RES_ACAD,7,학위,DEGREE_NM,NAME,,Y,,N,인력이 취득한 학위 명칭,논리 속성
+TB_RES_ACAD,8,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,논리 속성; 개인정보
+TB_RES_ACAD,9,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,논리 속성; UTC 기준 저장
+TB_RES_ACAD,10,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,논리 속성; 개인정보
+TB_RES_ACAD,11,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,논리 속성; UTC 기준 저장
+TB_RES_ACAD,12,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,논리 속성
+TB_RES_EDU,1,인력ID,RES_ID,ID,,N,,Y,직원과 외주인력을 통합한 인력 식별자,논리 속성; 공유 또는 복합 기본키; 인력.인력ID 참조; 개인정보
+TB_RES_EDU,2,인력교육순번,RES_EDU_SEQ,SEQ,,N,,Y,인력별 교육 이력 순번,논리 속성; 기본키
+TB_RES_EDU,3,교육과정명,EDU_CRS_NM,LONG_NAME,,N,,N,인력이 이수한 교육과정 명칭,논리 속성
+TB_RES_EDU,4,교육기관명,EDU_INST_NM,LONG_NAME,,Y,,N,교육과정을 운영한 기관 명칭,논리 속성
+TB_RES_EDU,5,교육시작일자,EDU_START_DT,DATE,,Y,,N,교육과정 시작 일자,논리 속성
+TB_RES_EDU,6,교육종료일자,EDU_END_DT,DATE,,Y,,N,교육과정 종료 일자,논리 속성
+TB_RES_EDU,7,수료번호,CMPL_NO,NUMBER,,Y,,N,교육과정 수료 시 발급된 번호,논리 속성
+TB_RES_EDU,8,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,논리 속성; 개인정보
+TB_RES_EDU,9,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,논리 속성; UTC 기준 저장
+TB_RES_EDU,10,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,논리 속성; 개인정보
+TB_RES_EDU,11,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,논리 속성; UTC 기준 저장
+TB_RES_EDU,12,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,논리 속성
+TB_RES_AWARD,1,인력ID,RES_ID,ID,,N,,Y,직원과 외주인력을 통합한 인력 식별자,논리 속성; 공유 또는 복합 기본키; 인력.인력ID 참조; 개인정보
+TB_RES_AWARD,2,인력상훈순번,RES_AWD_SEQ,SEQ,,N,,Y,인력별 상훈 이력 순번,논리 속성; 기본키
+TB_RES_AWARD,3,상훈종류,AWD_TYPE_NM,NAME,,Y,,N,인력이 수여받은 상훈의 종류,논리 속성
+TB_RES_AWARD,4,상훈기관명,AWD_INST_NM,LONG_NAME,,Y,,N,상훈을 수여한 기관 명칭,논리 속성
+TB_RES_AWARD,5,수여일,CNFR_DT,DATE,,Y,,N,인력에게 상훈을 수여한 날짜,논리 속성
+TB_RES_AWARD,6,근거,BASIS_CONT,CONTENT,,Y,,N,상훈을 수여한 근거 또는 공적 내용,논리 속성
+TB_RES_AWARD,7,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,논리 속성; 개인정보
+TB_RES_AWARD,8,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,논리 속성; UTC 기준 저장
+TB_RES_AWARD,9,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,논리 속성; 개인정보
+TB_RES_AWARD,10,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,논리 속성; UTC 기준 저장
+TB_RES_AWARD,11,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,논리 속성
+TB_RES_SKILL_QUAL,1,인력ID,RES_ID,ID,,N,,Y,직원과 외주인력을 통합한 인력 식별자,논리 속성; 공유 또는 복합 기본키; 인력.인력ID 참조; 개인정보
+TB_RES_SKILL_QUAL,2,인력기술자격순번,RES_SKILL_QUAL_SEQ,SEQ,,N,,Y,인력별 기술자격 순번,논리 속성; 기본키
+TB_RES_SKILL_QUAL,3,종목,ITEM_NM,NAME,,Y,,N,인력이 취득한 기술자격 종목,논리 속성
+TB_RES_SKILL_QUAL,4,등록번호,REG_NO,NUMBER,,Y,,N,기술자격 등록번호,논리 속성
+TB_RES_SKILL_QUAL,5,취득일,ACQ_DT,DATE,,Y,,N,기술자격을 취득한 날짜,논리 속성
+TB_RES_SKILL_QUAL,6,발급기관,ISSUE_INST_NM,LONG_NAME,,Y,,N,기술자격을 발급한 기관 명칭,논리 속성
+TB_RES_SKILL_QUAL,7,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,논리 속성; 개인정보
+TB_RES_SKILL_QUAL,8,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,논리 속성; UTC 기준 저장
+TB_RES_SKILL_QUAL,9,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,논리 속성; 개인정보
+TB_RES_SKILL_QUAL,10,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,논리 속성; UTC 기준 저장
+TB_RES_SKILL_QUAL,11,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,논리 속성
+TB_RES_SKILL_CAREER,1,인력ID,RES_ID,ID,,N,,Y,직원과 외주인력을 통합한 인력 식별자,논리 속성; 공유 또는 복합 기본키; 인력.인력ID 참조; 개인정보
+TB_RES_SKILL_CAREER,2,인력기술경력순번,RES_SKILL_CAREER_SEQ,SEQ,,N,,Y,인력별 기술경력 순번,논리 속성; 기본키
+TB_RES_SKILL_CAREER,3,참여사업명,PART_BIZ_NM,LONG_NAME,,N,,N,인력이 참여한 사업 명칭,논리 속성
+TB_RES_SKILL_CAREER,4,참여시작일자,PART_START_DT,DATE,,Y,,N,사업 참여 시작 일자,논리 속성
+TB_RES_SKILL_CAREER,5,참여종료일자,PART_END_DT,DATE,,Y,,N,사업 참여 종료 일자,논리 속성
+TB_RES_SKILL_CAREER,6,발주사,CLIENT_NM,LONG_NAME,,Y,,N,참여 사업을 발주한 회사 또는 기관 명칭,논리 속성
+TB_RES_SKILL_CAREER,7,소속사,AFFIL_CO_NM,LONG_NAME,,Y,,N,사업 참여 당시 인력이 소속된 회사 명칭,논리 속성
+TB_RES_SKILL_CAREER,8,직위,JOB_POS_NM,NAME,,Y,,N,사업 참여 당시 인력의 직위,논리 속성
+TB_RES_SKILL_CAREER,9,담당업무,CHRG_TASK_DESC,SHORT_DESC,,Y,,N,사업에서 인력이 담당한 업무,논리 속성
+TB_RES_SKILL_CAREER,10,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,논리 속성; 개인정보
+TB_RES_SKILL_CAREER,11,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,논리 속성; UTC 기준 저장
+TB_RES_SKILL_CAREER,12,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,논리 속성; 개인정보
+TB_RES_SKILL_CAREER,13,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,논리 속성; UTC 기준 저장
+TB_RES_SKILL_CAREER,14,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,논리 속성
+TB_RES_UNIT_AMT,1,인력단가ID,RES_UNIT_AMT_ID,ID,,N,,Y,인력 단가 이력 식별자,논리 속성; 기본키
+TB_RES_UNIT_AMT,2,인력ID,RES_ID,ID,,N,,N,직원과 외주인력을 통합한 인력 식별자,논리 속성; 인력.인력ID 참조; 개인정보
+TB_RES_UNIT_AMT,3,기준연월,BASE_YM,YEARMONTH,,N,,N,단가와 투입실적을 적용하는 기준 연월,논리 속성
+TB_RES_UNIT_AMT,4,월단가,MON_UNIT_AMT,UNIT_AMOUNT,,Y,,N,월 기준 인력 단가,논리 속성
+TB_RES_UNIT_AMT,5,일단가,DAY_UNIT_AMT,UNIT_AMOUNT,,Y,,N,일 기준 인력 단가,논리 속성
+TB_RES_UNIT_AMT,6,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,논리 속성; 개인정보
+TB_RES_UNIT_AMT,7,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,논리 속성; UTC 기준 저장
+TB_RES_UNIT_AMT,8,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,논리 속성; 개인정보
+TB_RES_UNIT_AMT,9,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,논리 속성; UTC 기준 저장
+TB_RES_UNIT_AMT,10,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,논리 속성
+TB_RES_ASSIGN,1,인력투입ID,RES_ASSIGN_ID,ID,,N,,Y,프로젝트별 인력 투입 식별자,논리 속성; 기본키
+TB_RES_ASSIGN,2,프로젝트ID,PRJ_ID,ID,,N,,N,프로젝트 식별자,논리 속성; 프로젝트.프로젝트ID 참조
+TB_RES_ASSIGN,3,인력ID,RES_ID,ID,,N,,N,직원과 외주인력을 통합한 인력 식별자,논리 속성; 인력.인력ID 참조; 개인정보
+TB_RES_ASSIGN,4,투입시작일자,ASSIGN_START_DT,DATE,,N,,N,프로젝트 인력 투입 시작 일자,논리 속성
+TB_RES_ASSIGN,5,투입종료일자,ASSIGN_END_DT,DATE,,Y,,N,프로젝트 인력 투입 종료 일자,논리 속성
+TB_RES_ASSIGN,6,프로젝트역할코드,PRJ_ROLE_CD,CODE,,Y,,N,프로젝트에서 인력이 수행하는 역할 코드,논리 속성
+TB_RES_ASSIGN,7,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,논리 속성; 개인정보
+TB_RES_ASSIGN,8,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,논리 속성; UTC 기준 저장
+TB_RES_ASSIGN,9,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,논리 속성; 개인정보
+TB_RES_ASSIGN,10,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,논리 속성; UTC 기준 저장
+TB_RES_ASSIGN,11,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,논리 속성
+TB_RES_MTHLY_ASSIGN_ACTL,1,인력월별투입실적ID,RES_MTHLY_ASSIGN_ACTL_ID,ID,,N,,Y,인력의 월별 투입실적 식별자,논리 속성; 기본키
+TB_RES_MTHLY_ASSIGN_ACTL,2,인력투입ID,RES_ASSIGN_ID,ID,,N,,N,프로젝트별 인력 투입 식별자,논리 속성; 인력투입.투입ID 참조
+TB_RES_MTHLY_ASSIGN_ACTL,3,기준연월,BASE_YM,YEARMONTH,,N,,N,단가와 투입실적을 적용하는 기준 연월,논리 속성
+TB_RES_MTHLY_ASSIGN_ACTL,4,계획투입률,PLAN_ASSIGN_RATE,RATE,,Y,,N,월별로 계획한 인력 투입 비율,논리 속성
+TB_RES_MTHLY_ASSIGN_ACTL,5,계획투입MM,PLAN_ASSIGN_MM,MM,,Y,,N,월별로 계획한 인력 투입 맨먼스,논리 속성
+TB_RES_MTHLY_ASSIGN_ACTL,6,실적투입률,ACTL_ASSIGN_RATE,RATE,,Y,,N,월별 실제 인력 투입 비율,논리 속성
+TB_RES_MTHLY_ASSIGN_ACTL,7,실적투입MM,ACTL_ASSIGN_MM,MM,,Y,,N,월별로 실제 투입한 맨먼스,논리 속성
+TB_RES_MTHLY_ASSIGN_ACTL,8,실적확정여부,ACTL_CNFM_YN,YN,,N,'N',N,월별 투입실적의 확정 여부,논리 속성; 물리 필수값 확정
+TB_RES_MTHLY_ASSIGN_ACTL,9,실적확정자ID,ACTL_CNFM_ID,ID,,Y,,N,월별 투입실적을 확정한 사용자 식별자,논리 속성; 사용자.사용자ID 참조; 개인정보
+TB_RES_MTHLY_ASSIGN_ACTL,10,실적확정일시,ACTL_CNFM_DTM,TIMESTAMP,,Y,,N,월별 투입실적을 확정한 일시,논리 속성; UTC 기준 저장
+TB_RES_MTHLY_ASSIGN_ACTL,11,비고내용,REMARK_CONT,CONTENT,,Y,,N,추가 참고 내용,논리 속성
+TB_RES_MTHLY_ASSIGN_ACTL,12,등록자ID,REG_ID,REG_ID,,N,,N,최초 등록자 식별자,논리 속성; 개인정보
+TB_RES_MTHLY_ASSIGN_ACTL,13,등록일시,REG_DTM,REG_DTM,,N,CURRENT_TIMESTAMP,N,최초 등록 일시,논리 속성; UTC 기준 저장
+TB_RES_MTHLY_ASSIGN_ACTL,14,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,논리 속성; 개인정보
+TB_RES_MTHLY_ASSIGN_ACTL,15,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,논리 속성; UTC 기준 저장
+TB_RES_MTHLY_ASSIGN_ACTL,16,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,논리 속성

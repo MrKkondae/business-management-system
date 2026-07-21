@@ -6,6 +6,7 @@
 - 공통 원본: `constraint-common.csv`
 - 고객관리 원본: `constraint-customer.csv`
 - 영업관리 원본: `constraint-sales.csv`
+- 인력관리 원본: `constraint-employee.csv`
 
 DB FK를 생성하지 않는 참조도 `enforcement_type=APPLICATION`, `create_yn=N`으로 기록하여 관계와 무결성 점검 대상을 보존한다.
 
