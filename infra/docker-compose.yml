@@ -5,9 +5,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: bms
-      POSTGRES_USER: bms_user
-      POSTGRES_PASSWORD: bms_password
+      POSTGRES_DB: ${POSTGRES_DB:-bms}
+      POSTGRES_USER: ${POSTGRES_USER:-bms_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in infra/.env}
     volumes:
       - postgres_data:/var/lib/postgresql/data
 

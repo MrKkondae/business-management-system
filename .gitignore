@@ -18,6 +18,8 @@ out/
 # Env
 .env
 .env.*
+!.env.example
+application-local.properties
 
 # Logs
 *.log
