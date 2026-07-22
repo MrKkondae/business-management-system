@@ -1,5 +1,5 @@
 # Copy this file to ${user.home}/.bms/application-local.properties.
 # Keep the copied file outside this Git repository.
-spring.datasource.url=jdbc:postgresql://localhost:15432/bms_dev_lead
-spring.datasource.username=bms_dev_lead
-spring.datasource.password=bms12595
+spring.datasource.url=jdbc:postgresql://localhost:15432/YOUR_DATABASE
+spring.datasource.username=YOUR_USERNAME
+spring.datasource.password=YOUR_PASSWORD
