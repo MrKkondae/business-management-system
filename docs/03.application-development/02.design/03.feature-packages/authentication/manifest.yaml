@@ -1,6 +1,6 @@
 package_id: FPK-COM-AUTH-001
 title: 인증
-version: 0.1.0
+version: 0.3.0
 design_status: DESIGN_IN_PROGRESS
 
 backlog_ids:
@@ -41,6 +41,7 @@ references:
     - ../../../01.analysis/06.screen-list/00.screen-list.md
   architecture:
     - ../../../../02.architecture/01.application-architecture/application-architecture.md
+    - ../../../../02.architecture/01.application-architecture/90.decisions/003-single-instance-http-session.md
     - ../../../03.development/01.architecture/package-structure.md
   common_design:
     - ../../01.common/01.authentication-authorization-design.md

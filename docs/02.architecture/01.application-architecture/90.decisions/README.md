@@ -6,3 +6,4 @@
 | --- | --- | --- |
 | [ADR-001](001-common-interface-baseline.md) | 공통 인터페이스 기준선 | 승인 |
 | [ADR-002](002-user-provisioning-and-bootstrap.md) | 사용자 프로비저닝과 최초 관리자 부트스트랩 | 승인 |
+| [ADR-003](003-single-instance-http-session.md) | 단일 인스턴스 HttpSession 적용 | 승인 |

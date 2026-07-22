@@ -1,6 +1,6 @@
 package_id: FPK-SYS-USER-001
 title: 사용자 관리
-version: 0.1.0
+version: 0.2.0
 design_status: DESIGN_IN_PROGRESS
 
 backlog_ids:
@@ -28,6 +28,7 @@ screen_ids:
   - SYS-001
 routes:
   - /system/users
+  - /account/initial-registration
 
 scope:
   includes:
@@ -96,7 +97,9 @@ allowed_paths:
     - backend/src/test/java/com/bms/backend/employee/**
   frontend:
     - frontend/app/(main)/system/users/**
+    - frontend/app/(auth)/account/initial-registration/**
     - frontend/features/system/users/**
+    - frontend/features/account/initial-registration/**
     - frontend/shared/api/users/**
     - frontend/shared/types/users/**
   database:

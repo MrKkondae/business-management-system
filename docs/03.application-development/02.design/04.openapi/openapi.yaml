@@ -7,8 +7,143 @@ servers:
   - url: /api/v1
 security:
   - sessionCookie: []
-tags: []
-paths: {}
+tags:
+  - name: Authentication
+    description: 로그인과 서버 세션 관리
+paths:
+  /auth/login:
+    post:
+      tags: [Authentication]
+      summary: 로그인
+      operationId: commonLogin
+      security:
+        - csrfToken: []
+      x-bms-api-id: API-COM-AUTH-001
+      x-bms-requirement-ids: [REQ-COM-005, NFR-SEC-001, NFR-SEC-002]
+      x-bms-function-ids: [BFD-02-05-01-01]
+      x-bms-screen-ids: [COM-001]
+      x-bms-permission: PUBLIC
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: 로그인 성공과 서버 세션 생성
+          headers:
+            Set-Cookie:
+              description: HttpOnly 서버 세션 쿠키
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUserResponse'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/LoginFailedProblem'
+        '403':
+          $ref: '#/components/responses/ForbiddenProblem'
+        '429':
+          $ref: '#/components/responses/TooManyAttemptsProblem'
+        '500':
+          $ref: '#/components/responses/InternalProblem'
+  /auth/logout:
+    post:
+      tags: [Authentication]
+      summary: 로그아웃
+      operationId: commonLogout
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      x-bms-api-id: API-COM-AUTH-002
+      x-bms-requirement-ids: [REQ-COM-005]
+      x-bms-function-ids: [BFD-02-05-01-02]
+      x-bms-screen-ids: [COM-001]
+      x-bms-permission: AUTHENTICATED
+      responses:
+        '204':
+          description: 세션과 인증 쿠키 제거 완료
+        '401':
+          $ref: '#/components/responses/AuthenticationRequiredProblem'
+        '403':
+          $ref: '#/components/responses/ForbiddenProblem'
+        '500':
+          $ref: '#/components/responses/InternalProblem'
+  /auth/me:
+    get:
+      tags: [Authentication]
+      summary: 현재 사용자 조회
+      operationId: commonGetCurrentUser
+      security:
+        - sessionCookie: []
+      x-bms-api-id: API-COM-AUTH-003
+      x-bms-requirement-ids: [REQ-COM-005, NFR-SEC-002]
+      x-bms-function-ids: [BFD-02-05-01-03]
+      x-bms-screen-ids: [COM-001]
+      x-bms-permission: AUTHENTICATED_OR_LIMITED
+      responses:
+        '200':
+          description: 로그인 시점의 사용자와 권한 스냅샷
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUserResponse'
+        '401':
+          $ref: '#/components/responses/AuthenticationRequiredProblem'
+        '500':
+          $ref: '#/components/responses/InternalProblem'
+  /auth/activity:
+    post:
+      tags: [Authentication]
+      summary: 사용자 활동시각 갱신
+      operationId: commonRefreshActivity
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      x-bms-api-id: API-COM-AUTH-004
+      x-bms-requirement-ids: [REQ-COM-005]
+      x-bms-function-ids: [BFD-02-05-01-03]
+      x-bms-screen-ids: [COM-001]
+      x-bms-permission: AUTHENTICATED
+      responses:
+        '204':
+          description: 마지막 사용자 활동시각 갱신 완료
+        '401':
+          $ref: '#/components/responses/AuthenticationRequiredProblem'
+        '403':
+          $ref: '#/components/responses/ForbiddenProblem'
+        '500':
+          $ref: '#/components/responses/InternalProblem'
+  /auth/csrf:
+    get:
+      tags: [Authentication]
+      summary: CSRF 토큰 조회
+      operationId: commonGetCsrfToken
+      security: []
+      x-bms-api-id: API-COM-AUTH-005
+      x-bms-requirement-ids: [NFR-SEC-001]
+      x-bms-function-ids: [BFD-02-05-01-01]
+      x-bms-screen-ids: [COM-001]
+      x-bms-permission: PUBLIC
+      responses:
+        '200':
+          description: 상태 변경 요청용 CSRF 토큰
+          headers:
+            Cache-Control:
+              description: 토큰 응답 캐시 금지
+              schema:
+                type: string
+                example: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CsrfTokenResponse'
+        '500':
+          $ref: '#/components/responses/InternalProblem'
 components:
   securitySchemes:
     sessionCookie:
@@ -20,6 +155,91 @@ components:
       in: header
       name: X-CSRF-TOKEN
   schemas:
+    LoginRequest:
+      type: object
+      additionalProperties: false
+      required: [loginId, password]
+      properties:
+        loginId:
+          type: string
+          minLength: 1
+          maxLength: 100
+        password:
+          type: string
+          format: password
+          minLength: 1
+          maxLength: 256
+          writeOnly: true
+    CurrentUserResponse:
+      type: object
+      additionalProperties: false
+      required: [user, roles, menus, passwordChangeRequired, idleTimeoutSeconds]
+      properties:
+        user:
+          $ref: '#/components/schemas/AuthenticatedUser'
+        roles:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/AuthenticatedRole'
+        menus:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/AuthorizedMenu'
+        passwordChangeRequired:
+          type: boolean
+        idleTimeoutSeconds:
+          type: integer
+          minimum: 1
+          example: 900
+    AuthenticatedUser:
+      type: object
+      additionalProperties: false
+      required: [userId, loginId, displayName]
+      properties:
+        userId:
+          type: string
+        loginId:
+          type: string
+        displayName:
+          type: string
+    AuthenticatedRole:
+      type: object
+      additionalProperties: false
+      required: [roleId, roleName]
+      properties:
+        roleId:
+          type: string
+        roleName:
+          type: string
+    AuthorizedMenu:
+      type: object
+      additionalProperties: false
+      required: [menuId, menuName, sortOrder]
+      properties:
+        menuId:
+          type: string
+        parentMenuId:
+          type: [string, 'null']
+        menuName:
+          type: string
+        menuUrl:
+          type: [string, 'null']
+        sortOrder:
+          type: integer
+          minimum: 0
+    CsrfTokenResponse:
+      type: object
+      additionalProperties: false
+      required: [headerName, token]
+      properties:
+        headerName:
+          type: string
+          const: X-CSRF-TOKEN
+        token:
+          type: string
+          minLength: 1
     FieldError:
       type: object
       required: [field, reason, message]
@@ -66,4 +286,47 @@ components:
           type: array
           items:
             type: string
-
+  responses:
+    ValidationProblem:
+      description: 요청값 검증 실패
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    LoginFailedProblem:
+      description: 계정 존재 여부를 노출하지 않는 인증 실패
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    AuthenticationRequiredProblem:
+      description: 인증 세션 없음 또는 만료
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    ForbiddenProblem:
+      description: CSRF 토큰 없음·불일치 또는 접근 거부
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    TooManyAttemptsProblem:
+      description: 로그인 요청 속도 제한 초과
+      headers:
+        Retry-After:
+          description: 다시 요청할 수 있을 때까지의 초
+          schema:
+            type: integer
+            minimum: 1
+            example: 60
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    InternalProblem:
+      description: 내부 서버 오류
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
