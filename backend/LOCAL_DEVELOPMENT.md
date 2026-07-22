@@ -126,6 +126,10 @@ Test-NetConnection localhost -Port 15432
 
 ## 5. 최초 실행과 자동 마이그레이션
 
+이 프로젝트는 사용자 전역 Maven 설정과 분리된 `.mvn/bms-settings.xml`을 사용한다.
+따라서 다른 프로젝트를 위해 `${user.home}/.m2/settings.xml`에 로컬 Nexus가 설정되어 있어도
+BMS 의존성과 플러그인은 Maven Central에서 조회한다. Maven 명령은 `backend` 디렉터리에서 실행한다.
+
 그다음 백엔드를 평소처럼 실행한다.
 
 ```powershell
