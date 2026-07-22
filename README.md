@@ -8,3 +8,7 @@
 - Frontend: Next.js
 - Database: PostgreSQL
 - IDE: VS Code / Cursor
+
+## 개발환경 구축
+
+- [백엔드 로컬 개발환경 및 개발DB 권한 설정](backend/LOCAL_DEVELOPMENT.md)
