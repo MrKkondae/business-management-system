@@ -3,3 +3,8 @@
 spring.datasource.url=jdbc:postgresql://localhost:15432/YOUR_DATABASE
 spring.datasource.username=YOUR_USERNAME
 spring.datasource.password=YOUR_PASSWORD
+
+# Flyway 전용 접속
+spring.flyway.url=jdbc:postgresql://localhost:15432/YOUR_DATABASE
+spring.flyway.user=YOUR_MIGRATION_USERNAME
+spring.flyway.password=YOUR_MIGRATION_PASSWORD
