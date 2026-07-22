@@ -1,0 +1,141 @@
+package_id: FPK-SYS-AUTHZ-001
+title: 역할·권한 관리
+version: 0.1.0
+design_status: DESIGN_IN_PROGRESS
+
+backlog_ids:
+  - PB-018
+requirement_ids:
+  - REQ-SYS-002
+  - NFR-SEC-002
+function_ids:
+  - BFD-01-02-01-01 # 역할 조회
+  - BFD-01-02-01-02 # 역할 등록
+  - BFD-01-02-01-03 # 역할 수정
+  - BFD-01-02-01-04 # 역할 삭제처리
+  - BFD-01-02-02-01 # 메뉴권한 조회
+  - BFD-01-02-02-02 # 메뉴권한 저장
+  - BFD-01-02-03-01 # 역할 사용자 조회
+  - BFD-01-02-03-02 # 역할 사용자 추가
+  - BFD-01-02-03-03 # 역할 사용자 제외
+screen_ids:
+  - SYS-002
+routes:
+  - /system/roles
+
+scope:
+  includes:
+    - 역할 목록·상세 조회와 등록·수정·논리삭제
+    - 역할별 메뉴 접근권한 조회·저장
+    - 역할별 사용자 조회·추가·제외
+    - 다중 역할 권한 합집합과 다음 로그인 반영
+    - 마지막 활성 시스템관리자 보호
+    - 역할·권한 변경 시스템로그
+  excludes:
+    - 메뉴 기준정보 등록·수정·삭제와 순서 변경
+    - 기능 행위별 CRUD 권한 분리
+    - 조직·담당자·프로젝트별 데이터 범위 권한
+    - 현재 로그인 세션의 권한 즉시 갱신
+
+references:
+  backlog:
+    - ../../../../00.project-management/product-backlog.md
+  analysis:
+    - ../../../01.analysis/01.requirements-definition/00.requirements-definition.md
+    - ../../../01.analysis/04.business-function-detail/01.system-management.md
+    - ../../../01.analysis/05.menu-structure/00.menu-structure.md
+    - ../../../01.analysis/06.screen-list/00.screen-list.md
+  architecture:
+    - ../../../../02.architecture/01.application-architecture/application-architecture.md
+    - ../../../03.development/01.architecture/package-structure.md
+  common_design:
+    - ../../01.common/01.authentication-authorization-design.md
+    - ../../01.common/01-1.permission-matrix.md
+    - ../../01.common/02.api-openapi-error-rules.md
+    - ../../01.common/03.screen-design-rules.md
+    - ../../01.common/04.audit-log-policy.md
+    - ../../01.common/06.database-migration-rules.md
+    - ../../01.common/07.test-rules.md
+  catalogs:
+    - ../../02.catalog/functions.csv
+  openapi:
+    - ../../04.openapi/openapi.yaml
+  data:
+    - ../../../../02.architecture/02.data-architecture/03.physical-model/tables/table-system.csv
+    - ../../../../02.architecture/02.data-architecture/03.physical-model/columns/column-system.csv
+    - ../../../../02.architecture/02.data-architecture/03.physical-model/constraints/constraint-system.csv
+    - ../../../../02.architecture/02.data-architecture/03.physical-model/indexes/index-system.csv
+
+allowed_paths:
+  backend:
+    - backend/src/main/java/com/bms/backend/system/**
+    - backend/src/test/java/com/bms/backend/system/**
+  frontend:
+    - frontend/app/(main)/system/roles/**
+    - frontend/features/system/roles/**
+    - frontend/features/system/permissions/**
+    - frontend/shared/api/roles/**
+    - frontend/shared/types/roles/**
+  database:
+    - backend/src/main/resources/db/migration/**
+    - docs/02.architecture/02.data-architecture/03.physical-model/tables/table-system.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/columns/column-system.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/constraints/constraint-system.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/indexes/index-system.csv
+  design:
+    - docs/03.application-development/02.design/03.feature-packages/role-authorization/**
+    - docs/03.application-development/02.design/02.catalog/**
+    - docs/03.application-development/02.design/04.openapi/openapi.yaml
+
+forbidden_paths:
+  backend:
+    - backend/src/main/java/com/bms/backend/customer/**
+    - backend/src/main/java/com/bms/backend/sales/**
+    - backend/src/main/java/com/bms/backend/project/**
+    - backend/src/main/java/com/bms/backend/employee/**
+    - backend/src/main/java/com/bms/backend/external/**
+  frontend:
+    - frontend/app/(main)/customer/**
+    - frontend/app/(main)/sales/**
+    - frontend/app/(main)/project/**
+    - frontend/app/(main)/employee/**
+    - frontend/features/customer/**
+    - frontend/features/sales/**
+    - frontend/features/project/**
+    - frontend/features/employee/**
+  database:
+    - docs/02.architecture/02.data-architecture/03.physical-model/tables/table-customer.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/tables/table-sales.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/tables/table-project.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/tables/table-employee.csv
+
+database:
+  migration_required: true
+  allowed_objects:
+    - TB_SYS_USER
+    - TB_SYS_ROLE
+    - TB_SYS_USER_ROLE_REL
+    - TB_SYS_MENU
+    - TB_SYS_ROLE_MENU_PERM_REL
+    - TB_SYS_LOG
+  access:
+    read:
+      - TB_SYS_USER
+      - TB_SYS_ROLE
+      - TB_SYS_USER_ROLE_REL
+      - TB_SYS_MENU
+      - TB_SYS_ROLE_MENU_PERM_REL
+    write:
+      - TB_SYS_ROLE
+      - TB_SYS_USER_ROLE_REL
+      - TB_SYS_ROLE_MENU_PERM_REL
+      - TB_SYS_LOG
+
+planned_artifacts:
+  feature_spec: feature-spec.md
+  screens:
+    - screens/SYS-002.md
+  api_specs:
+    - apis/role-authorization-api.md
+  acceptance_tests:
+    - tests/acceptance.feature

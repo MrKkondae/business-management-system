@@ -1,0 +1,176 @@
+package_id: FPK-SYS-USER-001
+title: 사용자 관리
+version: 0.1.0
+design_status: DESIGN_IN_PROGRESS
+
+backlog_ids:
+  - PB-002
+requirement_ids:
+  - REQ-SYS-001
+  - NFR-SEC-001
+  - NFR-SEC-003
+dependency_requirement_ids:
+  - REQ-RES-001
+function_ids:
+  - BFD-01-01-01-01 # 사용자 조회
+  - BFD-01-01-01-02 # 사용자 등록
+  - BFD-01-01-01-03 # 사용자 수정
+  - BFD-01-01-01-04 # 사용자 사용중지
+  - BFD-01-01-02-01 # 비밀번호 초기화
+  - BFD-01-01-02-02 # 비밀번호 변경
+  - BFD-01-01-03-01 # 계정 활성화
+  - BFD-01-01-03-02 # 계정 비활성화
+  - BFD-01-01-03-03 # 로그인실패 비활성 해제
+dependency_function_ids:
+  - BFD-07-01-01-03 # 인력 공통정보 등록
+  - BFD-07-01-02-02 # 직원 등록
+screen_ids:
+  - SYS-001
+routes:
+  - /system/users
+
+scope:
+  includes:
+    - 사용자 목록·상세 조회와 등록·수정
+    - 관리자가 직원 최소정보와 사용자 계정 초기값을 한 번에 직접 등록
+    - 직원·사용자·초기 역할 관계의 단일 트랜잭션 생성
+    - 사용자의 최초 로그인 비밀번호 변경과 선택 개인정보 완성
+    - 빈 시스템의 기본 조직·최초 시스템관리자 1회성 부트스트랩
+    - 사용자 사용중지와 계정 활성·비활성 처리
+    - 관리자 비밀번호 초기화와 사용자 비밀번호 변경
+    - 로그인 실패 비활성 해제와 실패건수 초기화
+    - 사용자 변경 시스템로그와 개인정보 마스킹
+  excludes:
+    - 외주인력 사용자 계정 생성
+    - 공개 회원가입과 관리자 승인 없는 사용자 생성
+    - 사용자 등록에 필요한 최소 범위를 넘는 직원 상세정보 관리
+    - 직원 엑셀 일괄등록
+    - 역할 기준정보와 메뉴권한 관리
+    - 로그인·로그아웃 세션 처리
+
+references:
+  backlog:
+    - ../../../../00.project-management/product-backlog.md
+  analysis:
+    - ../../../01.analysis/01.requirements-definition/00.requirements-definition.md
+    - ../../../01.analysis/04.business-function-detail/01.system-management.md
+    - ../../../01.analysis/06.screen-list/00.screen-list.md
+  architecture:
+    - ../../../../02.architecture/01.application-architecture/application-architecture.md
+    - ../../../../02.architecture/01.application-architecture/90.decisions/002-user-provisioning-and-bootstrap.md
+    - ../../../03.development/01.architecture/package-structure.md
+  common_design:
+    - ../../01.common/01.authentication-authorization-design.md
+    - ../../01.common/01-1.permission-matrix.md
+    - ../../01.common/02.api-openapi-error-rules.md
+    - ../../01.common/03.screen-design-rules.md
+    - ../../01.common/04.audit-log-policy.md
+    - ../../01.common/05.privacy-data-policy.md
+    - ../../01.common/06.database-migration-rules.md
+    - ../../01.common/07.test-rules.md
+  catalogs:
+    - ../../02.catalog/functions.csv
+  openapi:
+    - ../../04.openapi/openapi.yaml
+  data:
+    - ../../../../02.architecture/02.data-architecture/03.physical-model/tables/table-system.csv
+    - ../../../../02.architecture/02.data-architecture/03.physical-model/columns/column-system.csv
+    - ../../../../02.architecture/02.data-architecture/03.physical-model/constraints/constraint-system.csv
+    - ../../../../02.architecture/02.data-architecture/03.physical-model/indexes/index-system.csv
+    - ../../../../02.architecture/02.data-architecture/03.physical-model/tables/table-employee.csv
+    - ../../../../02.architecture/02.data-architecture/03.physical-model/columns/column-employee.csv
+    - ../../../../02.architecture/02.data-architecture/03.physical-model/constraints/constraint-employee.csv
+    - ../../../../02.architecture/02.data-architecture/03.physical-model/indexes/index-employee.csv
+    - ../../../../02.architecture/02.data-architecture/03.physical-model/tables/table-common.csv
+    - ../../../../02.architecture/02.data-architecture/03.physical-model/columns/column-common.csv
+    - ../../../../02.architecture/02.data-architecture/03.physical-model/constraints/constraint-common.csv
+    - ../../../../02.architecture/02.data-architecture/03.physical-model/indexes/index-common.csv
+
+allowed_paths:
+  backend:
+    - backend/src/main/java/com/bms/backend/common/**
+    - backend/src/main/java/com/bms/backend/system/**
+    - backend/src/main/java/com/bms/backend/employee/**
+    - backend/src/test/java/com/bms/backend/common/**
+    - backend/src/test/java/com/bms/backend/system/**
+    - backend/src/test/java/com/bms/backend/employee/**
+  frontend:
+    - frontend/app/(main)/system/users/**
+    - frontend/features/system/users/**
+    - frontend/shared/api/users/**
+    - frontend/shared/types/users/**
+  database:
+    - backend/src/main/resources/db/migration/**
+    - docs/02.architecture/02.data-architecture/03.physical-model/tables/table-system.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/columns/column-system.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/constraints/constraint-system.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/indexes/index-system.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/tables/table-employee.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/columns/column-employee.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/constraints/constraint-employee.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/indexes/index-employee.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/tables/table-common.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/columns/column-common.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/constraints/constraint-common.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/indexes/index-common.csv
+  design:
+    - docs/03.application-development/02.design/03.feature-packages/user-management/**
+    - docs/03.application-development/02.design/02.catalog/**
+    - docs/03.application-development/02.design/04.openapi/openapi.yaml
+
+forbidden_paths:
+  backend:
+    - backend/src/main/java/com/bms/backend/customer/**
+    - backend/src/main/java/com/bms/backend/sales/**
+    - backend/src/main/java/com/bms/backend/project/**
+    - backend/src/main/java/com/bms/backend/external/**
+  frontend:
+    - frontend/app/(main)/customer/**
+    - frontend/app/(main)/sales/**
+    - frontend/app/(main)/project/**
+    - frontend/app/(main)/employee/**
+    - frontend/features/customer/**
+    - frontend/features/sales/**
+    - frontend/features/project/**
+    - frontend/features/employee/**
+  database:
+    - docs/02.architecture/02.data-architecture/03.physical-model/tables/table-customer.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/tables/table-sales.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/tables/table-project.csv
+
+database:
+  migration_required: true
+  allowed_objects:
+    - TB_SYS_USER
+    - TB_SYS_ORG
+    - TB_SYS_ROLE
+    - TB_SYS_USER_ROLE_REL
+    - TB_SYS_LOG
+    - TB_COM_TASK_TGT
+    - TB_RES_MST
+    - TB_RES_EMPLOYEE
+  access:
+    read:
+      - TB_SYS_USER
+      - TB_SYS_ORG
+      - TB_SYS_ROLE
+      - TB_SYS_USER_ROLE_REL
+      - TB_RES_MST
+      - TB_RES_EMPLOYEE
+    write:
+      - TB_SYS_USER
+      - TB_SYS_ORG
+      - TB_SYS_USER_ROLE_REL
+      - TB_SYS_LOG
+      - TB_COM_TASK_TGT
+      - TB_RES_MST
+      - TB_RES_EMPLOYEE
+
+planned_artifacts:
+  feature_spec: feature-spec.md
+  screens:
+    - screens/SYS-001.md
+  api_specs:
+    - apis/user-management-api.md
+  acceptance_tests:
+    - tests/acceptance.feature

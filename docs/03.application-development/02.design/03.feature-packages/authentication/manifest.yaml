@@ -1,0 +1,140 @@
+package_id: FPK-COM-AUTH-001
+title: 인증
+version: 0.1.0
+design_status: DESIGN_IN_PROGRESS
+
+backlog_ids:
+  - PB-001
+requirement_ids:
+  - REQ-COM-005
+  - NFR-SEC-001
+  - NFR-SEC-002
+function_ids:
+  - BFD-02-05-01-01 # 로그인
+  - BFD-02-05-01-02 # 로그아웃
+  - BFD-02-05-01-03 # 현재 사용자 조회
+screen_ids:
+  - COM-001
+routes:
+  - /login
+
+scope:
+  includes:
+    - 로그인ID와 비밀번호 인증
+    - 서버 세션 생성·조회·만료와 로그아웃
+    - 로그인 시점 역할·메뉴권한 스냅샷 생성
+    - 로그인 실패건수 증가와 6번째 실패 계정 비활성화
+    - 로그인·로그아웃·자동 로그아웃 접속로그
+    - 현재 사용자와 접근 가능 메뉴 조회
+  excludes:
+    - 사용자 기본정보 관리
+    - 역할·메뉴권한 기준정보 관리
+    - SSO와 외부 OAuth 인증
+    - 비밀번호 찾기와 이메일·SMS 발송
+
+references:
+  backlog:
+    - ../../../../00.project-management/product-backlog.md
+  analysis:
+    - ../../../01.analysis/01.requirements-definition/00.requirements-definition.md
+    - ../../../01.analysis/04.business-function-detail/02.common-management.md
+    - ../../../01.analysis/06.screen-list/00.screen-list.md
+  architecture:
+    - ../../../../02.architecture/01.application-architecture/application-architecture.md
+    - ../../../03.development/01.architecture/package-structure.md
+  common_design:
+    - ../../01.common/01.authentication-authorization-design.md
+    - ../../01.common/01-1.permission-matrix.md
+    - ../../01.common/02.api-openapi-error-rules.md
+    - ../../01.common/03.screen-design-rules.md
+    - ../../01.common/04.audit-log-policy.md
+    - ../../01.common/05.privacy-data-policy.md
+    - ../../01.common/06.database-migration-rules.md
+    - ../../01.common/07.test-rules.md
+  catalogs:
+    - ../../02.catalog/functions.csv
+  openapi:
+    - ../../04.openapi/openapi.yaml
+  data:
+    - ../../../../02.architecture/02.data-architecture/03.physical-model/tables/table-system.csv
+    - ../../../../02.architecture/02.data-architecture/03.physical-model/columns/column-system.csv
+    - ../../../../02.architecture/02.data-architecture/03.physical-model/constraints/constraint-system.csv
+    - ../../../../02.architecture/02.data-architecture/03.physical-model/indexes/index-system.csv
+
+allowed_paths:
+  backend:
+    - backend/src/main/java/com/bms/backend/common/**
+    - backend/src/main/java/com/bms/backend/global/security/**
+    - backend/src/main/java/com/bms/backend/global/config/**
+    - backend/src/main/java/com/bms/backend/system/**
+    - backend/src/test/java/com/bms/backend/common/**
+    - backend/src/test/java/com/bms/backend/global/security/**
+    - backend/src/test/java/com/bms/backend/system/**
+  frontend:
+    - frontend/app/(auth)/login/**
+    - frontend/features/auth/**
+    - frontend/shared/api/auth/**
+    - frontend/shared/types/auth/**
+  database:
+    - backend/src/main/resources/db/migration/**
+    - docs/02.architecture/02.data-architecture/03.physical-model/tables/table-system.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/columns/column-system.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/constraints/constraint-system.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/indexes/index-system.csv
+  design:
+    - docs/03.application-development/02.design/03.feature-packages/authentication/**
+    - docs/03.application-development/02.design/02.catalog/**
+    - docs/03.application-development/02.design/04.openapi/openapi.yaml
+
+forbidden_paths:
+  backend:
+    - backend/src/main/java/com/bms/backend/customer/**
+    - backend/src/main/java/com/bms/backend/sales/**
+    - backend/src/main/java/com/bms/backend/project/**
+    - backend/src/main/java/com/bms/backend/employee/**
+    - backend/src/main/java/com/bms/backend/external/**
+  frontend:
+    - frontend/app/(main)/customer/**
+    - frontend/app/(main)/sales/**
+    - frontend/app/(main)/project/**
+    - frontend/app/(main)/employee/**
+    - frontend/features/customer/**
+    - frontend/features/sales/**
+    - frontend/features/project/**
+    - frontend/features/employee/**
+  database:
+    - docs/02.architecture/02.data-architecture/03.physical-model/tables/table-customer.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/tables/table-sales.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/tables/table-project.csv
+    - docs/02.architecture/02.data-architecture/03.physical-model/tables/table-employee.csv
+
+database:
+  migration_required: true
+  allowed_objects:
+    - TB_SYS_USER
+    - TB_SYS_ROLE
+    - TB_SYS_USER_ROLE_REL
+    - TB_SYS_MENU
+    - TB_SYS_ROLE_MENU_PERM_REL
+    - TB_SYS_ACCESS_LOG
+    - TB_SYS_LOG
+  access:
+    read:
+      - TB_SYS_USER
+      - TB_SYS_ROLE
+      - TB_SYS_USER_ROLE_REL
+      - TB_SYS_MENU
+      - TB_SYS_ROLE_MENU_PERM_REL
+    write:
+      - TB_SYS_USER
+      - TB_SYS_ACCESS_LOG
+      - TB_SYS_LOG
+
+planned_artifacts:
+  feature_spec: feature-spec.md
+  screens:
+    - screens/COM-001.md
+  api_specs:
+    - apis/authentication-api.md
+  acceptance_tests:
+    - tests/acceptance.feature
