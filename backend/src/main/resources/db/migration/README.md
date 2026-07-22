@@ -23,5 +23,19 @@ V202607221000__create_system_common_tables.sql
 - 운영 사용자, 비밀번호, 개인정보와 환경별 비밀값은 마이그레이션에 포함하지 않는다.
 - 잘못된 변경은 기존 파일 수정이 아니라 더 높은 버전의 마이그레이션으로 보정한다.
 
-현재 디렉터리는 Flyway 실행 기반만 구성한 상태이며 초기 스키마 DDL은 후속 작업에서
-물리 모델 CSV를 기준으로 추가한다.
+## 초기 스키마 구성
+
+- `V202607221000__create_initial_tables.sql`: 컬럼, PK, DB CHECK와 설명
+- `V202607221010__add_initial_foreign_keys.sql`: `DATABASE/Y` FK
+- `V202607221020__create_initial_indexes.sql`: 일반·고유·부분 인덱스
+- `V202607221030__seed_initial_roles.sql`: 승인된 초기 역할
+
+앞의 세 DDL 파일은 `scripts/generate_initial_ddl.py`가 물리 모델 CSV에서 생성한다.
+공유 환경 적용 전 최신 여부는 다음 명령으로 확인한다.
+
+```powershell
+python scripts/generate_initial_ddl.py --check
+```
+
+공유 환경에 적용된 마이그레이션은 생성기로 다시 덮어쓰지 않는다. 물리 모델이 변경되면
+더 높은 버전의 새 마이그레이션을 작성한다.
