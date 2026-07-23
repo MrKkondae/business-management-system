@@ -65,7 +65,7 @@ paths:
       x-bms-requirement-ids: [REQ-COM-005]
       x-bms-function-ids: [BFD-02-05-01-02]
       x-bms-screen-ids: [COM-001]
-      x-bms-permission: AUTHENTICATED
+      x-bms-permission: AUTHENTICATED_OR_LIMITED
       responses:
         '204':
           description: 세션과 인증 쿠키 제거 완료
@@ -110,7 +110,7 @@ paths:
       x-bms-requirement-ids: [REQ-COM-005]
       x-bms-function-ids: [BFD-02-05-01-03]
       x-bms-screen-ids: [COM-001]
-      x-bms-permission: AUTHENTICATED
+      x-bms-permission: AUTHENTICATED_OR_LIMITED
       responses:
         '204':
           description: 마지막 사용자 활동시각 갱신 완료
@@ -430,6 +430,7 @@ components:
         temporaryPasswordExpiresAt:
           type: string
           format: date-time
+          description: 서버에 저장한 최초 등록 전용 임시 비밀번호의 발급 후 24시간 만료일시
     UserRegistrationOptionsResponse:
       type: object
       additionalProperties: false
@@ -470,6 +471,7 @@ components:
           type: string
           minLength: 1
           maxLength: 100
+          description: 앞뒤 공백 제거 후 영문자를 소문자로 변환하여 조회
         password:
           type: string
           format: password
@@ -479,7 +481,7 @@ components:
     CurrentUserResponse:
       type: object
       additionalProperties: false
-      required: [user, roles, menus, passwordChangeRequired, idleTimeoutSeconds]
+      required: [user, roles, menus, passwordChangeRequired, idleTimeoutSeconds, absoluteSessionExpiresAt]
       properties:
         user:
           $ref: '#/components/schemas/AuthenticatedUser'
@@ -499,6 +501,11 @@ components:
           type: integer
           minimum: 1
           example: 900
+          description: 일반 세션 900초, 초기 비밀번호 제한 세션 600초
+        absoluteSessionExpiresAt:
+          type: [string, 'null']
+          format: date-time
+          description: 제한 세션 절대 만료일시이며 일반 세션은 null
     AuthenticatedUser:
       type: object
       additionalProperties: false

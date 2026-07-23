@@ -18,6 +18,7 @@ TB_SYS_USER,18,수정자ID,MOD_ID,MOD_ID,,Y,,N,최종 수정자 식별자,공통
 TB_SYS_USER,19,수정일시,MOD_DTM,MOD_DTM,,Y,,N,최종 수정 일시,공통 컬럼
 TB_SYS_USER,20,삭제여부,DEL_YN,DEL_YN,,N,'N',N,논리 삭제 여부,공통 컬럼
 TB_SYS_USER,21,비활성원인코드,INACTIVE_RSN_CD,CODE,,Y,,N,계정 비활성 전환 원인 코드,논리 속성
+TB_SYS_USER,22,임시비밀번호만료일시,TEMP_PWD_EXPIRE_DTM,TIMESTAMP,,Y,,N,최초 등록 전용 임시 비밀번호를 사용할 수 있는 최종 일시,비밀번호초기화필요여부가 Y이면 필수
 TB_SYS_ROLE,1,역할ID,ROLE_ID,ID,,N,,Y,역할 식별자,논리 속성
 TB_SYS_ROLE,2,역할명,ROLE_NM,NAME,,N,,N,역할 명칭,논리 속성
 TB_SYS_ROLE,3,역할설명,ROLE_DESC,SHORT_DESC,,Y,,N,역할에 대한 설명,논리 속성

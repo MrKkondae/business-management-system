@@ -102,7 +102,7 @@
   "userId": "01K...",
   "employeeId": "01K...",
   "loginId": "staff01",
-  "temporaryPassword": "one-time-value",
+  "temporaryPassword": "initial-registration-value",
   "temporaryPasswordExpiresAt": "2026-07-23T08:00:00Z"
 }
 ```
@@ -110,6 +110,7 @@
 - `Location: /api/v1/users/{userId}`를 반환한다.
 - `Cache-Control: no-store`를 반환한다.
 - `temporaryPassword`는 이 응답 이후 어떤 조회 API에서도 제공하지 않는다.
+- `temporaryPasswordExpiresAt`은 서버가 `TEMP_PWD_EXPIRE_DTM`에 저장한 발급 후 24시간 만료일시와 동일하다.
 
 ### 오류
 
@@ -131,4 +132,3 @@
 | `API-SYS-USER-001` | `BFD-01-01-01-01` | `SYS-001` | `SYS-001` |
 | `API-SYS-USER-002` | `BFD-01-01-01-02` | `SYS-001` | `SYS-001` |
 | `API-SYS-USER-003` | `BFD-01-01-01-02` | `SYS-001` | `SYS-001` |
-

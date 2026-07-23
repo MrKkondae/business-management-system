@@ -1,6 +1,6 @@
 package_id: FPK-COM-AUTH-001
 title: 인증
-version: 0.3.0
+version: 0.5.0
 design_status: DESIGN_IN_PROGRESS
 
 backlog_ids:
