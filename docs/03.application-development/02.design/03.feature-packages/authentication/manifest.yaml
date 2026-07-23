@@ -146,3 +146,4 @@ planned_artifacts:
     - apis/authentication-api.md
   acceptance_tests:
     - tests/acceptance.feature
+  test_plan: tests/test-plan.md

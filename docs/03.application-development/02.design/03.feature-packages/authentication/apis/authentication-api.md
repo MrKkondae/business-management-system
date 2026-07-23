@@ -71,7 +71,7 @@ API ID, Method·Path, operationId, 기능·화면·권한·오류 연결은 `../
 
 ## 4. 로그아웃
 
-`POST /auth/logout`은 본문을 받지 않는다. 유효 세션이 있으면 접속로그를 `MANUAL`로 종료한 뒤 세션을 무효화하고 `204 No Content`를 반환한다. 세션이 없거나 만료되면 `401 AUTH_AUTHENTICATION_REQUIRED`를 반환한다.
+`POST /auth/logout`은 본문을 받지 않는다. 유효 세션이 있으면 접속로그를 `MANUAL`로 종료한 뒤 세션을 무효화하고 `204 No Content`를 반환한다. 세션이 없거나 만료되면 `401 AUTH_AUTHENTICATION_REQUIRED`와 세션 쿠키 만료 헤더를 반환하며 접속로그를 중복 변경하지 않는다.
 
 ## 5. 현재 사용자 조회
 

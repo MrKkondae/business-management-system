@@ -203,3 +203,4 @@ planned_artifacts:
     - apis/user-management-api.md
   acceptance_tests:
     - tests/acceptance.feature
+    - tests/bootstrap.feature
