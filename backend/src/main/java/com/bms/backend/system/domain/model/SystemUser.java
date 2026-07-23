@@ -58,6 +58,12 @@ public class SystemUser {
     @JdbcTypeCode(SqlTypes.CHAR)
     private String passwordInitializationRequired;
 
+    @Column(name = "temp_pwd_expire_dtm")
+    private LocalDateTime temporaryPasswordExpiresAt;
+
+    @Column(name = "sec_ver", nullable = false)
+    private Integer securityVersion;
+
     @Column(name = "reg_id", length = 26, nullable = false)
     private String registeredBy;
 

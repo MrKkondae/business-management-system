@@ -29,6 +29,8 @@ V202607221000__create_system_common_tables.sql
 - `V202607221010__add_initial_foreign_keys.sql`: `DATABASE/Y` FK
 - `V202607221020__create_initial_indexes.sql`: 일반·고유·부분 인덱스
 - `V202607221030__seed_initial_roles.sql`: 승인된 초기 역할
+- `V202607231600__add_user_authentication_security_fields.sql`: 세션 보안버전과 임시 비밀번호 만료 필드
+- `V202607231610__seed_authentication_bootstrap_data.sql`: 인증·부트스트랩 역할, 메뉴, 권한과 공통코드
 
 앞의 세 DDL 파일은 `scripts/generate_initial_ddl.py`가 물리 모델 CSV에서 생성한다.
 공유 환경 적용 전 최신 여부는 다음 명령으로 확인한다.

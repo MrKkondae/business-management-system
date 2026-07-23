@@ -1,0 +1,97 @@
+-- Generated from docs/03.application-development/02.design/02.catalog/seed-data.
+-- Reviewed as the authentication and initial-administrator bootstrap baseline.
+
+INSERT INTO tb_sys_role (
+    role_id, role_nm, role_desc, reg_id, reg_dtm, mod_id, mod_dtm, del_yn
+)
+VALUES
+    ('01KY3HYG000000000000000001', '시스템관리자', '시스템 기준정보와 운영 기능을 관리하는 역할', 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG000000000000000002', '경영진', '전사 현황과 승인된 경영정보를 조회하는 역할', 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG000000000000000003', '영업', '고객과 영업 업무를 처리하는 역할', 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG000000000000000004', 'PM', '담당 프로젝트와 투입 인력을 관리하는 역할', 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG000000000000000005', '일반사용자', '본인에게 허용된 업무를 조회하고 처리하는 역할', 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N')
+ON CONFLICT (role_id) DO UPDATE
+SET role_nm = EXCLUDED.role_nm,
+    role_desc = EXCLUDED.role_desc,
+    mod_id = 'SYSTEM',
+    mod_dtm = CURRENT_TIMESTAMP,
+    del_yn = 'N';
+
+INSERT INTO tb_com_code_grp (
+    cd_grp_id, cd_grp_nm, cd_grp_desc_cont,
+    reg_id, reg_dtm, mod_id, mod_dtm, del_yn
+)
+VALUES
+    ('01KY3HYG200000000000000001', '계정 상태', '사용자 계정 활성 상태', 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG200000000000000002', '비활성 사유', '사용자 계정 비활성 처리 사유', 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG200000000000000003', '로그인 실패 사유', '내부 로그인 실패 분류', 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG200000000000000004', '로그아웃 유형', '세션 종료 유형', 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG200000000000000005', '조직 유형', '조직 계층의 업무 유형', 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG200000000000000006', '인력 구분', '직원과 외주인력 구분', 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG200000000000000007', '재직 상태', '직원의 현재 재직 상태', 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N')
+ON CONFLICT (cd_grp_id) DO UPDATE
+SET cd_grp_nm = EXCLUDED.cd_grp_nm,
+    cd_grp_desc_cont = EXCLUDED.cd_grp_desc_cont,
+    mod_id = 'SYSTEM',
+    mod_dtm = CURRENT_TIMESTAMP,
+    del_yn = 'N';
+
+INSERT INTO tb_com_code (
+    cd_grp_id, cd, cd_nm, sort_seq,
+    reg_id, reg_dtm, mod_id, mod_dtm, del_yn
+)
+VALUES
+    ('01KY3HYG200000000000000001', 'ACTIVE', '활성', 10, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG200000000000000001', 'INACTIVE', '비활성', 20, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG200000000000000002', 'MANUAL', '관리자 수동 처리', 10, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG200000000000000002', 'LOGIN_FAILURE', '로그인 실패 누적', 20, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG200000000000000003', 'USER_NOT_FOUND', '사용자 없음', 10, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG200000000000000003', 'BAD_CREDENTIALS', '인증정보 불일치', 20, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG200000000000000003', 'ACCOUNT_INACTIVE', '비활성 계정', 30, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG200000000000000003', 'TEMP_PWD_EXPIRED', '임시 비밀번호 만료', 40, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG200000000000000004', 'MANUAL', '사용자 로그아웃', 10, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG200000000000000004', 'TIMEOUT', '세션 시간 만료', 20, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG200000000000000005', 'COMPANY', '회사', 10, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG200000000000000006', 'EMPLOYEE', '직원', 10, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG200000000000000006', 'OUTSOURCED', '외주인력', 20, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG200000000000000007', 'EMPLOYED', '재직', 10, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG200000000000000007', 'LEAVE', '휴직', 20, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG200000000000000007', 'RETIRED', '퇴직', 30, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N')
+ON CONFLICT (cd_grp_id, cd) DO UPDATE
+SET cd_nm = EXCLUDED.cd_nm,
+    sort_seq = EXCLUDED.sort_seq,
+    mod_id = 'SYSTEM',
+    mod_dtm = CURRENT_TIMESTAMP,
+    del_yn = 'N';
+
+INSERT INTO tb_sys_menu (
+    menu_id, up_menu_id, menu_nm, menu_url, sort_seq,
+    reg_id, reg_dtm, mod_id, mod_dtm, del_yn
+)
+VALUES
+    ('01KY3HYG100000000000000001', NULL, '시스템 관리', NULL, 900, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG100000000000000002', '01KY3HYG100000000000000001', '사용자 관리', '/system/users', 10, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG100000000000000003', '01KY3HYG100000000000000001', '역할 관리', '/system/roles', 20, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG100000000000000004', '01KY3HYG100000000000000001', '메뉴 관리', '/system/menus', 30, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG100000000000000005', '01KY3HYG100000000000000001', '공통코드 관리', '/system/common-codes', 40, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N'),
+    ('01KY3HYG100000000000000006', '01KY3HYG100000000000000001', '조직 관리', '/system/organizations', 50, 'SYSTEM', CURRENT_TIMESTAMP, NULL, NULL, 'N')
+ON CONFLICT (menu_id) DO UPDATE
+SET up_menu_id = EXCLUDED.up_menu_id,
+    menu_nm = EXCLUDED.menu_nm,
+    menu_url = EXCLUDED.menu_url,
+    sort_seq = EXCLUDED.sort_seq,
+    mod_id = 'SYSTEM',
+    mod_dtm = CURRENT_TIMESTAMP,
+    del_yn = 'N';
+
+INSERT INTO tb_sys_role_menu_perm_rel (
+    role_id, menu_id, reg_id, reg_dtm
+)
+VALUES
+    ('01KY3HYG000000000000000001', '01KY3HYG100000000000000001', 'SYSTEM', CURRENT_TIMESTAMP),
+    ('01KY3HYG000000000000000001', '01KY3HYG100000000000000002', 'SYSTEM', CURRENT_TIMESTAMP),
+    ('01KY3HYG000000000000000001', '01KY3HYG100000000000000003', 'SYSTEM', CURRENT_TIMESTAMP),
+    ('01KY3HYG000000000000000001', '01KY3HYG100000000000000004', 'SYSTEM', CURRENT_TIMESTAMP),
+    ('01KY3HYG000000000000000001', '01KY3HYG100000000000000005', 'SYSTEM', CURRENT_TIMESTAMP),
+    ('01KY3HYG000000000000000001', '01KY3HYG100000000000000006', 'SYSTEM', CURRENT_TIMESTAMP)
+ON CONFLICT (role_id, menu_id) DO NOTHING;

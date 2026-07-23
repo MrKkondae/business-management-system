@@ -349,7 +349,7 @@ components:
     sessionCookie:
       type: apiKey
       in: cookie
-      name: JSESSIONID
+      name: BMSSESSION
     csrfToken:
       type: apiKey
       in: header
