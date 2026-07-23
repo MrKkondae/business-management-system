@@ -10,6 +10,8 @@ security:
 tags:
   - name: Authentication
     description: 로그인과 서버 세션 관리
+  - name: UserManagement
+    description: 내부 직원과 사용자 계정 관리
 paths:
   /auth/login:
     post:
@@ -144,6 +146,146 @@ paths:
                 $ref: '#/components/schemas/CsrfTokenResponse'
         '500':
           $ref: '#/components/responses/InternalProblem'
+  /users:
+    get:
+      tags: [UserManagement]
+      summary: 사용자 목록 조회
+      operationId: systemSearchUsers
+      security:
+        - sessionCookie: []
+      x-bms-api-id: API-SYS-USER-001
+      x-bms-requirement-ids: [REQ-SYS-001, NFR-SEC-003]
+      x-bms-function-ids: [BFD-01-01-01-01]
+      x-bms-screen-ids: [SYS-001]
+      x-bms-permission: SYS-001
+      parameters:
+        - name: keyword
+          in: query
+          schema:
+            type: string
+            maxLength: 100
+        - name: accountStatusCode
+          in: query
+          schema:
+            type: string
+            enum: [ACTIVE, INACTIVE]
+        - name: organizationId
+          in: query
+          schema:
+            type: string
+        - name: roleId
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - name: size
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: sort
+          in: query
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: 사용자 목록
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSearchResponse'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationRequiredProblem'
+        '403':
+          $ref: '#/components/responses/ForbiddenProblem'
+        '500':
+          $ref: '#/components/responses/InternalProblem'
+    post:
+      tags: [UserManagement]
+      summary: 내부 직원과 사용자 계정 등록
+      operationId: systemCreateUser
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      x-bms-api-id: API-SYS-USER-002
+      x-bms-requirement-ids: [REQ-SYS-001, REQ-RES-001, NFR-SEC-003]
+      x-bms-function-ids: [BFD-01-01-01-02, BFD-07-01-01-03, BFD-07-01-02-02]
+      x-bms-screen-ids: [SYS-001]
+      x-bms-permission: SYS-001
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '201':
+          description: 직원·사용자·초기 역할 등록 완료
+          headers:
+            Location:
+              description: 생성된 사용자 자원 URL
+              schema:
+                type: string
+                example: /api/v1/users/01K00000000000000000000000
+            Cache-Control:
+              description: 임시 비밀번호 응답 캐시 금지
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUserResponse'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationRequiredProblem'
+        '403':
+          $ref: '#/components/responses/ForbiddenProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+        '500':
+          $ref: '#/components/responses/InternalProblem'
+  /users/registration-options:
+    get:
+      tags: [UserManagement]
+      summary: 사용자 등록 옵션 조회
+      operationId: systemGetUserRegistrationOptions
+      security:
+        - sessionCookie: []
+      x-bms-api-id: API-SYS-USER-003
+      x-bms-requirement-ids: [REQ-SYS-001]
+      x-bms-function-ids: [BFD-01-01-01-02]
+      x-bms-screen-ids: [SYS-001]
+      x-bms-permission: SYS-001
+      responses:
+        '200':
+          description: 등록 가능한 조직과 역할 옵션
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRegistrationOptionsResponse'
+        '401':
+          $ref: '#/components/responses/AuthenticationRequiredProblem'
+        '403':
+          $ref: '#/components/responses/ForbiddenProblem'
+        '500':
+          $ref: '#/components/responses/InternalProblem'
 components:
   securitySchemes:
     sessionCookie:
@@ -155,6 +297,170 @@ components:
       in: header
       name: X-CSRF-TOKEN
   schemas:
+    UserSearchResponse:
+      type: object
+      additionalProperties: false
+      required: [items, page, size, totalElements, totalPages, sort]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserSummary'
+        page:
+          type: integer
+          minimum: 0
+        size:
+          type: integer
+          minimum: 1
+          maximum: 100
+        totalElements:
+          type: integer
+          format: int64
+          minimum: 0
+        totalPages:
+          type: integer
+          minimum: 0
+        sort:
+          type: array
+          items:
+            type: string
+    UserSummary:
+      type: object
+      additionalProperties: false
+      required:
+        - userId
+        - employeeId
+        - employeeNumber
+        - loginId
+        - userName
+        - organizationId
+        - organizationName
+        - roleNames
+        - accountStatusCode
+        - passwordChangeRequired
+        - registeredAt
+      properties:
+        userId:
+          type: string
+        employeeId:
+          type: string
+        employeeNumber:
+          type: string
+        loginId:
+          type: string
+        userName:
+          type: string
+        organizationId:
+          type: string
+        organizationName:
+          type: string
+        roleNames:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        emailMasked:
+          type: [string, 'null']
+        mobileMasked:
+          type: [string, 'null']
+        accountStatusCode:
+          type: string
+          enum: [ACTIVE, INACTIVE]
+        passwordChangeRequired:
+          type: boolean
+        lastLoginAt:
+          type: [string, 'null']
+          format: date-time
+        registeredAt:
+          type: string
+          format: date-time
+    CreateUserRequest:
+      type: object
+      additionalProperties: false
+      required: [employeeNumber, userName, organizationId, loginId, initialRoleIds]
+      properties:
+        employeeNumber:
+          type: string
+          minLength: 1
+          maxLength: 30
+        userName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        organizationId:
+          type: string
+          minLength: 1
+        loginId:
+          type: string
+          minLength: 4
+          maxLength: 26
+          pattern: '^[A-Za-z0-9][A-Za-z0-9._-]{3,25}$'
+        initialRoleIds:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items:
+            type: string
+            minLength: 1
+        email:
+          type: string
+          format: email
+          maxLength: 100
+        mobileNumber:
+          type: string
+          maxLength: 20
+          pattern: '^[0-9-]+$'
+    CreateUserResponse:
+      type: object
+      additionalProperties: false
+      required: [userId, employeeId, loginId, temporaryPassword, temporaryPasswordExpiresAt]
+      properties:
+        userId:
+          type: string
+        employeeId:
+          type: string
+        loginId:
+          type: string
+        temporaryPassword:
+          type: string
+          format: password
+          readOnly: true
+          minLength: 16
+          maxLength: 16
+        temporaryPasswordExpiresAt:
+          type: string
+          format: date-time
+    UserRegistrationOptionsResponse:
+      type: object
+      additionalProperties: false
+      required: [organizations, roles]
+      properties:
+        organizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationOption'
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleOption'
+    OrganizationOption:
+      type: object
+      additionalProperties: false
+      required: [organizationId, organizationName]
+      properties:
+        organizationId:
+          type: string
+        organizationName:
+          type: string
+    RoleOption:
+      type: object
+      additionalProperties: false
+      required: [roleId, roleName]
+      properties:
+        roleId:
+          type: string
+        roleName:
+          type: string
     LoginRequest:
       type: object
       additionalProperties: false
@@ -301,6 +607,18 @@ components:
             $ref: '#/components/schemas/Problem'
     AuthenticationRequiredProblem:
       description: 인증 세션 없음 또는 만료
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    NotFoundProblem:
+      description: 조직·역할 또는 요청 자원을 찾을 수 없음
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    ConflictProblem:
+      description: 중복 자원 또는 현재 상태에서 처리할 수 없음
       content:
         application/problem+json:
           schema:
