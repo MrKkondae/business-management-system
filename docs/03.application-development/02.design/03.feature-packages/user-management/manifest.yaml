@@ -87,6 +87,9 @@ references:
     - ../../01.common/09.security-implementation-contract.md
   catalogs:
     - ../../02.catalog/functions.csv
+    - ../../02.catalog/apis.csv
+    - ../../02.catalog/error-codes.csv
+    - ../../02.catalog/permissions.csv
     - ../../02.catalog/seed-data/README.md
   openapi:
     - ../../04.openapi/openapi.yaml

@@ -25,6 +25,7 @@ paths:
       x-bms-function-ids: [BFD-02-05-01-01]
       x-bms-screen-ids: [COM-001]
       x-bms-permission: PUBLIC
+      x-bms-error-codes: [COMMON_VALIDATION_FAILED, AUTH_LOGIN_FAILED, AUTH_CSRF_INVALID, AUTH_TOO_MANY_ATTEMPTS, COMMON_INTERNAL_ERROR]
       requestBody:
         required: true
         content:
@@ -71,6 +72,7 @@ paths:
       x-bms-function-ids: [BFD-02-05-01-02]
       x-bms-screen-ids: [COM-001]
       x-bms-permission: AUTHENTICATED_OR_LIMITED
+      x-bms-error-codes: [AUTH_AUTHENTICATION_REQUIRED, AUTH_CSRF_INVALID, COMMON_INTERNAL_ERROR]
       responses:
         '204':
           description: 세션과 인증 쿠키 제거 완료
@@ -92,6 +94,7 @@ paths:
       x-bms-function-ids: [BFD-02-05-01-03]
       x-bms-screen-ids: [COM-001]
       x-bms-permission: AUTHENTICATED_OR_LIMITED
+      x-bms-error-codes: [AUTH_AUTHENTICATION_REQUIRED, COMMON_INTERNAL_ERROR]
       responses:
         '200':
           description: 로그인 시점의 사용자와 권한 스냅샷
@@ -122,6 +125,7 @@ paths:
       x-bms-function-ids: [BFD-02-05-01-03]
       x-bms-screen-ids: [COM-001]
       x-bms-permission: AUTHENTICATED_OR_LIMITED
+      x-bms-error-codes: [AUTH_AUTHENTICATION_REQUIRED, AUTH_CSRF_INVALID, COMMON_INTERNAL_ERROR]
       responses:
         '204':
           description: 마지막 사용자 활동시각 갱신 완료
@@ -144,6 +148,7 @@ paths:
       x-bms-function-ids: [BFD-02-05-01-01]
       x-bms-screen-ids: [COM-001]
       x-bms-permission: AUTHENTICATED
+      x-bms-error-codes: [COMMON_VALIDATION_FAILED, AUTH_AUTHENTICATION_REQUIRED, AUTH_REAUTHENTICATION_FAILED, AUTH_CSRF_INVALID, AUTH_PASSWORD_CHANGE_REQUIRED, AUTH_TOO_MANY_ATTEMPTS, COMMON_INTERNAL_ERROR]
       requestBody:
         required: true
         content:
@@ -180,6 +185,7 @@ paths:
       x-bms-function-ids: [BFD-02-05-01-01]
       x-bms-screen-ids: [COM-001]
       x-bms-permission: PUBLIC
+      x-bms-error-codes: [COMMON_INTERNAL_ERROR]
       responses:
         '200':
           description: 상태 변경 요청용 CSRF 토큰
@@ -207,6 +213,7 @@ paths:
       x-bms-function-ids: [BFD-01-01-01-01]
       x-bms-screen-ids: [SYS-001]
       x-bms-permission: SYS-001
+      x-bms-error-codes: [COMMON_VALIDATION_FAILED, AUTH_AUTHENTICATION_REQUIRED, AUTH_FORBIDDEN, AUTH_PASSWORD_CHANGE_REQUIRED, COMMON_INTERNAL_ERROR]
       parameters:
         - name: keyword
           in: query
@@ -274,6 +281,7 @@ paths:
       x-bms-function-ids: [BFD-01-01-01-02, BFD-07-01-01-03, BFD-07-01-02-02]
       x-bms-screen-ids: [SYS-001]
       x-bms-permission: SYS-001
+      x-bms-error-codes: [COMMON_VALIDATION_FAILED, AUTH_AUTHENTICATION_REQUIRED, AUTH_FORBIDDEN, AUTH_CSRF_INVALID, AUTH_PASSWORD_CHANGE_REQUIRED, COMMON_RESOURCE_NOT_FOUND, SYS_LOGIN_ID_DUPLICATE, RES_EMPLOYEE_NUMBER_DUPLICATE, COMMON_INVALID_STATE, COMMON_INTERNAL_ERROR]
       requestBody:
         required: true
         content:
@@ -322,6 +330,7 @@ paths:
       x-bms-function-ids: [BFD-01-01-01-02]
       x-bms-screen-ids: [SYS-001]
       x-bms-permission: SYS-001
+      x-bms-error-codes: [AUTH_AUTHENTICATION_REQUIRED, AUTH_FORBIDDEN, AUTH_PASSWORD_CHANGE_REQUIRED, COMMON_INTERNAL_ERROR]
       responses:
         '200':
           description: 등록 가능한 조직과 역할 옵션

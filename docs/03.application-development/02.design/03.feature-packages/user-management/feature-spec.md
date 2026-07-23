@@ -133,17 +133,7 @@ UserRegistrationService (@Transactional)
 
 ## 10. 오류 계약
 
-| 상황 | HTTP | 오류코드 |
-| --- | :---: | --- |
-| 입력 검증 실패 | 400 | `COMMON_VALIDATION_FAILED` |
-| 미인증·세션 만료 | 401 | `AUTH_AUTHENTICATION_REQUIRED` |
-| `SYS-001` 권한 없음 | 403 | `AUTH_FORBIDDEN` |
-| CSRF 실패 | 403 | `AUTH_CSRF_INVALID` |
-| 조직·역할을 찾을 수 없음 | 404 | `COMMON_RESOURCE_NOT_FOUND` |
-| 로그인ID 중복 | 409 | `SYS_LOGIN_ID_DUPLICATE` |
-| 사원번호 중복 | 409 | `RES_EMPLOYEE_NUMBER_DUPLICATE` |
-| 조직·역할이 삭제되어 등록 불가 | 409 | `COMMON_INVALID_STATE` |
-| 서버 오류 | 500 | `COMMON_INTERNAL_ERROR` |
+외부 오류코드 정의는 `../../02.catalog/error-codes.csv`, 사용자 관리 API별 오류 연결은 `../../02.catalog/apis.csv`를 원본으로 한다. 조직·역할 없음, 정규화 로그인ID·사원번호 중복과 삭제된 기준정보 선택은 등록 트랜잭션을 시작하거나 커밋하지 않는다.
 
 ## 11. 개인정보와 로그
 

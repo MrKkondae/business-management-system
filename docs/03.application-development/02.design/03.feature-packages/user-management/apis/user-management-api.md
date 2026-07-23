@@ -12,11 +12,7 @@
 
 ## 2. API 목록
 
-| API ID | Method·Path | operationId | 기능 |
-| --- | --- | --- | --- |
-| `API-SYS-USER-001` | `GET /users` | `systemSearchUsers` | 사용자 목록 조회 |
-| `API-SYS-USER-002` | `POST /users` | `systemCreateUser` | 직원·사용자·역할 동시 등록 |
-| `API-SYS-USER-003` | `GET /users/registration-options` | `systemGetUserRegistrationOptions` | 조직·초기 역할 옵션 조회 |
+API ID, Method·Path, operationId, 기능·화면·권한·오류 연결은 `../../../02.catalog/apis.csv`를 원본으로 한다. 본 문서는 사용자 관리 API의 처리 순서와 필드 기준만 보완한다.
 
 ## 3. 사용자 목록 조회
 
@@ -114,22 +110,8 @@
 
 ### 오류
 
-| HTTP | 오류코드 | 조건 |
-| :---: | --- | --- |
-| 400 | `COMMON_VALIDATION_FAILED` | 필수·형식 검증 실패 |
-| 401 | `AUTH_AUTHENTICATION_REQUIRED` | 세션 없음·만료 |
-| 403 | `AUTH_FORBIDDEN` | SYS-001 권한 없음 |
-| 403 | `AUTH_CSRF_INVALID` | CSRF 토큰 없음 또는 불일치 |
-| 404 | `COMMON_RESOURCE_NOT_FOUND` | 존재하지 않는 조직·역할 |
-| 409 | `SYS_LOGIN_ID_DUPLICATE` | 로그인ID 중복 |
-| 409 | `RES_EMPLOYEE_NUMBER_DUPLICATE` | 사원번호 중복 |
-| 409 | `COMMON_INVALID_STATE` | 삭제된 조직·역할 선택 |
-| 500 | `COMMON_INTERNAL_ERROR` | 내부 서버 오류 |
+사용자 등록 API의 오류코드와 HTTP 상태 연결은 `../../../02.catalog/apis.csv`를 따른다. 중복과 삭제된 기준정보 오류가 발생하면 직원·사용자·역할 관계를 모두 롤백한다.
 
 ## 6. 권한과 추적성
 
-| API ID | 기능 ID | 화면 ID | 권한 |
-| --- | --- | --- | --- |
-| `API-SYS-USER-001` | `BFD-01-01-01-01` | `SYS-001` | `SYS-001` |
-| `API-SYS-USER-002` | `BFD-01-01-01-02` | `SYS-001` | `SYS-001` |
-| `API-SYS-USER-003` | `BFD-01-01-01-02` | `SYS-001` | `SYS-001` |
+API별 기능·화면·권한 연결은 `../../../02.catalog/apis.csv`, `SYS-001` 권한 정의는 `../../../02.catalog/permissions.csv`를 원본으로 한다.

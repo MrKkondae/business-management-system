@@ -1,0 +1,17 @@
+error_code,domain,http_status,user_message,exposure_policy,retryable_yn,log_level,description
+COMMON_VALIDATION_FAILED,common,400,입력값을 확인해 주세요.,SAFE,N,INFO,요청 필드 또는 형식 검증 실패
+AUTH_AUTHENTICATION_REQUIRED,common,401,로그인이 필요합니다.,SAFE,N,INFO,인증 세션 없음·유휴 만료·절대 만료·계정 상태 또는 보안버전 불일치
+AUTH_LOGIN_FAILED,common,401,로그인 정보를 확인해 주세요.,GENERIC_AUTH,N,WARN,사용자 존재 여부와 내부 인증 실패 원인을 숨긴 로그인 실패
+AUTH_FORBIDDEN,common,403,접근 권한이 없습니다.,SAFE,N,WARN,기능·메뉴 또는 데이터 범위 권한 없음
+AUTH_CSRF_INVALID,common,403,요청을 다시 시도해 주세요.,GENERIC_AUTH,Y,WARN,CSRF 토큰 없음 또는 불일치
+AUTH_REAUTHENTICATION_REQUIRED,common,403,보안을 위해 비밀번호를 다시 확인해 주세요.,SAFE,Y,INFO,중요 작업에 필요한 최근 재인증 없음 또는 10분 만료
+AUTH_REAUTHENTICATION_FAILED,common,403,비밀번호를 확인해 주세요.,GENERIC_AUTH,N,WARN,현재 세션 사용자의 재인증 비밀번호 불일치
+AUTH_PASSWORD_CHANGE_REQUIRED,common,403,초기 비밀번호를 변경해 주세요.,SAFE,Y,INFO,초기 비밀번호 제한 세션에서 허용되지 않은 API 접근
+AUTH_TOO_MANY_ATTEMPTS,common,429,잠시 후 다시 시도해 주세요.,SAFE,Y,WARN,로그인 또는 재인증 요청 속도 제한 초과
+COMMON_RESOURCE_NOT_FOUND,common,404,요청한 정보를 찾을 수 없습니다.,SAFE,N,INFO,요청 자원 없음 또는 노출할 수 없는 자원
+COMMON_DUPLICATE_RESOURCE,common,409,이미 등록된 정보입니다.,SAFE,N,INFO,일반적인 업무키 또는 유일성 충돌
+COMMON_INVALID_STATE,common,409,현재 상태에서는 처리할 수 없습니다.,SAFE,N,INFO,허용되지 않은 상태 전이 또는 삭제된 기준정보 사용
+COMMON_CONCURRENT_MODIFICATION,common,409,다른 사용자가 먼저 변경했습니다. 다시 조회해 주세요.,SAFE,Y,WARN,낙관적 잠금 또는 동시 변경 충돌
+COMMON_INTERNAL_ERROR,common,500,일시적인 오류가 발생했습니다.,GENERIC_INTERNAL,Y,ERROR,외부에 상세를 노출하지 않는 예상하지 못한 서버 오류
+SYS_LOGIN_ID_DUPLICATE,system,409,이미 사용 중인 로그인ID입니다.,SAFE,N,INFO,정규화된 로그인ID 중복
+RES_EMPLOYEE_NUMBER_DUPLICATE,employee,409,이미 사용 중인 사원번호입니다.,SAFE,N,INFO,내부 직원 사원번호 중복

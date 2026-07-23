@@ -69,7 +69,7 @@
 | `AUTH-BR-020` | 모든 보호 API는 현재 계정의 `SEC_VER`와 세션 `securityVersion`을 비교하고 다르면 업무 처리 전에 세션을 만료한다. |
 | `AUTH-BR-021` | 로그인ID가 없어도 더미 Argon2id 해시를 검증하고 실제 비밀번호는 Argon2id 최소 메모리 19 MiB·반복 2회·병렬도 1로 검증한다. |
 | `AUTH-BR-022` | 중요 관리자 작업은 로그인 또는 `POST /auth/reauthenticate` 성공 후 10분 안에서만 허용한다. |
-| `AUTH-BR-023` | 재인증은 현재 비밀번호와 CSRF를 검증하고 세션별 분당 5회로 제한하며 실패해도 계정 로그인실패건수를 증가시키지 않는다. |
+| `AUTH-BR-023` | 재인증은 현재 비밀번호와 CSRF를 검증하고 세션별 분당 5회로 제한한다. 비밀번호 불일치는 `AUTH_REAUTHENTICATION_FAILED`로 응답하고 계정 로그인실패건수를 증가시키지 않는다. |
 | `AUTH-BR-024` | CSRF 검증 실패는 `403 AUTH_CSRF_INVALID`로 통일하고 로그인 성공·로그아웃·최초 등록 완료 후 토큰을 교체한다. |
 
 ## 5. 처리 흐름
@@ -161,18 +161,7 @@
 
 ## 8. 오류 계약
 
-| 상황 | HTTP | 오류코드 |
-| --- | :---: | --- |
-| 로그인ID·비밀번호 누락 | 400 | `COMMON_VALIDATION_FAILED` |
-| 인증 실패 또는 비활성 계정 | 401 | `AUTH_LOGIN_FAILED` |
-| 세션 없음·만료 | 401 | `AUTH_AUTHENTICATION_REQUIRED` |
-| CSRF 토큰 없음·불일치 | 403 | `AUTH_CSRF_INVALID` |
-| 중요 작업 재인증 없음·만료 | 403 | `AUTH_REAUTHENTICATION_REQUIRED` |
-| 로그인 요청 속도 제한 초과 | 429 | `AUTH_TOO_MANY_ATTEMPTS` |
-| 제한 세션의 허용목록 밖 API | 403 | `AUTH_PASSWORD_CHANGE_REQUIRED` |
-| 예상하지 못한 서버 오류 | 500 | `COMMON_INTERNAL_ERROR` |
-
-오류 응답은 공통 `Problem` 구조를 사용하며 `traceId`를 포함한다.
+외부 오류코드 정의는 `../../02.catalog/error-codes.csv`, 인증 API별 오류 연결은 `../../02.catalog/apis.csv`를 원본으로 한다. 오류 응답은 공통 `Problem` 구조와 `traceId`를 사용하며 내부 로그인·재인증 실패 원인을 노출하지 않는다.
 
 ## 9. 완료 조건
 

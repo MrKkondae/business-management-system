@@ -1,0 +1,5 @@
+permission_code,permission_name,permission_type,session_scope,screen_id,menu_id,data_scope,reauthentication_default_yn,description
+PUBLIC,공개 API,PUBLIC,NONE,,,NONE,N,인증 세션 없이 호출할 수 있으나 API별 CSRF 요구는 별도 적용
+AUTHENTICATED,일반 인증 세션,SESSION,GENERAL,,,SELF_SESSION,N,초기 비밀번호 제한 세션을 제외한 유효한 일반 세션 필요
+AUTHENTICATED_OR_LIMITED,일반 또는 제한 인증 세션,SESSION,GENERAL_OR_LIMITED,,,SELF_SESSION,N,일반 세션과 최초 등록 제한 세션 모두 호출 가능
+SYS-001,사용자 관리 메뉴 접근,MENU,GENERAL,SYS-001,01KY3HYG100000000000000002,ALL_USERS,N,유효한 일반 세션과 사용자 관리 메뉴 RBAC 권한 필요

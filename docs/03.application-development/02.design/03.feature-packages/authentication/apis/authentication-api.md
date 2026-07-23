@@ -13,14 +13,7 @@
 
 ## 2. API 목록
 
-| API ID | Method·Path | operationId | 인증 |
-| --- | --- | --- | --- |
-| `API-COM-AUTH-001` | `POST /auth/login` | `commonLogin` | 세션 불필요, CSRF 필요 |
-| `API-COM-AUTH-002` | `POST /auth/logout` | `commonLogout` | 세션·CSRF |
-| `API-COM-AUTH-003` | `GET /auth/me` | `commonGetCurrentUser` | 세션 |
-| `API-COM-AUTH-004` | `POST /auth/activity` | `commonRefreshActivity` | 세션·CSRF |
-| `API-COM-AUTH-005` | `GET /auth/csrf` | `commonGetCsrfToken` | 불필요 |
-| `API-COM-AUTH-006` | `POST /auth/reauthenticate` | `commonReauthenticate` | 일반 세션·CSRF |
+API ID, Method·Path, operationId, 기능·화면·권한·오류 연결은 `../../../02.catalog/apis.csv`를 원본으로 한다. 본 문서는 인증 API의 처리 순서와 필드별 보안 기준만 보완한다.
 
 ## 3. 로그인
 
@@ -74,15 +67,7 @@
 
 ### 오류
 
-| HTTP | 코드 | 조건 |
-| :---: | --- | --- |
-| 400 | `COMMON_VALIDATION_FAILED` | 필수값 누락 또는 허용 입력 크기 초과 |
-| 401 | `AUTH_LOGIN_FAILED` | 사용자 없음, 비밀번호 오류 또는 비활성 계정 |
-| 403 | `AUTH_CSRF_INVALID` | CSRF 토큰 없음 또는 불일치 |
-| 429 | `AUTH_TOO_MANY_ATTEMPTS` | 로그인ID·IP 또는 IP 전체 요청 제한 초과 |
-| 500 | `COMMON_INTERNAL_ERROR` | 처리할 수 없는 서버 오류 |
-
-`429` 응답에는 `Retry-After: 60` 헤더를 포함한다. 이 요청은 자격 증명을 검증하지 않고 `LOGIN_FAIL_CNT`를 변경하지 않는다.
+로그인 API의 오류코드와 HTTP 상태 연결은 `../../../02.catalog/apis.csv`를 따른다. 속도 제한 응답에는 `Retry-After: 60`을 포함하며 자격 증명을 검증하거나 `LOGIN_FAIL_CNT`를 변경하지 않는다.
 
 ## 4. 로그아웃
 
@@ -110,7 +95,7 @@
 
 - 일반 세션과 유효한 CSRF 토큰이 필요하다.
 - 성공하면 세션의 `reauthenticatedAt`을 현재시각으로 갱신하고 `204 No Content`를 반환한다.
-- 실패해도 계정 로그인실패건수를 증가시키지 않고 세션별 분당 5회로 제한한다.
+- 비밀번호 불일치는 세션을 유지한 채 `403 AUTH_REAUTHENTICATION_FAILED`를 반환하고 계정 로그인실패건수를 증가시키지 않는다. 재인증 요청은 세션별 분당 5회로 제한한다.
 - 시스템관리자 역할·메뉴권한 변경, 다른 사용자 비밀번호 초기화와 계정 활성·비활성 등 중요 작업은 최근 로그인 또는 재인증 후 10분 안에서만 허용한다.
 - 중요 작업 시각 조건을 충족하지 않으면 `403 AUTH_REAUTHENTICATION_REQUIRED`를 반환한다.
 - 비밀번호, 재인증 응답과 보안로그에는 `Cache-Control: no-store` 및 비밀정보 제외 정책을 적용한다.
@@ -130,11 +115,4 @@
 
 ## 9. 추적성과 권한
 
-| API ID | 기능 ID | 화면 ID | 권한 |
-| --- | --- | --- | --- |
-| `API-COM-AUTH-001` | `BFD-02-05-01-01` | `COM-001` | 공개 |
-| `API-COM-AUTH-002` | `BFD-02-05-01-02` | `COM-001` | 로그인 세션 |
-| `API-COM-AUTH-003` | `BFD-02-05-01-03` | `COM-001` | 로그인 또는 제한 세션 |
-| `API-COM-AUTH-004` | `BFD-02-05-01-03` | `COM-001` | 일반 또는 제한 세션의 실제 사용자 활동 |
-| `API-COM-AUTH-005` | `BFD-02-05-01-01` | `COM-001` | 공개 |
-| `API-COM-AUTH-006` | `BFD-02-05-01-01` | `COM-001` | 일반 로그인 세션 |
+API별 기능·화면·권한 연결은 `../../../02.catalog/apis.csv`, 권한코드의 의미는 `../../../02.catalog/permissions.csv`를 원본으로 한다.
