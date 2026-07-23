@@ -118,7 +118,8 @@
 | :---: | --- | --- |
 | 400 | `COMMON_VALIDATION_FAILED` | 필수·형식 검증 실패 |
 | 401 | `AUTH_AUTHENTICATION_REQUIRED` | 세션 없음·만료 |
-| 403 | `AUTH_FORBIDDEN` | SYS-001 권한 없음 또는 CSRF 실패 |
+| 403 | `AUTH_FORBIDDEN` | SYS-001 권한 없음 |
+| 403 | `AUTH_CSRF_INVALID` | CSRF 토큰 없음 또는 불일치 |
 | 404 | `COMMON_RESOURCE_NOT_FOUND` | 존재하지 않는 조직·역할 |
 | 409 | `SYS_LOGIN_ID_DUPLICATE` | 로그인ID 중복 |
 | 409 | `RES_EMPLOYEE_NUMBER_DUPLICATE` | 사원번호 중복 |

@@ -20,6 +20,7 @@
 | `API-COM-AUTH-003` | `GET /auth/me` | `commonGetCurrentUser` | 세션 |
 | `API-COM-AUTH-004` | `POST /auth/activity` | `commonRefreshActivity` | 세션·CSRF |
 | `API-COM-AUTH-005` | `GET /auth/csrf` | `commonGetCsrfToken` | 불필요 |
+| `API-COM-AUTH-006` | `POST /auth/reauthenticate` | `commonReauthenticate` | 일반 세션·CSRF |
 
 ## 3. 로그인
 
@@ -62,13 +63,13 @@
   ],
   "passwordChangeRequired": false,
   "idleTimeoutSeconds": 900,
-  "absoluteSessionExpiresAt": null
+  "absoluteSessionExpiresAt": "2026-07-23T09:00:00Z"
 }
 ```
 
 - `passwordChangeRequired=true`이면 `menus`는 빈 배열이다.
-- `passwordChangeRequired=true`인 제한 세션은 `idleTimeoutSeconds=600`과 `absoluteSessionExpiresAt`을 반환한다. 일반 세션은 `idleTimeoutSeconds=900`, `absoluteSessionExpiresAt=null`을 반환한다.
-- 역할과 메뉴는 로그인 시점 스냅샷이며 세션 중 자동 갱신하지 않는다.
+- `passwordChangeRequired=true`인 제한 세션은 `idleTimeoutSeconds=600`과 로그인 후 30분·임시 비밀번호 만료 중 빠른 `absoluteSessionExpiresAt`을 반환한다. 일반 세션은 `idleTimeoutSeconds=900`과 로그인 후 8시간의 절대 만료일시를 반환한다.
+- 역할과 메뉴는 로그인 시점 스냅샷이며 자동 갱신하지 않는다. DB 보안버전이 세션 버전과 달라지면 다음 보호 요청에서 세션을 종료한다.
 - 응답과 함께 세션 쿠키를 발급하고 세션ID를 교체한다.
 
 ### 오류
@@ -77,7 +78,7 @@
 | :---: | --- | --- |
 | 400 | `COMMON_VALIDATION_FAILED` | 필수값 누락 또는 허용 입력 크기 초과 |
 | 401 | `AUTH_LOGIN_FAILED` | 사용자 없음, 비밀번호 오류 또는 비활성 계정 |
-| 403 | `AUTH_FORBIDDEN` | CSRF 토큰 없음 또는 불일치 |
+| 403 | `AUTH_CSRF_INVALID` | CSRF 토큰 없음 또는 불일치 |
 | 429 | `AUTH_TOO_MANY_ATTEMPTS` | 로그인ID·IP 또는 IP 전체 요청 제한 초과 |
 | 500 | `COMMON_INTERNAL_ERROR` | 처리할 수 없는 서버 오류 |
 
@@ -97,7 +98,24 @@
 
 초기 비밀번호 사용자의 제한 세션은 `/account/initial-registration` 화면에서 `GET /auth/csrf`, `GET /auth/me`, `POST /auth/activity`, `POST /users/me/initial-registration`, `POST /auth/logout`만 호출할 수 있다. 다른 API는 `403 AUTH_PASSWORD_CHANGE_REQUIRED`로 차단한다.
 
-## 7. CSRF 토큰 조회
+## 7. 중요 작업 재인증
+
+`POST /auth/reauthenticate`는 다음 요청으로 현재 비밀번호를 검증한다.
+
+```json
+{
+  "password": "plain-text-only-in-transit"
+}
+```
+
+- 일반 세션과 유효한 CSRF 토큰이 필요하다.
+- 성공하면 세션의 `reauthenticatedAt`을 현재시각으로 갱신하고 `204 No Content`를 반환한다.
+- 실패해도 계정 로그인실패건수를 증가시키지 않고 세션별 분당 5회로 제한한다.
+- 시스템관리자 역할·메뉴권한 변경, 다른 사용자 비밀번호 초기화와 계정 활성·비활성 등 중요 작업은 최근 로그인 또는 재인증 후 10분 안에서만 허용한다.
+- 중요 작업 시각 조건을 충족하지 않으면 `403 AUTH_REAUTHENTICATION_REQUIRED`를 반환한다.
+- 비밀번호, 재인증 응답과 보안로그에는 `Cache-Control: no-store` 및 비밀정보 제외 정책을 적용한다.
+
+## 8. CSRF 토큰 조회
 
 `GET /auth/csrf`는 로그인 전 호출 가능하며 다음 값을 반환한다.
 
@@ -110,7 +128,7 @@
 
 토큰은 상태 변경 요청의 헤더로만 전송하며 로그·분석 이벤트·영구 저장소에 저장하지 않는다. 이 응답은 캐시하지 않는다.
 
-## 8. 추적성과 권한
+## 9. 추적성과 권한
 
 | API ID | 기능 ID | 화면 ID | 권한 |
 | --- | --- | --- | --- |
@@ -119,3 +137,4 @@
 | `API-COM-AUTH-003` | `BFD-02-05-01-03` | `COM-001` | 로그인 또는 제한 세션 |
 | `API-COM-AUTH-004` | `BFD-02-05-01-03` | `COM-001` | 일반 또는 제한 세션의 실제 사용자 활동 |
 | `API-COM-AUTH-005` | `BFD-02-05-01-01` | `COM-001` | 공개 |
+| `API-COM-AUTH-006` | `BFD-02-05-01-01` | `COM-001` | 일반 로그인 세션 |

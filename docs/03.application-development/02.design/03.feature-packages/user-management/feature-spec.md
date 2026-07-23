@@ -129,7 +129,7 @@ UserRegistrationService (@Transactional)
 | `TB_RES_MST` | 조회·생성 | employee | 인력 공통정보와 목록 조인 |
 | `TB_RES_EMPLOYEE` | 조회·생성 | employee | 직원 최소정보와 사원번호 |
 
-`TEMP_PWD_EXPIRE_DTM` 컬럼과 초기화필요여부·만료일시 일관성 CHECK를 추가하는 신규 Flyway 마이그레이션이 필요하다. 이미 적용된 초기 마이그레이션은 수정하지 않고 후속 버전 마이그레이션으로 추가한다.
+`TEMP_PWD_EXPIRE_DTM`, `SEC_VER` 컬럼과 관련 CHECK를 추가하는 신규 Flyway 마이그레이션이 필요하다. 이미 적용된 초기 마이그레이션은 수정하지 않고 후속 버전 마이그레이션으로 추가한다.
 
 ## 10. 오류 계약
 
@@ -137,7 +137,8 @@ UserRegistrationService (@Transactional)
 | --- | :---: | --- |
 | 입력 검증 실패 | 400 | `COMMON_VALIDATION_FAILED` |
 | 미인증·세션 만료 | 401 | `AUTH_AUTHENTICATION_REQUIRED` |
-| `SYS-001` 권한 없음 또는 CSRF 실패 | 403 | `AUTH_FORBIDDEN` |
+| `SYS-001` 권한 없음 | 403 | `AUTH_FORBIDDEN` |
+| CSRF 실패 | 403 | `AUTH_CSRF_INVALID` |
 | 조직·역할을 찾을 수 없음 | 404 | `COMMON_RESOURCE_NOT_FOUND` |
 | 로그인ID 중복 | 409 | `SYS_LOGIN_ID_DUPLICATE` |
 | 사원번호 중복 | 409 | `RES_EMPLOYEE_NUMBER_DUPLICATE` |

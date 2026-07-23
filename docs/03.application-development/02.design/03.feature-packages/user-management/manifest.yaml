@@ -84,6 +84,7 @@ references:
     - ../../01.common/06.database-migration-rules.md
     - ../../01.common/07.test-rules.md
     - ../../01.common/08.initial-data-bootstrap-design.md
+    - ../../01.common/09.security-implementation-contract.md
   catalogs:
     - ../../02.catalog/functions.csv
     - ../../02.catalog/seed-data/README.md

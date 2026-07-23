@@ -1,6 +1,6 @@
 package_id: FPK-SYS-AUTHZ-001
 title: 역할·권한 관리
-version: 0.1.0
+version: 0.2.0
 design_status: DESIGN_IN_PROGRESS
 
 backlog_ids:
@@ -28,14 +28,15 @@ scope:
     - 역할 목록·상세 조회와 등록·수정·논리삭제
     - 역할별 메뉴 접근권한 조회·저장
     - 역할별 사용자 조회·추가·제외
-    - 다중 역할 권한 합집합과 다음 로그인 반영
+    - 다중 역할 권한 합집합과 보안버전 기반 기존 세션 종료
+    - 중요 권한 변경 전 최근 10분 비밀번호 재인증
     - 마지막 활성 시스템관리자 보호
     - 역할·권한 변경 시스템로그
   excludes:
     - 메뉴 기준정보 등록·수정·삭제와 순서 변경
     - 기능 행위별 CRUD 권한 분리
     - 조직·담당자·프로젝트별 데이터 범위 권한
-    - 현재 로그인 세션의 권한 즉시 갱신
+    - 현재 로그인 세션의 권한 스냅샷 직접 갱신
 
 references:
   backlog:
@@ -56,6 +57,7 @@ references:
     - ../../01.common/04.audit-log-policy.md
     - ../../01.common/06.database-migration-rules.md
     - ../../01.common/07.test-rules.md
+    - ../../01.common/09.security-implementation-contract.md
   catalogs:
     - ../../02.catalog/functions.csv
   openapi:
@@ -126,6 +128,7 @@ database:
       - TB_SYS_MENU
       - TB_SYS_ROLE_MENU_PERM_REL
     write:
+      - TB_SYS_USER
       - TB_SYS_ROLE
       - TB_SYS_USER_ROLE_REL
       - TB_SYS_ROLE_MENU_PERM_REL

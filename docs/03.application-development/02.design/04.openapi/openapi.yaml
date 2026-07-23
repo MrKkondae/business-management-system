@@ -36,9 +36,14 @@ paths:
           description: 로그인 성공과 서버 세션 생성
           headers:
             Set-Cookie:
-              description: HttpOnly 서버 세션 쿠키
+              description: BMSSESSION; Path=/; HttpOnly; 운영 Secure; SameSite=Lax; Domain·Max-Age·Expires 미지정
               schema:
                 type: string
+            Cache-Control:
+              description: 인증 응답 캐시 금지
+              schema:
+                type: string
+                example: no-store
           content:
             application/json:
               schema:
@@ -90,6 +95,12 @@ paths:
       responses:
         '200':
           description: 로그인 시점의 사용자와 권한 스냅샷
+          headers:
+            Cache-Control:
+              description: 인증 응답 캐시 금지
+              schema:
+                type: string
+                example: no-store
           content:
             application/json:
               schema:
@@ -118,6 +129,44 @@ paths:
           $ref: '#/components/responses/AuthenticationRequiredProblem'
         '403':
           $ref: '#/components/responses/ForbiddenProblem'
+        '500':
+          $ref: '#/components/responses/InternalProblem'
+  /auth/reauthenticate:
+    post:
+      tags: [Authentication]
+      summary: 중요 작업용 현재 비밀번호 재인증
+      operationId: commonReauthenticate
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      x-bms-api-id: API-COM-AUTH-006
+      x-bms-requirement-ids: [REQ-COM-005, NFR-SEC-001, NFR-SEC-002]
+      x-bms-function-ids: [BFD-02-05-01-01]
+      x-bms-screen-ids: [COM-001]
+      x-bms-permission: AUTHENTICATED
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReauthenticateRequest'
+      responses:
+        '204':
+          description: 현재 세션의 재인증시각 갱신 완료
+          headers:
+            Cache-Control:
+              description: 재인증 응답 캐시 금지
+              schema:
+                type: string
+                example: no-store
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationRequiredProblem'
+        '403':
+          $ref: '#/components/responses/ForbiddenProblem'
+        '429':
+          $ref: '#/components/responses/TooManyAttemptsProblem'
         '500':
           $ref: '#/components/responses/InternalProblem'
   /auth/csrf:
@@ -478,6 +527,17 @@ components:
           minLength: 1
           maxLength: 256
           writeOnly: true
+    ReauthenticateRequest:
+      type: object
+      additionalProperties: false
+      required: [password]
+      properties:
+        password:
+          type: string
+          format: password
+          minLength: 1
+          maxLength: 256
+          writeOnly: true
     CurrentUserResponse:
       type: object
       additionalProperties: false
@@ -503,9 +563,9 @@ components:
           example: 900
           description: 일반 세션 900초, 초기 비밀번호 제한 세션 600초
         absoluteSessionExpiresAt:
-          type: [string, 'null']
+          type: string
           format: date-time
-          description: 제한 세션 절대 만료일시이며 일반 세션은 null
+          description: 일반 세션은 로그인·승격 후 8시간, 제한 세션은 로그인 후 30분과 임시 비밀번호 만료 중 빠른 시각
     AuthenticatedUser:
       type: object
       additionalProperties: false
@@ -631,13 +691,13 @@ components:
           schema:
             $ref: '#/components/schemas/Problem'
     ForbiddenProblem:
-      description: CSRF 토큰 없음·불일치 또는 접근 거부
+      description: CSRF 토큰 없음·불일치, 재인증 필요 또는 접근 거부
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
     TooManyAttemptsProblem:
-      description: 로그인 요청 속도 제한 초과
+      description: 로그인 또는 재인증 요청 속도 제한 초과
       headers:
         Retry-After:
           description: 다시 요청할 수 있을 때까지의 초

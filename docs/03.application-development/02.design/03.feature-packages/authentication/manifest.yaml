@@ -1,6 +1,6 @@
 package_id: FPK-COM-AUTH-001
 title: 인증
-version: 0.6.0
+version: 0.7.0
 design_status: DESIGN_IN_PROGRESS
 
 backlog_ids:
@@ -22,6 +22,7 @@ scope:
   includes:
     - 로그인ID와 비밀번호 인증
     - 서버 세션 생성·조회·만료와 로그아웃
+    - 중요 관리자 작업 전 현재 비밀번호 재인증
     - 로그인 시점 역할·메뉴권한 스냅샷 생성
     - 로그인 실패건수 증가와 6번째 실패 계정 비활성화
     - 로그인·로그아웃·자동 로그아웃 접속로그
@@ -53,6 +54,7 @@ references:
     - ../../01.common/06.database-migration-rules.md
     - ../../01.common/07.test-rules.md
     - ../../01.common/08.initial-data-bootstrap-design.md
+    - ../../01.common/09.security-implementation-contract.md
   catalogs:
     - ../../02.catalog/functions.csv
     - ../../02.catalog/seed-data/README.md
