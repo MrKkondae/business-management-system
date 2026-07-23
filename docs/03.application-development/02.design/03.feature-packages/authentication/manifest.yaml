@@ -1,6 +1,6 @@
 package_id: FPK-COM-AUTH-001
 title: 인증
-version: 0.5.0
+version: 0.6.0
 design_status: DESIGN_IN_PROGRESS
 
 backlog_ids:
@@ -52,8 +52,10 @@ references:
     - ../../01.common/05.privacy-data-policy.md
     - ../../01.common/06.database-migration-rules.md
     - ../../01.common/07.test-rules.md
+    - ../../01.common/08.initial-data-bootstrap-design.md
   catalogs:
     - ../../02.catalog/functions.csv
+    - ../../02.catalog/seed-data/README.md
   openapi:
     - ../../04.openapi/openapi.yaml
   data:

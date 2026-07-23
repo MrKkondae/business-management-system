@@ -1,6 +1,6 @@
 package_id: FPK-SYS-USER-001
 title: 사용자 관리
-version: 0.4.0
+version: 0.5.0
 design_status: DESIGN_IN_PROGRESS
 
 backlog_ids:
@@ -83,8 +83,10 @@ references:
     - ../../01.common/05.privacy-data-policy.md
     - ../../01.common/06.database-migration-rules.md
     - ../../01.common/07.test-rules.md
+    - ../../01.common/08.initial-data-bootstrap-design.md
   catalogs:
     - ../../02.catalog/functions.csv
+    - ../../02.catalog/seed-data/README.md
   openapi:
     - ../../04.openapi/openapi.yaml
   data:

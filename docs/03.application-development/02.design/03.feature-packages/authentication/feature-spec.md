@@ -104,7 +104,7 @@
 
 ### 5.5 초기 비밀번호 제한 세션
 
-1. 초기 비밀번호가 맞더라도 `TEMP_PWD_EXPIRE_DTM`이 지났으면 제한 세션을 발급하지 않고 로그인실패건수를 증가시키지 않는다. 외부에는 일반 `401 AUTH_LOGIN_FAILED`, 내부 접속로그에는 `TEMP_PASSWORD_EXPIRED`를 기록한다.
+1. 초기 비밀번호가 맞더라도 `TEMP_PWD_EXPIRE_DTM`이 지났으면 제한 세션을 발급하지 않고 로그인실패건수를 증가시키지 않는다. 외부에는 일반 `401 AUTH_LOGIN_FAILED`, 내부 접속로그에는 `TEMP_PWD_EXPIRED`를 기록한다.
 2. 제한 세션에는 `lastUserActivityAt`, `absoluteExpiresAt=min(로그인시각+30분, TEMP_PWD_EXPIRE_DTM)`과 로그인 당시 `PWD_CHG_DTM`을 저장한다.
 3. 제한 세션은 `GET /auth/csrf`, `GET /auth/me`, `POST /auth/activity`, `POST /users/me/initial-registration`, `POST /auth/logout`만 호출할 수 있다.
 4. 각 허용 요청에서 계정 활성·삭제 상태, `PWD_INIT_REQ_YN`, 임시 비밀번호 만료와 로그인 당시 `PWD_CHG_DTM` 일치를 확인한다.
