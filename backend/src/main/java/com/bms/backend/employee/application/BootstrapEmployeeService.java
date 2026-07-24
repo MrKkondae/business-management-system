@@ -1,11 +1,14 @@
 package com.bms.backend.employee.application;
 
 import com.bms.backend.common.application.TaskTargetRegistrationService;
+import com.bms.backend.employee.application.port.out.BootstrapEmployeeStore;
+import com.bms.backend.employee.application.port.out.BootstrapEmployeeStore.NewEmployee;
+import com.bms.backend.employee.application.port.out.BootstrapEmployeeStore.NewResource;
 import com.bms.backend.global.persistence.MonotonicUlidGenerator;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -13,10 +16,11 @@ public class BootstrapEmployeeService {
 
     private static final String SYSTEM_ACTOR = "SYSTEM";
 
-    private final JdbcTemplate jdbcTemplate;
+    private final BootstrapEmployeeStore employeeStore;
     private final TaskTargetRegistrationService taskTargetRegistrationService;
     private final MonotonicUlidGenerator ulidGenerator;
 
+    @Transactional
     public String register(
             String employeeNumber,
             String fullName,
@@ -24,11 +28,7 @@ public class BootstrapEmployeeService {
             String emailAddress,
             String mobileNumber,
             LocalDateTime registeredAt) {
-        Integer duplicateCount = jdbcTemplate.queryForObject(
-                "SELECT count(*) FROM tb_res_employee WHERE emp_no = ?",
-                Integer.class,
-                employeeNumber);
-        if (duplicateCount != null && duplicateCount > 0) {
+        if (employeeStore.existsByEmployeeNumber(employeeNumber)) {
             throw new IllegalStateException("BOOTSTRAP_EMPLOYEE_NUMBER_DUPLICATE");
         }
 
@@ -36,32 +36,20 @@ public class BootstrapEmployeeService {
                 taskTargetRegistrationService.register("EMPLOYEE", SYSTEM_ACTOR, registeredAt);
         String resourceId = ulidGenerator.next();
 
-        jdbcTemplate.update(
-                """
-                INSERT INTO tb_res_mst (
-                    res_id, res_se_cd, full_nm, mobile_no, email_addr,
-                    reg_id, reg_dtm, del_yn, task_tgt_id
-                ) VALUES (?, 'EMPLOYEE', ?, ?, ?, ?, ?, 'N', ?)
-                """,
+        employeeStore.createResource(new NewResource(
                 resourceId,
                 fullName,
                 mobileNumber,
                 emailAddress,
                 SYSTEM_ACTOR,
                 registeredAt,
-                taskTargetId);
-
-        jdbcTemplate.update(
-                """
-                INSERT INTO tb_res_employee (
-                    res_id, emp_no, org_id, employ_status_cd, reg_id, reg_dtm, del_yn
-                ) VALUES (?, ?, ?, 'EMPLOYED', ?, ?, 'N')
-                """,
+                taskTargetId));
+        employeeStore.createEmployee(new NewEmployee(
                 resourceId,
                 employeeNumber,
                 organizationId,
                 SYSTEM_ACTOR,
-                registeredAt);
+                registeredAt));
         return resourceId;
     }
 }

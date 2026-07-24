@@ -6,6 +6,8 @@ import com.bms.backend.common.application.authentication.LoginAttemptContext;
 import com.bms.backend.common.application.authentication.LoginFailureReason;
 import com.bms.backend.global.security.LoginSessionValidationFilter;
 import com.bms.backend.system.application.authentication.ReauthenticationAuditOutcome;
+import com.bms.backend.system.infrastructure.persistence.mybatis.adapter.MyBatisAuthenticationAuditStore;
+import com.bms.backend.system.infrastructure.persistence.mybatis.adapter.MyBatisInitialRegistrationStore;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import org.junit.jupiter.api.Test;
@@ -25,10 +27,10 @@ import org.springframework.transaction.annotation.Transactional;
 class DevelopmentPostgresAuthenticationAuditVerificationTests {
 
     @Autowired
-    private JdbcAuthenticationAuditStore auditStore;
+    private MyBatisAuthenticationAuditStore auditStore;
 
     @Autowired
-    private JdbcInitialRegistrationStore initialRegistrationStore;
+    private MyBatisInitialRegistrationStore initialRegistrationStore;
 
     @Autowired
     private JdbcTemplate jdbc;

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bms.backend.system.infrastructure.persistence.mybatis.mapper.AuthenticationAuditMapper">
+
+    <insert id="insertAccessLog">
+        INSERT INTO tb_sys_access_log (
+            access_log_id,
+            user_id,
+            access_dtm,
+            logout_dtm,
+            access_ip_addr,
+            succ_yn,
+            reg_id,
+            reg_dtm,
+            fail_rsn_cd,
+            logout_type_cd,
+            req_trace_id,
+            login_id_hash_val,
+            user_agent_cont
+        ) VALUES (
+            #{accessLogId},
+            #{userId},
+            #{occurredAt},
+            NULL,
+            #{clientIpAddress},
+            #{successfulFlag},
+            #{registeredBy},
+            #{occurredAt},
+            #{failureReasonCode},
+            NULL,
+            #{requestTraceId},
+            #{protectedLoginId},
+            #{userAgent}
+        )
+    </insert>
+
+    <update id="updateLogout">
+        UPDATE tb_sys_access_log
+        SET logout_dtm = #{occurredAt},
+            logout_type_cd = #{logoutTypeCode}
+        WHERE access_log_id = #{accessLogId}
+          AND user_id = #{userId}
+          AND succ_yn = 'Y'
+          AND logout_dtm IS NULL
+    </update>
+
+    <insert id="insertSystemLog">
+        INSERT INTO tb_sys_log (
+            log_id,
+            log_type_cd,
+            proc_user_id,
+            occur_dtm,
+            log_cont,
+            reg_id,
+            reg_dtm,
+            event_type_cd,
+            tgt_type_cd,
+            tgt_id,
+            proc_result_cd,
+            chg_smry_cont,
+            req_trace_id,
+            access_ip_addr
+        ) VALUES (
+            #{logId},
+            'SECURITY',
+            NULL,
+            #{occurredAt},
+            NULL,
+            #{registeredBy},
+            #{occurredAt},
+            #{eventTypeCode},
+            #{targetTypeCode},
+            #{targetUserId},
+            #{resultCode},
+            #{changeSummary},
+            #{requestTraceId},
+            #{clientIpAddress}
+        )
+    </insert>
+
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bms.backend.employee.infrastructure.persistence.mybatis.mapper.BootstrapEmployeeMapper">
+
+    <select id="countByEmployeeNumber" resultType="int">
+        SELECT count(*)
+        FROM tb_res_employee
+        WHERE emp_no = #{employeeNumber}
+    </select>
+
+    <insert id="insertResource">
+        INSERT INTO tb_res_mst (
+            res_id,
+            res_se_cd,
+            full_nm,
+            mobile_no,
+            email_addr,
+            reg_id,
+            reg_dtm,
+            del_yn,
+            task_tgt_id
+        ) VALUES (
+            #{resourceId},
+            'EMPLOYEE',
+            #{fullName},
+            #{mobileNumber},
+            #{emailAddress},
+            #{registeredBy},
+            #{registeredAt},
+            'N',
+            #{taskTargetId}
+        )
+    </insert>
+
+    <insert id="insertEmployee">
+        INSERT INTO tb_res_employee (
+            res_id,
+            emp_no,
+            org_id,
+            employ_status_cd,
+            reg_id,
+            reg_dtm,
+            del_yn
+        ) VALUES (
+            #{resourceId},
+            #{employeeNumber},
+            #{organizationId},
+            'EMPLOYED',
+            #{registeredBy},
+            #{registeredAt},
+            'N'
+        )
+    </insert>
+
+</mapper>

@@ -55,10 +55,34 @@ com.bms.backend
 ├── api             # REST Controller, 요청·응답 DTO
 ├── application     # 유스케이스, 트랜잭션 경계, 공개 모듈 인터페이스
 ├── domain          # 엔터티, 값 객체, 업무 규칙, 저장소 인터페이스
-└── infrastructure  # JPA 저장소와 기술 구현체
+└── infrastructure  # MyBatis 저장소, 외부 연계 등 기술 구현체
 ```
 
-단순 조회에도 형식적인 클래스를 만들 필요는 없지만, API 계층이 JPA 저장소를 직접 호출하거나 영속 엔터티를 응답으로 반환하지 않는다.
+데이터 접근이 있는 업무 모듈은 [ADR-004 MyBatis 기반 데이터 접근 표준](../../../02.architecture/01.application-architecture/90.decisions/004-mybatis-data-access-standard.md)에 따라 다음 하위 구조를 적용한다.
+
+```text
+{business-area}
+├── application
+│   └── port
+│       └── out       # 유스케이스 전용 조회·저장 및 외부 기술 계약
+├── domain
+│   └── repository    # 도메인 의미를 갖는 저장소 계약
+└── infrastructure
+    └── persistence
+        └── mybatis
+            ├── adapter
+            ├── mapper
+            └── model
+
+backend/src/main/resources/mybatis/mapper/{business-area}
+└── {Feature}Mapper.xml
+```
+
+- 애플리케이션 서비스는 출력 Port 또는 도메인 Repository만 의존한다.
+- MyBatis Mapper와 영속 모델은 `infrastructure.persistence.mybatis` 밖으로 노출하지 않는다.
+- SQL은 업무영역별 Mapper XML에 둔다.
+- API 계층은 저장소나 Mapper를 직접 호출하거나 영속 모델을 응답으로 반환하지 않는다.
+- 기존 패키지는 기능별 MyBatis 전환 시 새 기준에 맞추며 일괄 이동하지 않는다.
 
 ## 6. 기존 명칭 통합 기준
 
@@ -93,5 +117,6 @@ com.bms.backend
 
 | 버전 | 일자 | 변경 내용 |
 | --- | --- | --- |
+| 0.3 | 2026-07-24 | ADR-004에 따른 MyBatis 데이터 접근 패키지, 출력 Port, Adapter, Mapper와 SQL 배치 기준 반영 |
 | 0.2 | 2026-07-21 | 애플리케이션 아키텍처 기준으로 모듈 명칭·책임·내부 계층과 기존 패키지 통합 기준 정리 |
 | 0.1 | - | 기능별 초기 패키지 구조 작성 |

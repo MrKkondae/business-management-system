@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bms.backend.system.infrastructure.persistence.mybatis.mapper.BootstrapAdminMapper">
+
+    <select id="findSystemAdministratorRoleForUpdate" resultType="string">
+        SELECT role_id
+        FROM tb_sys_role
+        WHERE role_id = #{roleId}
+          AND role_nm = #{roleName}
+          AND del_yn = 'N'
+        FOR UPDATE
+    </select>
+
+    <select id="countUsers" resultType="int">
+        SELECT count(*)
+        FROM tb_sys_user
+    </select>
+
+    <select id="countMissingMenuPermissions" resultType="int">
+        SELECT count(*)
+        FROM tb_sys_menu menu
+        WHERE menu.del_yn = 'N'
+          AND NOT EXISTS (
+              SELECT 1
+              FROM tb_sys_role_menu_perm_rel permission
+              WHERE permission.role_id = #{roleId}
+                AND permission.menu_id = menu.menu_id
+          )
+    </select>
+
+    <select id="countMissingRequiredCodeGroups" resultType="int">
+        SELECT count(*)
+        FROM (
+            VALUES
+                ('01KY3HYG200000000000000001'),
+                ('01KY3HYG200000000000000002'),
+                ('01KY3HYG200000000000000003'),
+                ('01KY3HYG200000000000000004'),
+                ('01KY3HYG200000000000000005'),
+                ('01KY3HYG200000000000000006'),
+                ('01KY3HYG200000000000000007')
+        ) required(cd_grp_id)
+        WHERE NOT EXISTS (
+            SELECT 1
+            FROM tb_com_code_grp code_group
+            WHERE code_group.cd_grp_id = required.cd_grp_id
+              AND code_group.del_yn = 'N'
+        )
+    </select>
+
+    <select id="countMissingRequiredCodes" resultType="int">
+        SELECT count(*)
+        FROM (
+            VALUES
+                ('01KY3HYG200000000000000001', 'ACTIVE'),
+                ('01KY3HYG200000000000000002', 'LOGIN_FAILURE'),
+                ('01KY3HYG200000000000000003', 'BAD_CREDENTIALS'),
+                ('01KY3HYG200000000000000004', 'MANUAL'),
+                ('01KY3HYG200000000000000005', 'COMPANY'),
+                ('01KY3HYG200000000000000006', 'EMPLOYEE'),
+                ('01KY3HYG200000000000000007', 'EMPLOYED')
+        ) required(cd_grp_id, required_cd)
+        WHERE NOT EXISTS (
+            SELECT 1
+            FROM tb_com_code code
+            WHERE code.cd_grp_id = required.cd_grp_id
+              AND code.cd = required.required_cd
+              AND code.del_yn = 'N'
+        )
+    </select>
+
+    <insert id="insertOrganization">
+        INSERT INTO tb_sys_org (
+            org_id,
+            org_nm,
+            org_type_cd,
+            reg_id,
+            reg_dtm,
+            del_yn
+        ) VALUES (
+            #{organizationId},
+            #{organizationName},
+            'COMPANY',
+            #{registeredBy},
+            #{registeredAt},
+            'N'
+        )
+    </insert>
+
+    <insert id="insertUser">
+        INSERT INTO tb_sys_user (
+            user_id,
+            emp_id,
+            login_id,
+            user_nm,
+            email_addr,
+            mobile_no,
+            acnt_status_cd,
+            pwd_hash_val,
+            pwd_chg_dtm,
+            login_fail_cnt,
+            inactive_dtm,
+            last_login_dtm,
+            pwd_init_req_yn,
+            reg_id,
+            reg_dtm,
+            mod_id,
+            mod_dtm,
+            del_yn,
+            inactive_rsn_cd,
+            temp_pwd_expire_dtm,
+            sec_ver
+        ) VALUES (
+            #{userId},
+            #{employeeId},
+            #{loginId},
+            #{userName},
+            #{emailAddress},
+            #{mobileNumber},
+            'ACTIVE',
+            #{passwordHash},
+            #{passwordChangedAt},
+            0,
+            NULL,
+            NULL,
+            'Y',
+            #{registeredBy},
+            #{registeredAt},
+            NULL,
+            NULL,
+            'N',
+            NULL,
+            #{temporaryPasswordExpiresAt},
+            1
+        )
+    </insert>
+
+    <insert id="insertUserRole">
+        INSERT INTO tb_sys_user_role_rel (
+            user_id,
+            role_id,
+            reg_id,
+            reg_dtm
+        ) VALUES (
+            #{userId},
+            #{roleId},
+            #{registeredBy},
+            #{registeredAt}
+        )
+    </insert>
+
+    <insert id="insertBootstrapAudit">
+        INSERT INTO tb_sys_log (
+            log_id,
+            log_type_cd,
+            proc_user_id,
+            occur_dtm,
+            log_cont,
+            reg_id,
+            reg_dtm,
+            event_type_cd,
+            tgt_type_cd,
+            tgt_id,
+            proc_result_cd,
+            chg_smry_cont,
+            req_trace_id,
+            access_ip_addr
+        ) VALUES (
+            #{logId},
+            'SECURITY',
+            NULL,
+            #{occurredAt},
+            NULL,
+            #{registeredBy},
+            #{occurredAt},
+            'BOOTSTRAP_ADMIN_CREATED',
+            'USER',
+            #{targetUserId},
+            'SUCCESS',
+            '최초 시스템관리자 생성',
+            NULL,
+            NULL
+        )
+    </insert>
+
+</mapper>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bms.backend.system.infrastructure.persistence.mybatis.mapper.AuthenticationStateMapper">
+
+    <resultMap id="lockedUserRow"
+               type="com.bms.backend.system.infrastructure.persistence.mybatis.model.AuthenticationPersistenceRows$LockedUser">
+        <constructor>
+            <arg column="user_id" javaType="string"/>
+            <arg column="acnt_status_cd" javaType="string"/>
+            <arg column="del_yn" javaType="string"/>
+            <arg column="sec_ver" javaType="_int"/>
+            <arg column="pwd_init_req_yn" javaType="string"/>
+            <arg column="pwd_chg_dtm" javaType="java.time.LocalDateTime"/>
+            <arg column="login_fail_cnt" javaType="_int"/>
+        </constructor>
+    </resultMap>
+
+    <select id="findUsersForUpdate" resultMap="lockedUserRow">
+        SELECT user_id,
+               acnt_status_cd,
+               del_yn,
+               sec_ver,
+               pwd_init_req_yn,
+               pwd_chg_dtm,
+               login_fail_cnt
+        FROM tb_sys_user
+        WHERE user_id = #{userId}
+        FOR UPDATE
+    </select>
+
+    <update id="updateFailedLogin">
+        UPDATE tb_sys_user
+        SET login_fail_cnt = #{failureCount},
+            acnt_status_cd = #{accountStatusCode},
+            inactive_rsn_cd = #{inactiveReasonCode},
+            inactive_dtm = #{inactiveAt},
+            sec_ver = #{securityVersion},
+            mod_id = #{modifiedBy},
+            mod_dtm = #{modifiedAt}
+        WHERE user_id = #{userId}
+    </update>
+
+    <update id="updateSuccessfulLogin">
+        UPDATE tb_sys_user
+        SET login_fail_cnt = 0,
+            last_login_dtm = #{lastLoginAt},
+            mod_id = #{modifiedBy},
+            mod_dtm = #{modifiedAt}
+        WHERE user_id = #{userId}
+    </update>
+
+</mapper>

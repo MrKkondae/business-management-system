@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bms.backend.common.infrastructure.persistence.mybatis.mapper.TaskTargetMapper">
+
+    <insert id="insert">
+        INSERT INTO tb_com_task_tgt (
+            task_tgt_id,
+            task_tgt_type_cd,
+            reg_id,
+            reg_dtm,
+            del_yn
+        ) VALUES (
+            #{taskTargetId},
+            #{taskTargetTypeCode},
+            #{registeredBy},
+            #{registeredAt},
+            'N'
+        )
+    </insert>
+
+</mapper>

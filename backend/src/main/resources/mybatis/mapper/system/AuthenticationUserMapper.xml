@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bms.backend.system.infrastructure.persistence.mybatis.mapper.AuthenticationUserMapper">
+
+    <resultMap id="authenticationUserRow"
+               type="com.bms.backend.system.infrastructure.persistence.mybatis.model.AuthenticationPersistenceRows$User">
+        <constructor>
+            <arg column="user_id" javaType="string"/>
+            <arg column="emp_id" javaType="string"/>
+            <arg column="login_id" javaType="string"/>
+            <arg column="user_nm" javaType="string"/>
+            <arg column="pwd_hash_val" javaType="string"/>
+            <arg column="acnt_status_cd" javaType="string"/>
+            <arg column="login_fail_cnt" javaType="_int"/>
+            <arg column="pwd_chg_dtm" javaType="java.time.LocalDateTime"/>
+            <arg column="pwd_init_req_yn" javaType="string"/>
+            <arg column="temp_pwd_expire_dtm" javaType="java.time.LocalDateTime"/>
+            <arg column="sec_ver" javaType="_int"/>
+        </constructor>
+    </resultMap>
+
+    <resultMap id="role" type="com.bms.backend.system.application.authentication.AuthenticationRole">
+        <constructor>
+            <arg column="role_id" javaType="string"/>
+            <arg column="role_nm" javaType="string"/>
+        </constructor>
+    </resultMap>
+
+    <resultMap id="menu" type="com.bms.backend.system.application.authentication.AuthenticationMenu">
+        <constructor>
+            <arg column="menu_id" javaType="string"/>
+            <arg column="up_menu_id" javaType="string"/>
+            <arg column="menu_nm" javaType="string"/>
+            <arg column="menu_url" javaType="string"/>
+            <arg column="sort_seq" javaType="_int"/>
+        </constructor>
+    </resultMap>
+
+    <resultMap id="sessionStateRow"
+               type="com.bms.backend.system.infrastructure.persistence.mybatis.model.AuthenticationPersistenceRows$SessionState">
+        <constructor>
+            <arg column="user_id" javaType="string"/>
+            <arg column="acnt_status_cd" javaType="string"/>
+            <arg column="del_yn" javaType="string"/>
+            <arg column="sec_ver" javaType="_int"/>
+            <arg column="pwd_init_req_yn" javaType="string"/>
+            <arg column="pwd_chg_dtm" javaType="java.time.LocalDateTime"/>
+        </constructor>
+    </resultMap>
+
+    <resultMap id="reauthenticationCredentialRow"
+               type="com.bms.backend.system.infrastructure.persistence.mybatis.model.AuthenticationPersistenceRows$ReauthenticationCredential">
+        <constructor>
+            <arg column="user_id" javaType="string"/>
+            <arg column="pwd_hash_val" javaType="string"/>
+            <arg column="acnt_status_cd" javaType="string"/>
+            <arg column="del_yn" javaType="string"/>
+            <arg column="sec_ver" javaType="_int"/>
+            <arg column="pwd_init_req_yn" javaType="string"/>
+            <arg column="pwd_chg_dtm" javaType="java.time.LocalDateTime"/>
+        </constructor>
+    </resultMap>
+
+    <select id="findLoginCandidates" resultMap="authenticationUserRow">
+        SELECT user_id,
+               emp_id,
+               login_id,
+               user_nm,
+               pwd_hash_val,
+               acnt_status_cd,
+               login_fail_cnt,
+               pwd_chg_dtm,
+               pwd_init_req_yn,
+               temp_pwd_expire_dtm,
+               sec_ver
+        FROM tb_sys_user
+        WHERE login_id = #{loginId}
+          AND del_yn = 'N'
+    </select>
+
+    <select id="findRoles" resultMap="role">
+        SELECT role.role_id,
+               role.role_nm
+        FROM tb_sys_user_role_rel user_role
+        JOIN tb_sys_role role
+          ON role.role_id = user_role.role_id
+         AND role.del_yn = 'N'
+        WHERE user_role.user_id = #{userId}
+        ORDER BY role.role_id
+    </select>
+
+    <select id="findMenus" resultMap="menu">
+        SELECT DISTINCT
+               menu.menu_id,
+               menu.up_menu_id,
+               menu.menu_nm,
+               menu.menu_url,
+               menu.sort_seq
+        FROM tb_sys_user_role_rel user_role
+        JOIN tb_sys_role role
+          ON role.role_id = user_role.role_id
+         AND role.del_yn = 'N'
+        JOIN tb_sys_role_menu_perm_rel permission
+          ON permission.role_id = user_role.role_id
+        JOIN tb_sys_menu menu
+          ON menu.menu_id = permission.menu_id
+         AND menu.del_yn = 'N'
+        WHERE user_role.user_id = #{userId}
+        ORDER BY menu.menu_id
+    </select>
+
+    <select id="findSessionStates" resultMap="sessionStateRow">
+        SELECT user_id,
+               acnt_status_cd,
+               del_yn,
+               sec_ver,
+               pwd_init_req_yn,
+               pwd_chg_dtm
+        FROM tb_sys_user
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="findReauthenticationCredentials" resultMap="reauthenticationCredentialRow">
+        SELECT user_id,
+               pwd_hash_val,
+               acnt_status_cd,
+               del_yn,
+               sec_ver,
+               pwd_init_req_yn,
+               pwd_chg_dtm
+        FROM tb_sys_user
+        WHERE user_id = #{userId}
+    </select>
+
+</mapper>

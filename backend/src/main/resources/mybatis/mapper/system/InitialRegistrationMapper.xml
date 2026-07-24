@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bms.backend.system.infrastructure.persistence.mybatis.mapper.InitialRegistrationMapper">
+
+    <resultMap id="initialRegistrationAccountRow"
+               type="com.bms.backend.system.infrastructure.persistence.mybatis.model.AuthenticationPersistenceRows$InitialRegistrationAccount">
+        <constructor>
+            <arg column="user_id" javaType="string"/>
+            <arg column="login_id" javaType="string"/>
+            <arg column="user_nm" javaType="string"/>
+            <arg column="pwd_hash_val" javaType="string"/>
+            <arg column="acnt_status_cd" javaType="string"/>
+            <arg column="del_yn" javaType="string"/>
+            <arg column="pwd_init_req_yn" javaType="string"/>
+            <arg column="pwd_chg_dtm" javaType="java.time.LocalDateTime"/>
+            <arg column="temp_pwd_expire_dtm" javaType="java.time.LocalDateTime"/>
+            <arg column="sec_ver" javaType="_int"/>
+        </constructor>
+    </resultMap>
+
+    <select id="findAccountsForUpdate" resultMap="initialRegistrationAccountRow">
+        SELECT user_id,
+               login_id,
+               user_nm,
+               pwd_hash_val,
+               acnt_status_cd,
+               del_yn,
+               pwd_init_req_yn,
+               pwd_chg_dtm,
+               temp_pwd_expire_dtm,
+               sec_ver
+        FROM tb_sys_user
+        WHERE user_id = #{userId}
+        FOR UPDATE
+    </select>
+
+    <update id="complete">
+        UPDATE tb_sys_user
+        SET pwd_hash_val = #{newPasswordHash},
+            pwd_chg_dtm = #{completedAt},
+            pwd_init_req_yn = 'N',
+            temp_pwd_expire_dtm = NULL,
+            sec_ver = #{newSecurityVersion},
+            login_fail_cnt = 0,
+            email_addr = COALESCE(#{emailAddress}, email_addr),
+            mobile_no = COALESCE(#{mobileNumber}, mobile_no),
+            mod_id = #{userId},
+            mod_dtm = #{completedAt}
+        WHERE user_id = #{userId}
+          AND acnt_status_cd = 'ACTIVE'
+          AND del_yn = 'N'
+          AND pwd_init_req_yn = 'Y'
+          AND sec_ver = #{expectedSecurityVersion}
+          AND pwd_chg_dtm = #{expectedPasswordChangedAt}
+          AND temp_pwd_expire_dtm > #{completedAt}
+    </update>
+
+</mapper>
