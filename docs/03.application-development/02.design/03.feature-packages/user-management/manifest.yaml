@@ -1,6 +1,6 @@
 package_id: FPK-SYS-USER-001
 title: 사용자 관리
-version: 0.5.0
+version: 0.6.0
 design_status: DESIGN_IN_PROGRESS
 
 backlog_ids:
@@ -26,6 +26,7 @@ dependency_function_ids:
   - BFD-07-01-02-02 # 직원 등록
 screen_ids:
   - SYS-001
+  - SYS-009
 routes:
   - /system/users
   - /account/initial-registration
@@ -37,11 +38,11 @@ current_delivery_unit:
     - 등록 조직·역할 옵션 조회
     - 내부 직원·사용자·초기 역할 동시 등록
     - 24시간 유효한 최초 등록 전용 임시 비밀번호 1회 전달
+    - 최초 등록 및 초기 비밀번호 변경 화면
   excludes:
     - 사용자 상세·수정·사용중지
     - 비밀번호 초기화·변경
     - 계정 활성·비활성
-    - 최초 등록 완성 화면 구현
     - 최초 시스템관리자 부트스트랩 실행
 
 scope:
@@ -85,6 +86,7 @@ references:
     - ../../01.common/07.test-rules.md
     - ../../01.common/08.initial-data-bootstrap-design.md
     - ../../01.common/09.security-implementation-contract.md
+    - ../authentication/frontend-implementation-contract.md
   catalogs:
     - ../../02.catalog/functions.csv
     - ../../02.catalog/apis.csv
@@ -123,8 +125,13 @@ allowed_paths:
     - frontend/app/(auth)/account/initial-registration/**
     - frontend/features/system/users/**
     - frontend/features/account/initial-registration/**
-    - frontend/shared/api/users/**
-    - frontend/shared/types/users/**
+    - frontend/features/auth/**
+    - frontend/features/session/**
+    - frontend/shared/api/**
+    - frontend/shared/types/**
+    - frontend/shared/ui/**
+    - frontend/next.config.ts
+    - frontend/package.json
   database:
     - backend/src/main/resources/db/migration/**
     - docs/02.architecture/02.data-architecture/01.standard/standard-words.csv
@@ -199,8 +206,10 @@ planned_artifacts:
   feature_spec: feature-spec.md
   screens:
     - screens/SYS-001.md
+    - screens/SYS-009.md
   api_specs:
     - apis/user-management-api.md
   acceptance_tests:
     - tests/acceptance.feature
     - tests/bootstrap.feature
+    - tests/initial-registration.feature

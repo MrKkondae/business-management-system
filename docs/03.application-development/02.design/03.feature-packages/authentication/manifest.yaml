@@ -1,7 +1,7 @@
 package_id: FPK-COM-AUTH-001
 title: 인증
-version: 0.7.0
-design_status: DESIGN_IN_PROGRESS
+version: 0.8.0
+design_status: READY
 
 backlog_ids:
   - PB-001
@@ -16,6 +16,7 @@ function_ids:
 screen_ids:
   - COM-001
 routes:
+  - /
   - /login
 
 scope:
@@ -79,10 +80,18 @@ allowed_paths:
     - backend/src/test/java/com/bms/backend/global/security/**
     - backend/src/test/java/com/bms/backend/system/**
   frontend:
+    - frontend/app/page.tsx
+    - frontend/app/layout.tsx
+    - frontend/app/globals.css
+    - frontend/app/(auth)/**
     - frontend/app/(auth)/login/**
     - frontend/features/auth/**
-    - frontend/shared/api/auth/**
-    - frontend/shared/types/auth/**
+    - frontend/features/session/**
+    - frontend/shared/api/**
+    - frontend/shared/types/**
+    - frontend/shared/ui/**
+    - frontend/next.config.ts
+    - frontend/package.json
   database:
     - backend/src/main/resources/db/migration/**
     - docs/02.architecture/02.data-architecture/03.physical-model/tables/table-system.csv
@@ -140,6 +149,8 @@ database:
 
 planned_artifacts:
   feature_spec: feature-spec.md
+  frontend_implementation_contract: frontend-implementation-contract.md
+  implementation_task: implementation-task.md
   screens:
     - screens/COM-001.md
   api_specs:

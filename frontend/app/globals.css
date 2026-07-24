@@ -1,26 +1,67 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --canvas: #f3f5f2;
+  --surface: #ffffff;
+  --surface-subtle: #edf1ed;
+  --ink: #15211f;
+  --muted: #65716d;
+  --line: #d9e0dc;
+  --brand: #173b38;
+  --brand-strong: #0f2c2a;
+  --accent: #d5f24b;
+  --danger: #b42318;
+  --danger-surface: #fff3f1;
+  --warning: #8a4b00;
+  --warning-surface: #fff8e7;
+  --focus: #2e6f68;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--canvas);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-width: 320px;
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family:
+    Pretendard, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic",
+    system-ui, sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: #dceaa0;
+  color: var(--brand-strong);
+}
+
+:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--focus) 45%, transparent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

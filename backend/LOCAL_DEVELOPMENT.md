@@ -170,6 +170,24 @@ $env:BMS_BOOTSTRAP_MOBILE = "010-0000-0000"    # 선택
 .\mvnw.cmd spring-boot:run
 ```
 
+부트스트랩 실행부터 최초 로그인까지의 정확한 순서는 다음과 같다.
+
+1. 백엔드 디렉터리의 PowerShell에서 위 환경변수를 설정한다.
+2. `.\mvnw.cmd spring-boot:run`을 실행한다.
+3. `Initial system administrator bootstrap completed successfully` 로그를 확인한다.
+   부트스트랩 모드는 관리자 생성 후 애플리케이션 컨텍스트를 닫기 때문에
+   `BUILD SUCCESS`와 함께 프로세스가 종료되는 것이 정상이다. 이 실행에서는 HTTP
+   서버가 계속 실행되지 않는다.
+4. 아래 명령으로 같은 PowerShell 세션의 `BMS_BOOTSTRAP_*` 환경변수를 제거한다.
+   이때 삭제하는 것은 PowerShell 환경변수이며, DB에 생성된 조직·직원·관리자 계정과
+   역할 관계를 삭제해서는 안 된다.
+5. `.\mvnw.cmd spring-boot:run`을 다시 실행한다. 이번에는 부트스트랩이 비활성화된
+   일반 웹 애플리케이션으로 기동되며 프로세스가 계속 실행되어야 한다.
+6. 프런트엔드 서버를 별도로 기동하고 `http://localhost:3000/login`에 접속한 뒤,
+   `BMS_BOOTSTRAP_LOGIN_ID`로 지정했던 로그인ID와 초기 임시 비밀번호로 로그인한다.
+7. 제한 세션으로 이동한 최초 등록 화면에서 필수 정보 등록과 초기 비밀번호 변경을
+   완료한다.
+
 임시 비밀번호는 12~64자이고 영문 대문자·소문자·숫자·특수문자 중 3종 이상을
 포함해야 하며 로그인ID나 관리자 성명을 포함할 수 없다. 성공하면 생성된 사용자ID와
 로그인ID만 기록하며 임시 비밀번호는 출력하지 않는다. 사용자 테이블에 한 건이라도
