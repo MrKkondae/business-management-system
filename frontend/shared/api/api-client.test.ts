@@ -88,4 +88,59 @@ describe("apiRequest", () => {
       retryAfterSeconds: 60,
     });
   });
+
+  it("429 Retry-After 헤더의 대기시간을 전달한다", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn<typeof fetch>().mockResolvedValue(
+        new Response(
+          JSON.stringify({
+            ...problem,
+            code: "AUTH_TOO_MANY_ATTEMPTS",
+          }),
+          {
+            status: 429,
+            headers: {
+              "content-type": "application/problem+json",
+              "retry-after": "17",
+            },
+          },
+        ),
+      ),
+    );
+
+    await expect(apiRequest("/auth/login")).rejects.toMatchObject({
+      status: 429,
+      retryAfterSeconds: 17,
+    });
+  });
+
+  it.each([
+    [401, "AUTH_AUTHENTICATION_REQUIRED"],
+    [403, "AUTH_ACCESS_DENIED"],
+  ])("%i 오류의 상태와 Problem 정보를 보존한다", async (status, code) => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn<typeof fetch>().mockResolvedValue(
+        new Response(
+          JSON.stringify({
+            ...problem,
+            code,
+          }),
+          {
+            status,
+            headers: { "content-type": "application/problem+json" },
+          },
+        ),
+      ),
+    );
+
+    await expect(apiRequest("/protected")).rejects.toMatchObject({
+      status,
+      problem: {
+        code,
+        traceId: "trace-1",
+      },
+    });
+  });
 });

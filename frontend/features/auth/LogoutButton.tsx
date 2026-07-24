@@ -17,6 +17,8 @@ export function LogoutButton({ compact = false }: { compact?: boolean }) {
     setPending(true);
     try {
       await logout();
+    } catch {
+      // 서버 세션은 만료 처리될 수 있으므로 클라이언트 로그아웃을 계속한다.
     } finally {
       auth.clear();
       router.replace("/login");
