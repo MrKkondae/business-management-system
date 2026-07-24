@@ -38,6 +38,8 @@ function AuthProbe() {
       <p data-testid="status">{auth.status}</p>
       <p data-testid="login-id">{auth.session?.user.loginId ?? "none"}</p>
       <p data-testid="error">{auth.bootstrapError ?? "none"}</p>
+      <p data-testid="trace-id">{auth.bootstrapTraceId ?? "none"}</p>
+      <p data-testid="notice">{auth.sessionNotice ?? "none"}</p>
       <button
         type="button"
         onClick={() =>
@@ -51,6 +53,12 @@ function AuthProbe() {
       </button>
       <button type="button" onClick={auth.clear}>
         세션 삭제
+      </button>
+      <button type="button" onClick={auth.expire}>
+        세션 만료
+      </button>
+      <button type="button" onClick={auth.consumeSessionNotice}>
+        안내 확인
       </button>
     </>
   );
@@ -97,7 +105,12 @@ describe("AuthProvider", () => {
 
   it("일시적인 조회 오류는 로그인 화면에서 안내할 수 있도록 보존한다", async () => {
     mocks.getCurrentUser.mockRejectedValue(
-      new ApiClientError("서버에 연결할 수 없습니다.", 0),
+      new ApiClientError("서버에 연결할 수 없습니다.", 500, {
+        code: "COMMON_INTERNAL_ERROR",
+        message: "서버에 연결할 수 없습니다.",
+        traceId: "trace-auth",
+        fieldErrors: [],
+      }),
     );
 
     render(
@@ -112,6 +125,7 @@ describe("AuthProvider", () => {
     expect(screen.getByTestId("error")).toHaveTextContent(
       "서버에 연결할 수 없습니다.",
     );
+    expect(screen.getByTestId("trace-id")).toHaveTextContent("trace-auth");
   });
 
   it("제한 세션 설정과 명시적 세션 삭제를 반영한다", async () => {
@@ -133,5 +147,28 @@ describe("AuthProvider", () => {
     await user.click(screen.getByRole("button", { name: "세션 삭제" }));
     expect(screen.getByTestId("status")).toHaveTextContent("unauthenticated");
     expect(mocks.clearCsrfToken).toHaveBeenCalledOnce();
+  });
+
+  it("세션 만료 안내를 로그인 화면에서 한 번 소비할 수 있게 유지한다", async () => {
+    mocks.getCurrentUser.mockResolvedValue(authenticatedSession);
+    const user = userEvent.setup();
+
+    render(
+      <AuthProvider>
+        <AuthProbe />
+      </AuthProvider>,
+    );
+    await waitFor(() =>
+      expect(screen.getByTestId("status")).toHaveTextContent("authenticated"),
+    );
+
+    await user.click(screen.getByRole("button", { name: "세션 만료" }));
+    expect(screen.getByTestId("status")).toHaveTextContent("unauthenticated");
+    expect(screen.getByTestId("notice")).toHaveTextContent(
+      "세션이 만료되었습니다.",
+    );
+
+    await user.click(screen.getByRole("button", { name: "안내 확인" }));
+    expect(screen.getByTestId("notice")).toHaveTextContent("none");
   });
 });

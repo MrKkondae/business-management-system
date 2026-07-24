@@ -9,7 +9,7 @@ import { recordUserActivity } from "@/shared/api/auth-api";
 const ACTIVITY_UPDATE_INTERVAL_MS = 60_000;
 
 export function SessionActivityTracker() {
-  const { status, clear } = useAuth();
+  const { status, expire } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
   const lastSentAt = useRef(0);
@@ -31,13 +31,13 @@ export function SessionActivityTracker() {
       lastSentAt.current = Date.now();
     } catch (error) {
       if (error instanceof ApiClientError && error.status === 401) {
-        clear();
+        expire();
         router.replace("/login");
       }
     } finally {
       inFlight.current = false;
     }
-  }, [clear, router, status]);
+  }, [expire, router, status]);
 
   useEffect(() => {
     if (previousPath.current !== pathname) {

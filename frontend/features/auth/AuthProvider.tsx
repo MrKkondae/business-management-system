@@ -25,9 +25,13 @@ type AuthContextValue = {
   status: AuthStatus;
   session: CurrentUserResponse | null;
   bootstrapError: string | null;
+  bootstrapTraceId: string | null;
+  sessionNotice: string | null;
   refresh: () => Promise<CurrentUserResponse | null>;
   establish: (session: CurrentUserResponse) => void;
   clear: () => void;
+  expire: () => void;
+  consumeSessionNotice: () => void;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -40,19 +44,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [status, setStatus] = useState<AuthStatus>("loading");
   const [session, setSession] = useState<CurrentUserResponse | null>(null);
   const [bootstrapError, setBootstrapError] = useState<string | null>(null);
+  const [bootstrapTraceId, setBootstrapTraceId] = useState<string | null>(null);
+  const [sessionNotice, setSessionNotice] = useState<string | null>(null);
   const initialized = useRef(false);
 
   const clear = useCallback(() => {
     clearCsrfToken();
     setSession(null);
     setBootstrapError(null);
+    setBootstrapTraceId(null);
+    setSessionNotice(null);
     setStatus("unauthenticated");
   }, []);
 
   const establish = useCallback((nextSession: CurrentUserResponse) => {
     setSession(nextSession);
     setBootstrapError(null);
+    setBootstrapTraceId(null);
+    setSessionNotice(null);
     setStatus(statusFor(nextSession));
+  }, []);
+
+  const expire = useCallback(() => {
+    clearCsrfToken();
+    setSession(null);
+    setBootstrapError(null);
+    setBootstrapTraceId(null);
+    setSessionNotice("세션이 만료되었습니다. 다시 로그인해 주세요.");
+    setStatus("unauthenticated");
+  }, []);
+
+  const consumeSessionNotice = useCallback(() => {
+    setSessionNotice(null);
   }, []);
 
   const refresh = useCallback(async () => {
@@ -67,6 +90,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       setSession(null);
+      setBootstrapTraceId(
+        error instanceof ApiClientError
+          ? (error.problem?.traceId ?? null)
+          : null,
+      );
       setBootstrapError(
         error instanceof Error
           ? error.message
@@ -90,11 +118,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       status,
       session,
       bootstrapError,
+      bootstrapTraceId,
+      sessionNotice,
       refresh,
       establish,
       clear,
+      expire,
+      consumeSessionNotice,
     }),
-    [bootstrapError, clear, establish, refresh, session, status],
+    [
+      bootstrapError,
+      bootstrapTraceId,
+      clear,
+      consumeSessionNotice,
+      establish,
+      expire,
+      refresh,
+      session,
+      sessionNotice,
+      status,
+    ],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -70,7 +70,7 @@ paths:
       x-bms-api-id: API-COM-AUTH-002
       x-bms-requirement-ids: [REQ-COM-005]
       x-bms-function-ids: [BFD-02-05-01-02]
-      x-bms-screen-ids: [COM-001, SYS-009]
+      x-bms-screen-ids: [COM-001, COM-006, SYS-009]
       x-bms-permission: AUTHENTICATED_OR_LIMITED
       x-bms-error-codes: [AUTH_AUTHENTICATION_REQUIRED, AUTH_CSRF_INVALID, COMMON_INTERNAL_ERROR]
       responses:
@@ -92,7 +92,7 @@ paths:
       x-bms-api-id: API-COM-AUTH-003
       x-bms-requirement-ids: [REQ-COM-005, NFR-SEC-002]
       x-bms-function-ids: [BFD-02-05-01-03]
-      x-bms-screen-ids: [COM-001, SYS-009]
+      x-bms-screen-ids: [COM-001, COM-006, SYS-009]
       x-bms-permission: AUTHENTICATED_OR_LIMITED
       x-bms-error-codes: [AUTH_AUTHENTICATION_REQUIRED, COMMON_INTERNAL_ERROR]
       responses:
@@ -123,7 +123,7 @@ paths:
       x-bms-api-id: API-COM-AUTH-004
       x-bms-requirement-ids: [REQ-COM-005]
       x-bms-function-ids: [BFD-02-05-01-03]
-      x-bms-screen-ids: [SYS-009]
+      x-bms-screen-ids: [COM-006, SYS-009]
       x-bms-permission: AUTHENTICATED_OR_LIMITED
       x-bms-error-codes: [AUTH_AUTHENTICATION_REQUIRED, AUTH_CSRF_INVALID, COMMON_INTERNAL_ERROR]
       responses:
@@ -183,7 +183,7 @@ paths:
       x-bms-api-id: API-COM-AUTH-005
       x-bms-requirement-ids: [NFR-SEC-001]
       x-bms-function-ids: [BFD-02-05-01-01]
-      x-bms-screen-ids: [COM-001, SYS-009]
+      x-bms-screen-ids: [COM-001, COM-006, SYS-009]
       x-bms-permission: PUBLIC
       x-bms-error-codes: [COMMON_INTERNAL_ERROR]
       responses:

@@ -41,7 +41,10 @@ export function LoginForm() {
   const [submitting, setSubmitting] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [formError, setFormError] = useState<string | null>(
-    auth.bootstrapError,
+    auth.sessionNotice ?? auth.bootstrapError,
+  );
+  const [formTone, setFormTone] = useState<"error" | "warning">(
+    auth.sessionNotice ? "warning" : "error",
   );
   const [traceId, setTraceId] = useState<string | null>(null);
   const [retryUntil, setRetryUntil] = useState<number | null>(null);
@@ -53,6 +56,12 @@ export function LoginForm() {
       setFormError("로그인 보안 요청을 준비하지 못했습니다. 다시 시도해 주세요.");
     });
   }, []);
+
+  useEffect(() => {
+    if (auth.sessionNotice) {
+      auth.consumeSessionNotice();
+    }
+  }, [auth]);
 
   useEffect(() => {
     if (!retryUntil) {
@@ -112,6 +121,7 @@ export function LoginForm() {
     const errors = validate();
     setFieldErrors(errors);
     setFormError(null);
+    setFormTone("error");
     setTraceId(null);
     if (Object.keys(errors).length > 0) {
       focusFirstError(errors);
@@ -141,6 +151,7 @@ export function LoginForm() {
           setNow(Date.now());
           setRetryUntil(Date.now() + seconds * 1_000);
           setFormError("로그인 요청이 많습니다. 잠시 후 다시 시도해 주세요.");
+          setFormTone("warning");
         } else {
           setFormError(error.message);
         }
@@ -184,7 +195,7 @@ export function LoginForm() {
               : formError
           }
           traceId={traceId}
-          tone={retrySeconds > 0 ? "warning" : "error"}
+          tone={retrySeconds > 0 ? "warning" : formTone}
         />
 
         <div>

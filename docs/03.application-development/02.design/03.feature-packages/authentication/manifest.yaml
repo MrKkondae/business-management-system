@@ -15,6 +15,7 @@ function_ids:
   - BFD-02-05-01-03 # 현재 사용자 조회
 screen_ids:
   - COM-001
+  - COM-006
 routes:
   - /
   - /login
@@ -153,6 +154,7 @@ planned_artifacts:
   implementation_task: implementation-task.md
   screens:
     - screens/COM-001.md
+    - screens/COM-006.md
   api_specs:
     - apis/authentication-api.md
   acceptance_tests:

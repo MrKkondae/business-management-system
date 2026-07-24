@@ -6,7 +6,7 @@
 | --- | --- |
 | 문서 상태 | `READY` |
 | 적용 기능 | 로그인, 세션 복원, 최초 등록 화면 연결, 로그아웃 |
-| 관련 화면 | `COM-001`, `SYS-009` |
+| 관련 화면 | `COM-001`, `COM-006`, `SYS-009` |
 | 프런트엔드 | Next.js 16 App Router, React 19, TypeScript, Tailwind CSS 4 |
 | 제외 범위 | 대시보드, 알림, 파일, 메모, 비밀번호 찾기, MFA, 사용자관리 본 화면 |
 
@@ -90,7 +90,7 @@ type ApiProblem = {
 
 - `app/**/page.tsx`와 레이아웃은 기본적으로 Server Component로 유지한다.
 - 브라우저 쿠키 기반 API 호출, 폼 상태, 라우터 이동, 활동 감지는 명시적인 Client Component에서 수행한다.
-- Client Component 경계는 `AuthProvider`, `AuthGate`, `LoginForm`, `InitialRegistrationForm`, `SessionActivityTracker`로 제한한다.
+- Client Component 경계는 `AuthProvider`, `AuthGate`, `LoginForm`, `InitialRegistrationForm`, `HomeClient`, `LogoutButton`, `SessionActivityTracker`로 제한한다.
 - 서버 렌더링 단계에서 백엔드 세션을 별도로 복제하거나 인증 결과를 캐시하지 않는다.
 - 인증 응답은 Next.js 데이터 캐시에 저장하지 않으며 클라이언트 요청은 `cache: "no-store"`를 사용한다.
 
@@ -112,7 +112,9 @@ frontend/
 │   ├── auth/
 │   │   ├── AuthGate.tsx
 │   │   ├── AuthProvider.tsx
+│   │   ├── HomeClient.tsx
 │   │   ├── LoginForm.tsx
+│   │   ├── LogoutButton.tsx
 │   │   └── auth-routing.ts
 │   ├── account/initial-registration/
 │   │   ├── InitialRegistrationForm.tsx

@@ -8,6 +8,8 @@ const mocks = vi.hoisted(() => ({
   prepareCsrfToken: vi.fn(() => Promise.resolve()),
   establish: vi.fn(),
   replace: vi.fn(),
+  consumeSessionNotice: vi.fn(),
+  sessionNotice: null as string | null,
 }));
 
 vi.mock("next/navigation", () => ({
@@ -24,6 +26,8 @@ vi.mock("@/shared/api/auth-api", () => ({
 vi.mock("@/features/auth/AuthProvider", () => ({
   useAuth: () => ({
     bootstrapError: null,
+    sessionNotice: mocks.sessionNotice,
+    consumeSessionNotice: mocks.consumeSessionNotice,
     establish: mocks.establish,
   }),
 }));
@@ -34,6 +38,8 @@ describe("LoginForm", () => {
     mocks.prepareCsrfToken.mockClear();
     mocks.establish.mockReset();
     mocks.replace.mockReset();
+    mocks.consumeSessionNotice.mockReset();
+    mocks.sessionNotice = null;
   });
 
   it("필수값 없이 제출하면 API를 호출하지 않고 로그인ID에 포커스한다", async () => {
@@ -82,5 +88,18 @@ describe("LoginForm", () => {
       absoluteSessionExpiresAt: "2026-07-24T12:00:00Z",
     });
     await waitFor(() => expect(mocks.replace).toHaveBeenCalledWith("/"));
+  });
+
+  it("세션 만료 안내를 표시한 뒤 인증 상태에서 소비한다", async () => {
+    mocks.sessionNotice = "세션이 만료되었습니다. 다시 로그인해 주세요.";
+
+    render(<LoginForm />);
+
+    expect(
+      screen.getByText("세션이 만료되었습니다. 다시 로그인해 주세요."),
+    ).toBeInTheDocument();
+    await waitFor(() =>
+      expect(mocks.consumeSessionNotice).toHaveBeenCalledOnce(),
+    );
   });
 });

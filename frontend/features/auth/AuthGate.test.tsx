@@ -1,11 +1,15 @@
 import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { AuthStatus } from "./AuthProvider";
 import { AuthGate } from "./AuthGate";
 
 const mocks = vi.hoisted(() => ({
   replace: vi.fn(),
+  refresh: vi.fn(),
   status: "loading" as AuthStatus,
+  bootstrapError: null as string | null,
+  bootstrapTraceId: null as string | null,
 }));
 
 vi.mock("next/navigation", () => ({
@@ -17,13 +21,19 @@ vi.mock("next/navigation", () => ({
 vi.mock("@/features/auth/AuthProvider", () => ({
   useAuth: () => ({
     status: mocks.status,
+    bootstrapError: mocks.bootstrapError,
+    bootstrapTraceId: mocks.bootstrapTraceId,
+    refresh: mocks.refresh,
   }),
 }));
 
 describe("AuthGate", () => {
   beforeEach(() => {
     mocks.replace.mockReset();
+    mocks.refresh.mockReset();
     mocks.status = "loading";
+    mocks.bootstrapError = null;
+    mocks.bootstrapTraceId = null;
   });
 
   it("허용된 인증 상태에서는 자식 화면을 표시한다", () => {
@@ -63,4 +73,29 @@ describe("AuthGate", () => {
       );
     },
   );
+
+  it("보호 화면의 세션 확인 오류에서 추적ID를 표시하고 재시도한다", async () => {
+    mocks.status = "error";
+    mocks.bootstrapError = "서버에 연결할 수 없습니다.";
+    mocks.bootstrapTraceId = "trace-auth";
+    mocks.refresh.mockResolvedValue(null);
+    const user = userEvent.setup();
+
+    render(
+      <AuthGate mode="authenticated-only">
+        <p>보호 화면</p>
+      </AuthGate>,
+    );
+
+    expect(
+      screen.getByRole("heading", {
+        name: "로그인 상태를 확인하지 못했습니다",
+      }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/trace-auth/)).toBeInTheDocument();
+    expect(screen.queryByText("보호 화면")).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "다시 시도" }));
+    expect(mocks.refresh).toHaveBeenCalledOnce();
+  });
 });

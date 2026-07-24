@@ -5,7 +5,7 @@ import { SessionActivityTracker } from "./SessionActivityTracker";
 
 const mocks = vi.hoisted(() => ({
   recordUserActivity: vi.fn(),
-  clear: vi.fn(),
+  expire: vi.fn(),
   replace: vi.fn(),
   status: "authenticated",
   pathname: "/",
@@ -21,7 +21,7 @@ vi.mock("next/navigation", () => ({
 vi.mock("@/features/auth/AuthProvider", () => ({
   useAuth: () => ({
     status: mocks.status,
-    clear: mocks.clear,
+    expire: mocks.expire,
   }),
 }));
 
@@ -33,7 +33,7 @@ describe("SessionActivityTracker", () => {
   beforeEach(() => {
     mocks.recordUserActivity.mockReset();
     mocks.recordUserActivity.mockResolvedValue(undefined);
-    mocks.clear.mockReset();
+    mocks.expire.mockReset();
     mocks.replace.mockReset();
     mocks.status = "authenticated";
     mocks.pathname = "/";
@@ -67,7 +67,7 @@ describe("SessionActivityTracker", () => {
 
     fireEvent.pointerDown(window);
 
-    await waitFor(() => expect(mocks.clear).toHaveBeenCalledOnce());
+    await waitFor(() => expect(mocks.expire).toHaveBeenCalledOnce());
     expect(mocks.replace).toHaveBeenCalledWith("/login");
   });
 
