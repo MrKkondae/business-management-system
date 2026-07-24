@@ -10,6 +10,9 @@ requirement_ids:
   - NFR-SEC-001
   - NFR-SEC-003
 dependency_requirement_ids:
+  - REQ-SYS-002
+  - REQ-SYS-004
+  - REQ-SYS-005
   - REQ-RES-001
 function_ids:
   - BFD-01-01-01-01 # 사용자 조회
@@ -22,6 +25,9 @@ function_ids:
   - BFD-01-01-03-02 # 계정 비활성화
   - BFD-01-01-03-03 # 로그인실패 비활성 해제
 dependency_function_ids:
+  - BFD-01-02-01-01 # 역할 조회
+  - BFD-01-04-02-01 # 공통코드 조회
+  - BFD-01-05-01-01 # 조직 조회
   - BFD-07-01-01-03 # 인력 공통정보 등록
   - BFD-07-01-02-02 # 직원 등록
 screen_ids:
