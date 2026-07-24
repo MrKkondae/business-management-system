@@ -106,6 +106,25 @@ public record LoginSession(
                 occurredAt);
     }
 
+    public LoginSession promoted(
+            AuthenticationAuthorizationSnapshot currentAuthorization,
+            LocalDateTime currentPasswordChangedAt,
+            int currentSecurityVersion,
+            Instant completedAt) {
+        return new LoginSession(
+                userId,
+                loginId,
+                displayName,
+                accessLogId,
+                currentAuthorization,
+                false,
+                currentPasswordChangedAt,
+                currentSecurityVersion,
+                completedAt,
+                completedAt.plus(Duration.ofHours(8)),
+                completedAt);
+    }
+
     public boolean isRecentlyReauthenticated(Instant now) {
         return !now.isBefore(reauthenticatedAt)
                 && now.isBefore(reauthenticatedAt.plus(Duration.ofMinutes(10)));

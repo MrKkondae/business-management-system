@@ -201,6 +201,49 @@ paths:
                 $ref: '#/components/schemas/CsrfTokenResponse'
         '500':
           $ref: '#/components/responses/InternalProblem'
+  /users/me/initial-registration:
+    post:
+      tags: [UserManagement]
+      summary: 최초 등록 및 초기 비밀번호 변경
+      operationId: systemCompleteInitialRegistration
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      x-bms-api-id: API-SYS-USER-004
+      x-bms-requirement-ids: [REQ-SYS-001, NFR-SEC-001, NFR-SEC-002]
+      x-bms-function-ids: [BFD-01-01-02-02]
+      x-bms-screen-ids: [COM-001]
+      x-bms-permission: AUTHENTICATED_OR_LIMITED
+      x-bms-error-codes: [COMMON_VALIDATION_FAILED, AUTH_AUTHENTICATION_REQUIRED, AUTH_CSRF_INVALID, COMMON_INVALID_STATE, COMMON_INTERNAL_ERROR]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InitialRegistrationRequest'
+      responses:
+        '204':
+          description: 비밀번호 변경과 일반 세션 승격 완료. 클라이언트는 새 CSRF 토큰을 조회해야 한다.
+          headers:
+            Set-Cookie:
+              description: 세션 고정 공격 방지를 위해 교체된 BMSSESSION
+              schema:
+                type: string
+            Cache-Control:
+              description: 인증 응답 캐시 금지
+              schema:
+                type: string
+                example: no-store
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationRequiredProblem'
+        '403':
+          $ref: '#/components/responses/ForbiddenProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+        '500':
+          $ref: '#/components/responses/InternalProblem'
   /users:
     get:
       tags: [UserManagement]
@@ -547,6 +590,32 @@ components:
           minLength: 1
           maxLength: 256
           writeOnly: true
+    InitialRegistrationRequest:
+      type: object
+      additionalProperties: false
+      required: [newPassword, newPasswordConfirmation]
+      properties:
+        newPassword:
+          type: string
+          format: password
+          minLength: 12
+          maxLength: 64
+          writeOnly: true
+          description: 대소문자·숫자·특수문자 중 3종 이상을 사용하며 개인값·취약·연속·반복 비밀번호를 허용하지 않는다.
+        newPasswordConfirmation:
+          type: string
+          format: password
+          minLength: 12
+          maxLength: 64
+          writeOnly: true
+        emailAddress:
+          type: [string, 'null']
+          format: email
+          maxLength: 100
+        mobileNumber:
+          type: [string, 'null']
+          maxLength: 20
+          pattern: '^[0-9+() -]*$'
     CurrentUserResponse:
       type: object
       additionalProperties: false

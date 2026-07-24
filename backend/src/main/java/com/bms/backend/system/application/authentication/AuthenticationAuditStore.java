@@ -32,4 +32,7 @@ public interface AuthenticationAuditStore {
             ReauthenticationAuditOutcome outcome,
             LoginAttemptContext context,
             LocalDateTime occurredAt);
+
+    void recordInitialRegistrationCompleted(
+            String userId, LoginAttemptContext context, LocalDateTime occurredAt);
 }

@@ -104,6 +104,18 @@ public class JdbcAuthenticationAuditStore implements AuthenticationAuditStore {
                 occurredAt);
     }
 
+    @Override
+    public void recordInitialRegistrationCompleted(
+            String userId, LoginAttemptContext context, LocalDateTime occurredAt) {
+        insertSystemLog(
+                "INITIAL_REGISTRATION_COMPLETED",
+                "SUCCESS",
+                userId,
+                "initial registration completed; password changed; securityVersion incremented",
+                context,
+                occurredAt);
+    }
+
     private void insertAccessLog(
             String accessLogId,
             String userId,

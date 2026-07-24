@@ -107,6 +107,20 @@ class LoginSessionValidationFilterTests {
         verify(chain, never()).doFilter(any(), any());
     }
 
+    @Test
+    void limitedSessionAllowsOnlyTheInitialRegistrationCommand() throws Exception {
+        LoginSession session = sessionAt(Instant.parse("2026-07-23T09:05:00Z"), true);
+        authenticate(session);
+        when(userQuery.findSessionState("USER-01")).thenReturn(Optional.of(state(true)));
+        var request = request("POST", "/users/me/initial-registration");
+        var chain = org.mockito.Mockito.mock(jakarta.servlet.FilterChain.class);
+
+        filter.doFilter(request, new MockHttpServletResponse(), chain);
+
+        verify(chain).doFilter(any(), any());
+        verify(problemWriter, never()).write(any(), any(), any());
+    }
+
     private LoginSession sessionAt(Instant lastActivity, boolean limited) {
         return new LoginSession(
                 "USER-01",

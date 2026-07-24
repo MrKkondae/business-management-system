@@ -28,6 +28,9 @@ class DevelopmentPostgresAuthenticationAuditVerificationTests {
     private JdbcAuthenticationAuditStore auditStore;
 
     @Autowired
+    private JdbcInitialRegistrationStore initialRegistrationStore;
+
+    @Autowired
     private JdbcTemplate jdbc;
 
     @Autowired
@@ -42,6 +45,41 @@ class DevelopmentPostgresAuthenticationAuditVerificationTests {
                 new LoginAttemptContext(traceId, "127.0.0.1", "BMS verification");
         LocalDateTime occurredAt =
                 LocalDateTime.now(ZoneOffset.UTC).withNano(0);
+        String initialRegistrationUserId = "DEV-VERIFY-INITIAL";
+
+        jdbc.update(
+                """
+                INSERT INTO tb_sys_user (
+                    user_id, emp_id, login_id, user_nm, email_addr, mobile_no,
+                    acnt_status_cd, pwd_hash_val, pwd_chg_dtm, login_fail_cnt,
+                    inactive_dtm, last_login_dtm, pwd_init_req_yn,
+                    reg_id, reg_dtm, mod_id, mod_dtm, del_yn, inactive_rsn_cd,
+                    temp_pwd_expire_dtm, sec_ver
+                ) VALUES (
+                    ?, NULL, ?, ?, NULL, NULL,
+                    'ACTIVE', ?, ?, 0,
+                    NULL, NULL, 'Y',
+                    'SYSTEM', ?, NULL, NULL, 'N', NULL,
+                    ?, 1
+                )
+                """,
+                initialRegistrationUserId,
+                "dev.verify.initial",
+                "Development verification",
+                "TEMP-HASH",
+                occurredAt,
+                occurredAt,
+                occurredAt.plusHours(24));
+        var initialAccount =
+                initialRegistrationStore.lockAccount(initialRegistrationUserId).orElseThrow();
+        int newSecurityVersion = initialRegistrationStore.complete(
+                initialAccount,
+                "NEW-HASH",
+                "verify@example.com",
+                "010-0000-0000",
+                occurredAt.plusSeconds(1));
+        auditStore.recordInitialRegistrationCompleted(
+                initialRegistrationUserId, context, occurredAt.plusSeconds(1));
 
         auditStore.recordFailedLogin(
                 null,
@@ -116,6 +154,36 @@ class DevelopmentPostgresAuthenticationAuditVerificationTests {
                         """,
                         Integer.class,
                         traceId))
+                .isEqualTo(1);
+        assertThat(newSecurityVersion).isEqualTo(2);
+        assertThat(jdbc.queryForObject(
+                        """
+                        SELECT count(*)
+                        FROM tb_sys_user
+                        WHERE user_id = ?
+                          AND pwd_hash_val = 'NEW-HASH'
+                          AND pwd_init_req_yn = 'N'
+                          AND temp_pwd_expire_dtm IS NULL
+                          AND sec_ver = 2
+                          AND email_addr = 'verify@example.com'
+                          AND mobile_no = '010-0000-0000'
+                        """,
+                        Integer.class,
+                        initialRegistrationUserId))
+                .isEqualTo(1);
+        assertThat(jdbc.queryForObject(
+                        """
+                        SELECT count(*)
+                        FROM tb_sys_log
+                        WHERE req_trace_id = ?
+                          AND event_type_cd = 'INITIAL_REGISTRATION_COMPLETED'
+                          AND proc_result_cd = 'SUCCESS'
+                          AND tgt_type_cd = 'USER'
+                          AND tgt_id = ?
+                        """,
+                        Integer.class,
+                        traceId,
+                        initialRegistrationUserId))
                 .isEqualTo(1);
     }
 }

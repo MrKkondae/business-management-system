@@ -115,3 +115,23 @@ API ID, Method·Path, operationId, 기능·화면·권한·오류 연결은 `../
 ## 6. 권한과 추적성
 
 API별 기능·화면·권한 연결은 `../../../02.catalog/apis.csv`, `SYS-001` 권한 정의는 `../../../02.catalog/permissions.csv`를 원본으로 한다.
+
+## 7. 최초 등록 및 초기 비밀번호 변경
+
+`POST /users/me/initial-registration`은 최초 등록 제한 세션에서만 정상 처리한다.
+
+```json
+{
+  "newPassword": "new-password-value",
+  "newPasswordConfirmation": "new-password-value",
+  "emailAddress": "staff01@example.com",
+  "mobileNumber": "010-1234-5678"
+}
+```
+
+- 새 비밀번호와 확인값은 일치해야 하며 12~64자, 문자종류 3종 이상과 취약·개인값·연속·반복 금지 정책을 적용한다.
+- 현재 임시 비밀번호와 같은 값은 허용하지 않는다.
+- 이메일과 휴대전화번호는 선택 입력이며 생략하면 기존 값을 유지한다.
+- 비밀번호 해시, 초기화필요여부, 임시 비밀번호 만료, 보안버전과 선택 개인정보를 한 트랜잭션으로 변경한다.
+- 성공 응답은 `204 No Content`, `Cache-Control: no-store`이며 세션ID와 CSRF 토큰을 교체한 일반 세션으로 승격한다.
+- 클라이언트는 성공 직후 `GET /auth/csrf`로 새 CSRF 토큰을 조회해야 한다.

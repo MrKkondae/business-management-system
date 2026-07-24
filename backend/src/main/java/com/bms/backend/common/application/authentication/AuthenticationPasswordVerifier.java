@@ -20,6 +20,10 @@ public class AuthenticationPasswordVerifier {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 
+    public String encode(String rawPassword) {
+        return passwordEncoder.encode(rawPassword);
+    }
+
     public void verifyAgainstDummyHash(String rawPassword) {
         passwordEncoder.matches(rawPassword, dummyPasswordHash);
     }

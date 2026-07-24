@@ -193,4 +193,23 @@ class JdbcAuthenticationAuditStoreTests {
                     .doesNotContain("secret", "hash", "passwordHash");
         });
     }
+
+    @Test
+    void recordsInitialRegistrationWithoutCredentialOrPersonalData() {
+        store.recordInitialRegistrationCompleted("USER-01", CONTEXT, NOW);
+
+        var row = jdbc.queryForMap("""
+                SELECT event_type_cd, proc_result_cd, tgt_type_cd, tgt_id,
+                       chg_smry_cont, req_trace_id
+                FROM tb_sys_log
+                """);
+        assertThat(row)
+                .containsEntry("EVENT_TYPE_CD", "INITIAL_REGISTRATION_COMPLETED")
+                .containsEntry("PROC_RESULT_CD", "SUCCESS")
+                .containsEntry("TGT_TYPE_CD", "USER")
+                .containsEntry("TGT_ID", "USER-01")
+                .containsEntry("REQ_TRACE_ID", "TRACE-01");
+        assertThat(row.get("CHG_SMRY_CONT").toString())
+                .doesNotContain("secret", "hash", "email", "mobile");
+    }
 }

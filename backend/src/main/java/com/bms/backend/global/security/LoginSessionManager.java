@@ -19,6 +19,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoginSessionManager {
 
+    private static final String CSRF_SESSION_ATTRIBUTE =
+            "org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository.CSRF_TOKEN";
+
     private final HttpSessionSecurityContextRepository repository =
             new HttpSessionSecurityContextRepository();
     private final boolean secureCookie;
@@ -34,9 +37,23 @@ public class LoginSessionManager {
             HttpServletResponse response) {
         HttpSession httpSession = request.getSession(true);
         request.changeSessionId();
+        httpSession.removeAttribute(CSRF_SESSION_ATTRIBUTE);
         // Business expiry is checked by LoginSessionValidationFilter. Keep the container
         // session longer so the filter can close the access log on the next request.
         httpSession.setMaxInactiveInterval((int) java.time.Duration.ofHours(24).toSeconds());
+        save(loginSession, request, response);
+    }
+
+    public void promote(
+            LoginSession loginSession,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        HttpSession httpSession = request.getSession(false);
+        if (httpSession == null) {
+            throw new IllegalStateException("AUTH_HTTP_SESSION_REQUIRED");
+        }
+        request.changeSessionId();
+        httpSession.removeAttribute(CSRF_SESSION_ATTRIBUTE);
         save(loginSession, request, response);
     }
 

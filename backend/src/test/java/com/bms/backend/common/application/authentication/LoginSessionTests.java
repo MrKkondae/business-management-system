@@ -38,6 +38,31 @@ class LoginSessionTests {
                 .isEqualTo(LoginSession.Expiration.ABSOLUTE);
     }
 
+    @Test
+    void promotesLimitedSessionToANewEightHourNormalSession() {
+        LoginSession limited =
+                LoginSession.from(login(true, LocalDateTime.of(2026, 7, 23, 9, 20)));
+        Instant completedAt = Instant.parse("2026-07-23T09:05:00Z");
+        var authorization = new AuthenticationAuthorizationSnapshot(
+                List.of(new com.bms.backend.system.application.authentication.AuthenticationRole(
+                        "ROLE-01", "시스템관리자")),
+                List.of());
+
+        LoginSession promoted = limited.promoted(
+                authorization,
+                LocalDateTime.of(2026, 7, 23, 9, 5),
+                4,
+                completedAt);
+
+        assertThat(promoted.passwordChangeRequired()).isFalse();
+        assertThat(promoted.securityVersion()).isEqualTo(4);
+        assertThat(promoted.authorization()).isEqualTo(authorization);
+        assertThat(promoted.lastUserActivityAt()).isEqualTo(completedAt);
+        assertThat(promoted.reauthenticatedAt()).isEqualTo(completedAt);
+        assertThat(promoted.absoluteExpiresAt()).isEqualTo(completedAt.plusSeconds(28_800));
+        assertThat(promoted.idleTimeoutSeconds()).isEqualTo(900);
+    }
+
     private AuthenticatedLogin login(
             boolean passwordChangeRequired, LocalDateTime temporaryPasswordExpiresAt) {
         return new AuthenticatedLogin(

@@ -58,6 +58,26 @@ class LoginSessionManagerTests {
                         && value.contains("SameSite=Lax"));
     }
 
+    @Test
+    void promotionRotatesSessionIdAndRemovesThePreviousCsrfToken() {
+        LoginSessionManager manager = new LoginSessionManager(false);
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        var httpSession = request.getSession(true);
+        String previousId = httpSession.getId();
+        String csrfAttribute =
+                "org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository.CSRF_TOKEN";
+        httpSession.setAttribute(csrfAttribute, "old-token");
+
+        manager.promote(session(), request, response);
+
+        assertThat(request.getSession(false).getId()).isNotEqualTo(previousId);
+        assertThat(request.getSession(false).getAttribute(csrfAttribute)).isNull();
+        assertThat(request.getSession(false).getAttribute(
+                        HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY))
+                .isInstanceOf(SecurityContext.class);
+    }
+
     private LoginSession session() {
         return new LoginSession(
                 "USER-01",
